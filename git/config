@@ -3,3 +3,12 @@
 	email = 0123krishnayadav@gmail.com
 [init]
 	defaultBranch = main
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	# Pretty side-by-side `git diff` / `git log -p` / `git show`. One column: `git -c delta.side-by-side=false diff`
+	# (lazygit ignores this section: its config passes --no-gitconfig and sets its own flags)
+	line-numbers = true
+	side-by-side = true

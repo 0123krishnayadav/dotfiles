@@ -114,6 +114,7 @@ dotfiles() {
   chmod 600 "$REPO/ssh/config"
   link "$REPO/ssh/config"          "$HOME/.ssh/config"
   link "$REPO/nvim"                "$HOME/.config/nvim"
+  link "$REPO/lazygit"             "$HOME/.config/lazygit"
   # Karabiner: copied, not linked. Its background service runs as root and macOS
   # blocks it from reading ~/Documents, so a link into this repo loads no rules.
   local kb="$HOME/.config/karabiner"

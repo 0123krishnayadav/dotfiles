@@ -1,0 +1,20 @@
+# lazygit config (linked to ~/.config/lazygit by setup.sh)
+# All options: https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
+
+os:
+  # `e` on a file: open it in nvim (in the surrounding Neovim if lazygit runs inside one)
+  editPreset: nvim-remote
+
+gui:
+  nerdFontsVersion: "3"   # file icons (JetBrainsMono Nerd Font)
+  sidePanelWidth: 0.2     # narrower left panels, more room for the diff
+
+git:
+  # Diffs rendered by delta (brew git-delta). `|` cycles through these, `+` enlarges the diff panel.
+  # --no-gitconfig: ignore git/config's [delta] section (it turns side by side on for the shell)
+  diffRenderers:
+    # Side by side when the diff panel is wide enough, normal diff otherwise
+    - name: delta side-by-side
+      command: delta --no-gitconfig --{{colorScheme}} --paging=never --line-numbers {{if gt .width 140}}--side-by-side{{end}}
+    - name: delta
+      command: delta --no-gitconfig --{{colorScheme}} --paging=never --line-numbers

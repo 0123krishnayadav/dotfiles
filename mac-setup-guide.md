@@ -71,10 +71,11 @@ The script is safe to run again. Each step skips anything already done, and it s
 | `zsh/aliases.zsh` | All aliases | loaded by `.zshrc` |
 | `zsh/keybindings.zsh` | Shell key bindings (Tab, `Cmd ←/→/Delete`) | loaded by `.zshrc` |
 | `zsh/functions.zsh` | Shell functions (`killport`) | loaded by `.zshrc` |
-| `git/config` | Git name/email, default branch | folder symlinked to `~/.config/git` (git reads it there by default) |
+| `git/config` | Git name/email, default branch, delta as the diff pager (side by side in `git diff`, `git log -p`, `git show`) | folder symlinked to `~/.config/git` (git reads it there by default) |
 | `git/ignore` | Global gitignore (`.DS_Store`, editor swap files, ...) | same folder; applies to every repo |
 | `ssh/config` | SSH hosts (GitHub, servers) | symlinked to `~/.ssh/config`. Keys are **not** in the repo |
 | `nvim/` | Neovim config (kickstart.nvim) | symlinked to `~/.config/nvim` |
+| `lazygit/config.yml` | lazygit (run `lazygit` in any repo; `space` stage, `c` commit, `P`/`p` push/pull, `q` quit, `?` all keys): `e` opens files in nvim, Nerd Font icons, side-by-side diffs with delta (`\|` switches style, `+` enlarges the diff) | folder symlinked to `~/.config/lazygit` |
 | `karabiner/karabiner.json` | Karabiner-Elements: Caps Lock / Right ⌘ = Hyper key | **copied** to `~/.config/karabiner/` (not linked: Karabiner can't read files in `~/Documents`) |
 | `iterm/iterm_config.json` | iTerm2 profile (colors, font, `Cmd` key mappings) | symlinked into `~/Library/Application Support/iTerm2/DynamicProfiles/` as the "Krishna Personal" profile, set as default. Already in Dynamic Profile format (`{ "Profiles": [ … ] }`, own Guid, own name) so it never clashes with iTerm2's built-in "Default" profile |
 | `vscode/settings.json`, `keybindings.json` | VS Code config | symlinked into `~/Library/Application Support/Code/User/` |
@@ -96,7 +97,7 @@ Put machine-specific or secret settings (API keys, work aliases) in `~/.zshrc.lo
 | 4 | Oh My Zsh | Unattended install that leaves our zsh config alone |
 | 5 | Zsh plugins | Clones `zsh-autosuggestions` into `~/.oh-my-zsh/custom/plugins` (the only plugin not bundled with Oh My Zsh) |
 | 6 | Default shell | `chsh -s /bin/zsh` if needed |
-| 7 | Dotfiles | Symlinks `~/.zshenv`, `~/.config/zsh`, `~/.config/git`, `~/.ssh/config`, `~/.config/nvim`. Copies `karabiner.json` to `~/.config/karabiner/`. Copies `~/.zsh_history` to `~/.local/state/zsh/history` if needed |
+| 7 | Dotfiles | Symlinks `~/.zshenv`, `~/.config/zsh`, `~/.config/git`, `~/.ssh/config`, `~/.config/nvim`, `~/.config/lazygit`. Copies `karabiner.json` to `~/.config/karabiner/`. Copies `~/.zsh_history` to `~/.local/state/zsh/history` if needed |
 | 8 | iTerm2 | Shell integration + "Krishna Personal" profile set as default. New tabs and split panes open in the current folder, new windows open in `~` |
 | 9 | VS Code | Symlinks settings + keybindings |
 | 10 | Node.js | `fnm install --lts`, set as default |
@@ -107,7 +108,7 @@ Put machine-specific or secret settings (API keys, work aliases) in `~/.zshrc.lo
 
 ### Brewfile contents
 
-- **CLI:** `fnm`, `fzf`, `zoxide`, `bun`, `colima`, `docker`, `docker-buildx`, `mas`, `neovim`, `tree-sitter-cli`, `fd`, `ripgrep`, `bat`
+- **CLI:** `fnm`, `fzf`, `zoxide`, `bun`, `colima`, `docker`, `docker-buildx`, `mas`, `neovim`, `tree-sitter-cli`, `fd`, `ripgrep`, `bat`, `lazygit`, `git-delta`
 - **Apps:** iTerm2, Brave, Raycast, Karabiner-Elements, VS Code, Bitwarden, AppCleaner
 - **App Store:** Amphetamine
 - **VS Code extensions:** Claude Code, Material Icon Theme, rust-analyzer
@@ -331,7 +332,7 @@ echo $ZDOTDIR        # ~/.config/zsh  (zsh config comes from the repo)
 ssh -T git@github.com
 
 # Every config link points into this repo (no "No such file")
-ls -l ~/.zshenv ~/.config/{zsh,git,nvim} ~/.ssh/config
+ls -l ~/.zshenv ~/.config/{zsh,git,nvim,lazygit} ~/.ssh/config
 ```
 
 Then:
