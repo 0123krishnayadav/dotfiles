@@ -1139,6 +1139,7 @@ do
     'javascript',
     'json',
     'yaml',
+    'regex', -- noice highlights the cmdline with it
   }
   require('nvim-treesitter').install(parsers)
   vim.g.ts_parsers = parsers -- used by setup.sh to install parsers headlessly
