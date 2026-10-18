@@ -38,14 +38,13 @@ Do the [Before you leave the old Mac](#before-you-leave-the-old-mac) checklist, 
 4. **Clone this repo to exactly this path.** Don't move the folder afterwards: your shell and editor configs are linked to it.
 
    ```bash
-   mkdir -p ~/Documents
-   git clone git@github.com:0123krishnayadav/settings.git ~/Documents/settings
+   git clone git@github.com:0123krishnayadav/dotfiles.git ~/dotfiles
    ```
 
 5. **Run the setup:**
 
    ```bash
-   ~/Documents/settings/setup.sh
+   ~/dotfiles/setup.sh
    ```
 
    It asks for your Mac password at the start (and Homebrew may ask again). It takes 15–30 minutes. Leave it running.
@@ -113,7 +112,7 @@ Put machine-specific or secret settings (API keys, work aliases) in `~/.zshrc.lo
 - **App Store:** Amphetamine
 - **VS Code extensions:** Claude Code, Material Icon Theme, rust-analyzer
 
-To add something later, add it to `Brewfile` and run `brew bundle --file=~/Documents/settings/Brewfile`.
+To add something later, add it to `Brewfile` and run `brew bundle --file=~/dotfiles/Brewfile`.
 To snapshot what's installed right now: `brew bundle dump --file=- --describe` and copy in what you want to keep.
 
 ---
@@ -160,7 +159,7 @@ These can't be scripted (or shouldn't be):
 
 **Hyper C** is a macOS shortcut (System Settings → Keyboard → Keyboard Shortcuts → Keyboard → Move focus to next window). The recorder in System Settings closes when you press Hyper+C, so `setup.sh` writes it with `defaults write` instead.
 
-To change the Hyper keys, edit `~/.config/karabiner/karabiner.json` (Karabiner reloads it on save), then copy it back into the repo: `cp ~/.config/karabiner/karabiner.json ~/Documents/settings/karabiner/` and commit. It's a copy, not a link, because Karabiner's background service isn't allowed to read `~/Documents`. Avoid tap-or-hold keys like Space, Return or Tab: Karabiner can only send their normal character on key *release*, so typing feels laggy and fast typing can trigger Hyper shortcuts by accident.
+To change the Hyper keys, edit `~/.config/karabiner/karabiner.json` (Karabiner reloads it on save), then copy it back into the repo: `cp ~/.config/karabiner/karabiner.json ~/dotfiles/karabiner/` and commit. It's a copy, not a link, because Karabiner's background service isn't allowed to read `~/Documents`. Avoid tap-or-hold keys like Space, Return or Tab: Karabiner can only send their normal character on key *release*, so typing feels laggy and fast typing can trigger Hyper shortcuts by accident.
 
 ---
 
