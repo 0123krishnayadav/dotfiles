@@ -227,6 +227,7 @@
       },
       "Silence Bell" : false,
       "Rows" : 30,
+      "Show Mark Indicators" : false,
       "Guid" : "6132E75C-6D6B-4C90-A9F4-CF60D74153F6",
       "Ansi 14 Color (Dark)" : {
         "Red Component" : 0.37597531080245972,
