@@ -70,6 +70,7 @@ The script is safe to run again. Each step skips anything already done, and it s
 | `zsh/aliases.zsh` | All aliases | loaded by `.zshrc` |
 | `zsh/keybindings.zsh` | Shell key bindings (Tab, `Cmd ←/→/Delete`) | loaded by `.zshrc` |
 | `zsh/functions.zsh` | Shell functions (`killport`) | loaded by `.zshrc` |
+| `zsh/prompt.zsh` | Oh My Posh prompt (prebuilt `amro` theme) + iTerm2 shell integration | loaded by `.zshrc` |
 | `git/config` | Git name/email, default branch, delta as the diff pager (side by side in `git diff`, `git log -p`, `git show`) | folder symlinked to `~/.config/git` (git reads it there by default) |
 | `git/ignore` | Global gitignore (`.DS_Store`, editor swap files, ...) | same folder; applies to every repo |
 | `ssh/config` | SSH hosts (GitHub, servers) | symlinked to `~/.ssh/config`. Keys are **not** in the repo |
@@ -107,7 +108,7 @@ Put machine-specific or secret settings (API keys, work aliases) in `~/.zshrc.lo
 
 ### Brewfile contents
 
-- **CLI:** `fnm`, `fzf`, `zoxide`, `bun`, `colima`, `docker`, `docker-buildx`, `mas`, `neovim`, `tree-sitter-cli`, `fd`, `ripgrep`, `bat`, `lazygit`, `git-delta`
+- **CLI:** `fnm`, `fzf`, `zoxide`, `bun`, `colima`, `docker`, `docker-buildx`, `mas`, `neovim`, `tree-sitter-cli`, `fd`, `ripgrep`, `bat`, `lazygit`, `git-delta`, `oh-my-posh`
 - **Apps:** iTerm2, Brave, Raycast, Karabiner-Elements, VS Code, Bitwarden, AppCleaner
 - **App Store:** Amphetamine
 - **VS Code extensions:** Claude Code, Material Icon Theme, rust-analyzer

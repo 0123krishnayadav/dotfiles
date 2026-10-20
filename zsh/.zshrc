@@ -14,7 +14,7 @@ ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
 # Oh My Zsh
 # ---------------------------------------------------------------------------
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="robbyrussell"
+ZSH_THEME=""   # prompt comes from Oh My Posh (prompt.zsh)
 
 # Plugin options (must be set before oh-my-zsh.sh is sourced)
 zstyle ':omz:plugins:fnm' autostart yes   # run `fnm env`
@@ -51,13 +51,9 @@ setopt AUTOCD                  # type a folder name to cd into it
 setopt NO_BEEP                 # no terminal bell
 setopt NUMERIC_GLOB_SORT       # sort file10 after file9, not after file1
 
-# Aliases, key bindings and functions live next to this file
-for f in aliases keybindings functions; do source "$ZDOTDIR/$f.zsh"; done
+# Aliases, key bindings, functions and prompt live next to this file
+for f in aliases keybindings functions prompt; do source "$ZDOTDIR/$f.zsh"; done
 unset f
-
-# iTerm2 shell integration
-test -e "${HOME}/.iterm2_shell_integration.zsh" && \
-  source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Machine-specific / secret stuff goes in ~/.zshrc.local (not committed)
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
