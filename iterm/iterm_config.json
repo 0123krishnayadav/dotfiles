@@ -89,81 +89,40 @@
         "Alpha Component" : 1,
         "Green Component" : 0
       },
-      "Ansi 3 Color (Dark)" : {
-        "Red Component" : 0.78058648109436035,
-        "Color Space" : "sRGB",
-        "Blue Component" : 0,
-        "Alpha Component" : 1,
-        "Green Component" : 0.76959484815597534
-      },
+      "AWDS Pane Option" : "Recycle",
       "Keyboard Map" : {
-        "0xf702-0x280000" : {
-          "Action" : 10,
-          "Text" : "b"
-        },
         "0xf703-0x280000" : {
-          "Action" : 10,
-          "Text" : "f"
+          "Text" : "f",
+          "Action" : 10
         },
         "0x7f-0x80000" : {
-          "Action" : 11,
-          "Text" : "0x1b 0x7f"
+          "Text" : "0x1b 0x7f",
+          "Action" : 11
+        },
+        "0xf703-0x300000" : {
+          "Version" : 2,
+          "Apply Mode" : 0,
+          "Action" : 10,
+          "Text" : "[1;9C",
+          "Escaping" : 2
         },
         "0xf728-0x80000" : {
-          "Action" : 10,
-          "Text" : "d"
+          "Text" : "d",
+          "Action" : 10
+        },
+        "0xf702-0x280000" : {
+          "Text" : "b",
+          "Action" : 10
         },
         "0xf728-0x0" : {
-          "Action" : 11,
-          "Text" : "0x4"
-        },
-        "0x2d-0x100000-0x1b" : {
-          "Version" : 2,
-          "Apply Mode" : 0,
-          "Action" : 10,
-          "Text" : "[45;9u",
-          "Escaping" : 2
-        },
-        "0x3d-0x100000-0x18" : {
-          "Version" : 2,
-          "Apply Mode" : 0,
-          "Action" : 10,
-          "Text" : "[61;9u",
-          "Escaping" : 2
-        },
-        "0x70-0x100000-0x23" : {
-          "Version" : 2,
-          "Apply Mode" : 0,
-          "Action" : 10,
-          "Text" : "[112;9u",
-          "Escaping" : 2
+          "Text" : "0x4",
+          "Action" : 11
         },
         "0x66-0x100000-0x3" : {
           "Version" : 2,
           "Apply Mode" : 0,
           "Action" : 10,
           "Text" : "[102;9u",
-          "Escaping" : 2
-        },
-        "0x46-0x120000-0x3" : {
-          "Version" : 2,
-          "Apply Mode" : 0,
-          "Action" : 10,
-          "Text" : "[102;10u",
-          "Escaping" : 2
-        },
-        "0x73-0x100000-0x1" : {
-          "Version" : 2,
-          "Apply Mode" : 0,
-          "Action" : 10,
-          "Text" : "[115;9u",
-          "Escaping" : 2
-        },
-        "0x7f-0x100000" : {
-          "Version" : 2,
-          "Apply Mode" : 0,
-          "Action" : 10,
-          "Text" : "[127;9u",
           "Escaping" : 2
         },
         "0xf702-0x300000" : {
@@ -173,14 +132,57 @@
           "Text" : "[1;9D",
           "Escaping" : 2
         },
-        "0xf703-0x300000" : {
+        "0x46-0x120000-0x3" : {
           "Version" : 2,
           "Apply Mode" : 0,
           "Action" : 10,
-          "Text" : "[1;9C",
+          "Text" : "[102;10u",
+          "Escaping" : 2
+        },
+        "0x3d-0x100000-0x18" : {
+          "Version" : 2,
+          "Apply Mode" : 0,
+          "Action" : 10,
+          "Text" : "[61;9u",
+          "Escaping" : 2
+        },
+        "0x2d-0x100000-0x1b" : {
+          "Version" : 2,
+          "Apply Mode" : 0,
+          "Action" : 10,
+          "Text" : "[45;9u",
+          "Escaping" : 2
+        },
+        "0x73-0x100000-0x1" : {
+          "Version" : 2,
+          "Apply Mode" : 0,
+          "Action" : 10,
+          "Text" : "[115;9u",
+          "Escaping" : 2
+        },
+        "0x70-0x100000-0x23" : {
+          "Version" : 2,
+          "Apply Mode" : 0,
+          "Action" : 10,
+          "Text" : "[112;9u",
+          "Escaping" : 2
+        },
+        "0x7f-0x100000" : {
+          "Version" : 2,
+          "Apply Mode" : 0,
+          "Action" : 10,
+          "Text" : "[127;9u",
           "Escaping" : 2
         }
       },
+      "Ansi 3 Color (Dark)" : {
+        "Red Component" : 0.78058648109436035,
+        "Color Space" : "sRGB",
+        "Blue Component" : 0,
+        "Alpha Component" : 1,
+        "Green Component" : 0.76959484815597534
+      },
+      "AWDS Window Option" : "No",
       "Visual Bell" : true,
       "Cursor Text Color" : {
         "Red Component" : 1,
@@ -189,6 +191,7 @@
         "Alpha Component" : 1,
         "Green Component" : 1
       },
+      "AWDS Tab Directory" : "",
       "Scrollback Lines" : 1000,
       "Selection Color (Light)" : {
         "Red Component" : 0.70196080207824707,
@@ -262,6 +265,7 @@
       "BM Growl" : true,
       "Prompt Before Closing 2" : false,
       "Command" : "",
+      "AWDS Tab Option" : "Recycle",
       "Selected Text Color" : {
         "Red Component" : 0,
         "Color Space" : "sRGB",
@@ -420,6 +424,7 @@
         "Green Component" : 0.23660069704055786
       },
       "Name" : "Krishna Personal",
+      "Rewritable" : true,
       "Transparency" : 0,
       "Horizontal Spacing" : 1,
       "Cursor Color (Dark)" : {
@@ -547,12 +552,6 @@
         "Green Component" : 0.77217715978622437
       },
       "Custom Directory" : "Advanced",
-      "AWDS Window Option" : "No",
-      "AWDS Window Directory" : "",
-      "AWDS Tab Option" : "Recycle",
-      "AWDS Tab Directory" : "",
-      "AWDS Pane Option" : "Recycle",
-      "AWDS Pane Directory" : "",
       "Working Directory" : "\/Users\/krishnayadav",
       "ASCII Anti Aliased" : true,
       "Shortcut" : "",
@@ -592,6 +591,7 @@
       },
       "Normal Font" : "JetBrainsMonoNFM-Regular 14",
       "Unlimited Scrollback" : false,
+      "AWDS Window Directory" : "",
       "Ansi 12 Color (Light)" : {
         "Red Component" : 0.65349078178405762,
         "Color Space" : "sRGB",
@@ -686,6 +686,7 @@
         "Alpha Component" : 1,
         "Green Component" : 0.24931684136390686
       },
+      "AWDS Pane Directory" : "",
       "Ansi 0 Color (Light)" : {
         "Red Component" : 0.078431375324726105,
         "Color Space" : "sRGB",
