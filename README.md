@@ -24,7 +24,7 @@ Clone to exactly `~/dotfiles`: configs are symlinked into it, so moving the fold
 | `lazygit/` | lazygit with side-by-side delta diffs | `~/.config/lazygit` |
 | `ssh/` | SSH host config (no keys) | `~/.ssh/config` |
 | `iterm/` | iTerm2 "Krishna Personal" profile (font, colors, `Cmd` keys) | iTerm2 Dynamic Profiles |
-| `karabiner/` | Karabiner-Elements: Caps Lock / Right ⌘ = Hyper | copied to `~/.config/karabiner` |
+| `karabiner/` | Karabiner-Elements: Caps Lock = Hyper; Right ⌘ = Hyper for B/T/V, else plain ⌘; tap either alone = ⌘` (next window) | copied to `~/.config/karabiner` |
 | `vscode/` | VS Code settings + keybindings | `~/Library/Application Support/Code/User` |
 | `Brewfile` | CLI tools, apps, fonts, App Store apps, VS Code extensions | `brew bundle` |
 

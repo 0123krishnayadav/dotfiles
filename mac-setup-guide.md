@@ -76,7 +76,7 @@ The script is safe to run again. Each step skips anything already done, and it s
 | `ssh/config` | SSH hosts (GitHub, servers) | symlinked to `~/.ssh/config`. Keys are **not** in the repo |
 | `nvim/` | Neovim config (kickstart.nvim) | symlinked to `~/.config/nvim` |
 | `lazygit/config.yml` | lazygit (run `lazygit` in any repo; `space` stage, `c` commit, `P`/`p` push/pull, `q` quit, `?` all keys): `e` opens files in nvim, Nerd Font icons, side-by-side diffs with delta (`\|` switches style, `+` enlarges the diff) | folder symlinked to `~/.config/lazygit` |
-| `karabiner/karabiner.json` | Karabiner-Elements: Caps Lock / Right ⌘ = Hyper key | **copied** to `~/.config/karabiner/` (not linked: Karabiner can't read files in `~/Documents`) |
+| `karabiner/karabiner.json` | Karabiner-Elements: Caps Lock = Hyper key; Right ⌘ = Hyper for `B`/`T`/`V`, plain ⌘ for everything else; tapping either alone = ⌘` (next window) | **copied** to `~/.config/karabiner/` (not linked: Karabiner can't read files in `~/Documents`) |
 | `iterm/iterm_config.json` | iTerm2 profile (colors, font, `Cmd` key mappings) | symlinked into `~/Library/Application Support/iTerm2/DynamicProfiles/` as the "Krishna Personal" profile, set as default. Already in Dynamic Profile format (`{ "Profiles": [ … ] }`, own Guid, own name) so it never clashes with iTerm2's built-in "Default" profile |
 | `vscode/settings.json`, `keybindings.json` | VS Code config | symlinked into `~/Library/Application Support/Code/User/` |
 | `vimguide.md` | Vim cheat sheet | — |
@@ -104,7 +104,7 @@ Put machine-specific or secret settings (API keys, work aliases) in `~/.zshrc.lo
 | 11 | Rust | `rustup` (stable toolchain) |
 | 12 | Neovim plugins | Installs plugins, Tree-sitter parsers and language servers headlessly |
 | 13 | Claude Code | Native installer → `~/.local/bin/claude` |
-| 14 | macOS defaults | Fast key repeat (`KeyRepeat 1`, `InitialKeyRepeat 10`). Hyper+C = move focus to next window |
+| 14 | macOS defaults | Fast key repeat (`KeyRepeat 1`, `InitialKeyRepeat 10`) |
 
 ### Brewfile contents
 
@@ -122,10 +122,10 @@ To snapshot what's installed right now: `brew bundle dump --file=- --describe` a
 
 These can't be scripted (or shouldn't be):
 
-- [ ] **Log out and back in** so the key-repeat setting and the Hyper+C shortcut apply
+- [ ] **Log out and back in** so the key-repeat setting applies
 - [ ] **Drag inertia:** System Settings → Accessibility → Pointer Control → Trackpad Options → enable inertia
 - [ ] **Default browser:** System Settings → Desktop & Dock → Default web browser → Brave
-- [ ] **Karabiner-Elements:** open it once and allow everything it asks for: the driver extension (System Settings → General → Login Items & Extensions → Driver Extensions) and **Input Monitoring** for `karabiner_grabber` / `Karabiner-Core-Service`. Until then, the Hyper key does nothing. Test: hold Caps Lock and press C - focus should move to your next window
+- [ ] **Karabiner-Elements:** open it once and allow everything it asks for: the driver extension (System Settings → General → Login Items & Extensions → Driver Extensions) and **Input Monitoring** for `karabiner_grabber` / `Karabiner-Core-Service`. Until then, the Hyper key does nothing. Test: tap Caps Lock on its own - focus should move to your next window
 - [ ] **Raycast:** open it, set the hotkey, then set the [keyboard shortcuts](#keyboard-shortcuts) (or import them). If using `⌘ Space`, first turn off the Spotlight shortcut (System Settings → Keyboard → Keyboard Shortcuts → Spotlight). Restore settings from the old Mac with Raycast → Settings → Advanced → Export / Import (`.rayconfig`)
 - [ ] **Raycast File Actions extension** (own extension, not in the Store): `git clone git@github.com:0123krishnayadav/raycast-file-action.git ~/Desktop/raycast-extension/file-actions`, then `cd` there and run `npm install && npm run dev`. If it doesn't show up in Raycast, run Raycast's **Import Extension** command and pick that folder. Then set its hotkey (see [keyboard shortcuts](#keyboard-shortcuts))
 - [ ] **Amphetamine, Raycast:** grant Accessibility permissions when prompted
@@ -139,14 +139,14 @@ These can't be scripted (or shouldn't be):
 
 ## Keyboard shortcuts
 
-**Hyper key = Caps Lock (left hand) or Right ⌘ (right thumb).** Either one acts as `Cmd+Opt+Ctrl+Shift` held together (Hyper), so use whichever hand is free: Right ⌘ + `B`, Caps Lock + `T`/`V`/`C`. Caps Lock no longer toggles capitals, and Right ⌘ is no longer a plain ⌘ (Left ⌘ still is). Nothing uses Hyper by default, so these never clash with app shortcuts. Set up by Karabiner-Elements (`karabiner/karabiner.json`, installed by `setup.sh`).
+**Hyper key = Caps Lock (left hand) or Right ⌘ (right thumb).** Caps Lock acts as `Cmd+Opt+Ctrl+Shift` held together (Hyper) with any key. Right ⌘ acts as Hyper only with `B`/`T`/`V` (the keys in the table below); with any other key it stays a plain ⌘, so Right ⌘ + `1` is still ⌘1. Use whichever hand is free: Right ⌘ + `B`, Caps Lock + `T`/`V`. Tap either one on its own to move to the next window. Caps Lock no longer toggles capitals. Nothing uses Hyper by default, so these never clash with app shortcuts. Set up by Karabiner-Elements (`karabiner/karabiner.json`, installed by `setup.sh`).
 
 | Shortcut | Action | Where it's set |
 |---|---|---|
 | `Hyper B` | Open / focus Brave | Raycast |
 | `Hyper T` | Open / focus iTerm2 | Raycast |
 | `Hyper V` | Open / focus VS Code | Raycast |
-| `Hyper C` | Move focus to next window (of the same app) | macOS, set by `setup.sh` |
+| Tap Caps Lock or Right ⌘ alone | Move focus to next window (of the same app) | Karabiner sends ⌘`, the macOS default shortcut |
 | `Opt M` | Maximize window | Raycast |
 | `Opt H` | Window to left half | Raycast |
 | `Opt L` | Window to right half | Raycast |
@@ -158,9 +158,9 @@ These can't be scripted (or shouldn't be):
 - **Window snapping:** Raycast → Settings → Extensions → Window Management → **Maximize**, **Left Half**, **Right Half** → Record Hotkey → `Opt M` / `Opt H` / `Opt L`
 - **File Actions:** Raycast → Settings → Extensions → File Actions → Record Hotkey → `Opt Cmd O`. Don't use plain `Cmd O`: Raycast hotkeys are global, so it would replace "Open" in Finder and every other app. Its **Terminal App** setting picks the app for "Open in Terminal" (default iTerm2, falls back to Terminal)
 
-**Hyper C** is a macOS shortcut (System Settings → Keyboard → Keyboard Shortcuts → Keyboard → Move focus to next window). The recorder in System Settings closes when you press Hyper+C, so `setup.sh` writes it with `defaults write` instead.
+**Next window** is the macOS shortcut ⌘` (System Settings → Keyboard → Keyboard Shortcuts → Keyboard → Move focus to next window), left at its default. Karabiner sends ⌘` when Caps Lock or Right ⌘ is tapped on its own, so the macOS side never needs a Hyper shortcut.
 
-To change the Hyper keys, edit `~/.config/karabiner/karabiner.json` (Karabiner reloads it on save), then copy it back into the repo: `cp ~/.config/karabiner/karabiner.json ~/dotfiles/karabiner/` and commit. It's a copy, not a link, because Karabiner's background service isn't allowed to read `~/Documents`. Avoid tap-or-hold keys like Space, Return or Tab: Karabiner can only send their normal character on key *release*, so typing feels laggy and fast typing can trigger Hyper shortcuts by accident.
+When you add a Hyper shortcut, also add its letter to the Right Command lines for `B`/`T`/`V` (copy one line, change the letter twice) so Right ⌘ sends Hyper for it. To change the Hyper keys, edit `~/.config/karabiner/karabiner.json` (Karabiner reloads it on save), then copy it back into the repo: `cp ~/.config/karabiner/karabiner.json ~/dotfiles/karabiner/` and commit. It's a copy, not a link, because Karabiner's background service isn't allowed to read `~/Documents`. Avoid tap-or-hold keys like Space, Return or Tab: Karabiner can only send their normal character on key *release*, so typing feels laggy and fast typing can trigger Hyper shortcuts by accident.
 
 ---
 

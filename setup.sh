@@ -177,14 +177,6 @@ macos_defaults() {
   defaults write NSGlobalDomain KeyRepeat -int 1
   defaults write NSGlobalDomain InitialKeyRepeat -int 10
   ok "fast key repeat (log out/in to apply)"
-  # "Move focus to next window" (shortcut #27) = Hyper+C. Must be real integers:
-  # string values from the plain -dict-add syntax are silently ignored.
-  # Parameters: 99 = 'c', 8 = key code of C, 1966080 = Cmd+Opt+Ctrl+Shift
-  defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 27 \
-    '<dict><key>enabled</key><true/><key>value</key><dict><key>parameters</key><array><integer>99</integer><integer>8</integer><integer>1966080</integer></array><key>type</key><string>standard</string></dict></dict>'
-  # No activateSettings -u here: it re-applies every saved keyboard/trackpad setting
-  # and once reset the trackpad gestures. Logging out after setup applies this anyway.
-  ok "Hyper+C = move focus to next window (log out/in to apply)"
 }
 
 # ---------------------------------------------------------------------------
