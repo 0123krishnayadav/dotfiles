@@ -2,6 +2,11 @@
 # keybindings.zsh - loaded from .zshrc (after Oh My Zsh, so these win)
 # ---------------------------------------------------------------------------
 
+# Ctrl-X Ctrl-E: edit the current command in $EDITOR.
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
+
 # Tab:
 # Accept autosuggestion if one is shown,
 # otherwise perform normal completion (via fzf so `**<Tab>` works).
