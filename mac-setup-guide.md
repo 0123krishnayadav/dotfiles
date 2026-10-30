@@ -108,7 +108,7 @@ Put machine-specific or secret settings (API keys, work aliases) in `~/.zshrc.lo
 
 ### Brewfile contents
 
-- **CLI:** `fnm`, `fzf`, `zoxide`, `bun`, `colima`, `docker`, `docker-buildx`, `mas`, `neovim`, `tree-sitter-cli`, `fd`, `ripgrep`, `bat`, `lazygit`, `git-delta`, `oh-my-posh`
+- **CLI:** `fnm`, `fzf`, `zoxide`, `bun`, `colima`, `docker`, `docker-buildx`, `mas`, `neovim`, `tree-sitter-cli`, `fd`, `ripgrep`, `bat`, `lazygit`, `herdr`, `git-delta`, `oh-my-posh`
 - **Apps:** iTerm2, Brave, Raycast, Karabiner-Elements, VS Code, Bitwarden, AppCleaner
 - **App Store:** Amphetamine
 - **VS Code extensions:** Claude Code, Material Icon Theme, rust-analyzer
