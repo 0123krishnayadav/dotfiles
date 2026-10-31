@@ -18,6 +18,7 @@ brew "lazygit"              # git UI in the terminal (run `lazygit` in a repo)
 brew "herdr"                # terminal agent multiplexer
 brew "git-delta"            # nicer diffs: side by side in git diff and lazygit
 brew "jandedobbeleer/oh-my-posh/oh-my-posh" # prompt (theme set in zsh/prompt.zsh)
+brew "eza"                  # nicer ls
 
 # Fonts
 cask "font-jetbrains-mono-nerd-font" # icons in Neovim (used by the iTerm2 profile)

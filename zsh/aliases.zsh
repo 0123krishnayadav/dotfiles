@@ -8,7 +8,10 @@ alias src='omz reload'
 # Neovim instead of vim
 alias vim='nvim'
 alias vi='nvim'
-alias ocat="/bin/cat"
+alias ils="/bin/ls"
+alias icat="/bin/cat"
+alias ls="eza --tree --level=2"
+
 
 # Better cat (bat on macOS/Arch, batcat on Ubuntu)
 if command -v bat >/dev/null 2>&1; then

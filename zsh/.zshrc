@@ -19,7 +19,7 @@ ZSH_THEME=""   # prompt comes from Oh My Posh (prompt.zsh)
 # Plugin options (must be set before oh-my-zsh.sh is sourced)
 zstyle ':omz:plugins:fnm' autostart yes   # run `fnm env`
 zstyle ':omz:plugins:fnm' use-on-cd yes   # auto-switch Node on cd (.nvmrc / .node-version)
-ZOXIDE_CMD_OVERRIDE=cd                    # zoxide replaces cd
+# ZOXIDE_CMD_OVERRIDE=cd                    # zoxide replaces cd
 
 plugins=(
   git                   # git aliases: gst, gco, gp, ...
