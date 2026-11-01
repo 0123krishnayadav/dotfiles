@@ -10,7 +10,7 @@ alias vim='nvim'
 alias vi='nvim'
 alias ils="/bin/ls"
 alias icat="/bin/cat"
-alias ls="eza --tree --level=1"
+alias ls="ls -alh"
 
 
 # Better cat (bat on macOS/Arch, batcat on Ubuntu)
