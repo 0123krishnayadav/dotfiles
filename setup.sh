@@ -83,6 +83,23 @@ default_shell() {
   chsh -s /bin/zsh
 }
 
+# Claude Code status line. The script is linked. settings.json is not: Claude Code
+# rewrites that file and it holds per-machine settings, so only add the statusLine entry.
+claude_statusline() {
+  link "$REPO/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
+  local cs="$HOME/.claude/settings.json" cmd="bash $HOME/.claude/statusline-command.sh"
+  if [[ -f "$cs" ]]; then
+    if jq -e --arg cmd "$cmd" '.statusLine.command == $cmd' "$cs" >/dev/null; then
+      ok "Claude Code status line already set"; return
+    fi
+    mkdir -p "$BACKUP" && cp "$cs" "$BACKUP/" && warn "backed up old settings.json to $BACKUP"
+  else
+    echo '{}' > "$cs"
+  fi
+  jq --arg cmd "$cmd" '.statusLine = {type: "command", command: $cmd, padding: 0}' "$cs" > "$cs.tmp" &&
+    mv "$cs.tmp" "$cs" && ok "set statusLine in $cs" || { rm -f "$cs.tmp"; return 1; }
+}
+
 dotfiles() {
   # zsh: ~/.zshenv sets ZDOTDIR=~/.config/zsh, where the rest of the config lives
   link "$REPO/zsh/.zshenv"         "$HOME/.zshenv"
@@ -115,6 +132,7 @@ dotfiles() {
   link "$REPO/ssh/config"          "$HOME/.ssh/config"
   link "$REPO/nvim"                "$HOME/.config/nvim"
   link "$REPO/lazygit"             "$HOME/.config/lazygit"
+  claude_statusline || return 1
   # Karabiner: copied, not linked. Its background service runs as root and macOS
   # blocks it from reading ~/Documents, so a link into this repo loads no rules.
   local kb="$HOME/.config/karabiner"

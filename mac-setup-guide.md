@@ -79,6 +79,7 @@ The script is safe to run again. Each step skips anything already done, and it s
 | `karabiner/karabiner.json` | Karabiner-Elements: Caps Lock = Hyper key; Right ⌘ = Hyper for `B`/`T`/`V`, plain ⌘ for everything else; tapping either alone = ⌘` (next window) | **copied** to `~/.config/karabiner/` (not linked: Karabiner can't read files in `~/Documents`) |
 | `iterm/iterm_config.json` | iTerm2 profile (colors, font, `Cmd` key mappings) | symlinked into `~/Library/Application Support/iTerm2/DynamicProfiles/` as the "Krishna Personal" profile, set as default. Already in Dynamic Profile format (`{ "Profiles": [ … ] }`, own Guid, own name) so it never clashes with iTerm2's built-in "Default" profile |
 | `vscode/settings.json`, `keybindings.json` | VS Code config | symlinked into `~/Library/Application Support/Code/User/` |
+| `claude/statusline-command.sh` | Claude Code status line, one colour per part: `Opus 5.5 xhigh · ~/Desktop/trade-bot · <git branch> · <session name> · 5h 97% left, renews 3:40pm · 7d 80% left, renews Thu 2:56am · ctx 93% of 1M left`. Parts with no data are skipped. Uses `jq` (built into macOS 15+) | symlinked to `~/.claude/statusline-command.sh`. `setup.sh` also sets `statusLine` in `~/.claude/settings.json` (edited, not linked: Claude Code rewrites that file) |
 | `vimguide.md` | Vim cheat sheet | — |
 
 Because these are **symlinks**, editing `~/.config/zsh/.zshrc`, `~/.config/git/config` or `~/.ssh/config` edits the file in this repo. Commit and push to keep it backed up. Any file that's replaced is first moved to `~/.settings-backup/<timestamp>/`.
@@ -97,7 +98,7 @@ Put machine-specific or secret settings (API keys, work aliases) in `~/.zshrc.lo
 | 4 | Oh My Zsh | Unattended install that leaves our zsh config alone |
 | 5 | Zsh plugins | Clones `zsh-autosuggestions` into `~/.oh-my-zsh/custom/plugins` (the only plugin not bundled with Oh My Zsh) |
 | 6 | Default shell | `chsh -s /bin/zsh` if needed |
-| 7 | Dotfiles | Symlinks `~/.zshenv`, `~/.config/zsh`, `~/.config/git`, `~/.ssh/config`, `~/.config/nvim`, `~/.config/lazygit`. Copies `karabiner.json` to `~/.config/karabiner/`. Copies `~/.zsh_history` to `~/.local/state/zsh/history` if needed |
+| 7 | Dotfiles | Symlinks `~/.zshenv`, `~/.config/zsh`, `~/.config/git`, `~/.ssh/config`, `~/.config/nvim`, `~/.config/lazygit`, `~/.claude/statusline-command.sh`, and sets `statusLine` in `~/.claude/settings.json`. Copies `karabiner.json` to `~/.config/karabiner/`. Copies `~/.zsh_history` to `~/.local/state/zsh/history` if needed |
 | 8 | iTerm2 | Shell integration + "Krishna Personal" profile set as default. New tabs and split panes open in the current folder, new windows open in `~` |
 | 9 | VS Code | Symlinks settings + keybindings |
 | 10 | Node.js | `fnm install --lts`, set as default |
