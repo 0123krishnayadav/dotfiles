@@ -132,6 +132,8 @@ dotfiles() {
   link "$REPO/ssh/config"          "$HOME/.ssh/config"
   link "$REPO/nvim"                "$HOME/.config/nvim"
   link "$REPO/lazygit"             "$HOME/.config/lazygit"
+  # herdr: link only the file; ~/.config/herdr also holds its sockets, logs and sessions
+  link "$REPO/herdr/config.toml"   "$HOME/.config/herdr/config.toml"
   claude_statusline || return 1
   # Karabiner: copied, not linked. Its background service runs as root and macOS
   # blocks it from reading ~/Documents, so a link into this repo loads no rules.
