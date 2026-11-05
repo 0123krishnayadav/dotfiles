@@ -1,6 +1,41 @@
--- Extra plugins on top of kickstart
+-- Extra plugins on top of kickstart, loaded last from init.lua
 
 local function gh(repo) return 'https://github.com/' .. repo end
+
+-- Indentation guides, also on blank lines (:help ibl)
+vim.pack.add { gh 'lukas-reineke/indent-blankline.nvim' }
+require('ibl').setup {}
+
+-- Close brackets and quotes as you type them
+vim.pack.add { gh 'windwp/nvim-autopairs' }
+require('nvim-autopairs').setup {}
+
+-- File tree: \ opens it on the current file, \ again closes it
+vim.pack.add {
+  { src = gh 'nvim-neo-tree/neo-tree.nvim', version = vim.version.range '*' },
+  gh 'nvim-lua/plenary.nvim',
+  gh 'MunifTanjim/nui.nvim',
+}
+vim.keymap.set('n', '\\', '<Cmd>Neotree reveal<CR>', { desc = 'NeoTree reveal', silent = true })
+require('neo-tree').setup {
+  close_if_last_window = true,
+  filesystem = {
+    -- Show dotfiles (dimmed), but hide .git and .DS_Store
+    filtered_items = {
+      visible = true,
+      hide_dotfiles = false,
+      hide_gitignored = false,
+      never_show = { '.git', '.DS_Store' },
+    },
+    follow_current_file = { enabled = true },
+    use_libuv_file_watcher = true,
+    window = {
+      mappings = {
+        ['\\'] = 'close_window',
+      },
+    },
+  },
+}
 
 -- Pin the current function/class signature to the top of the window while scrolling
 vim.pack.add { gh 'nvim-treesitter/nvim-treesitter-context' }

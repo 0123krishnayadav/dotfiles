@@ -38,8 +38,8 @@ macos-option-as-alt = true
 shell-integration-features = ssh-env
 
 # macOS-style Cmd keys, sent as CSI u escape sequences so Neovim reads them as <D-...>
-# (nvim/init.lua) and zsh can bind them (zsh/keybindings.zsh). At the zsh prompt,
-# Cmd+F / Cmd+Shift+F still open / close Ghostty's find bar (zsh asks Ghostty to).
+# (nvim/init.lua). At the zsh prompt in a plain Ghostty window, Cmd+F / Cmd+Shift+F open /
+# close Ghostty's find bar (zsh asks Ghostty to); inside herdr the shell never gets them.
 # Cmd+-/= no longer change the font size; use the menu bar for that.
 keybind = super+p=csi:112;9u
 keybind = super+f=csi:102;9u

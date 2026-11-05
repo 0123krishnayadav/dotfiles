@@ -35,6 +35,7 @@ bindkey '^[OF' end-of-line
 # Cmd-F / Cmd-Shift-F at the prompt: open / close Ghostty's find bar.
 # Ghostty sends these keys on to the running program so Neovim can use them for its
 # own search. Here at the prompt, zsh asks Ghostty to run its search action instead.
+# Plain Ghostty windows only: herdr doesn't pass Cmd chords on to the shell.
 _ghostty_action() {
   osascript -e "tell application \"Ghostty\" to perform action \"$1\" on focused terminal of selected tab of front window" >/dev/null 2>&1 &!
 }

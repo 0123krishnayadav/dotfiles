@@ -18,7 +18,6 @@ brew "lazygit"              # git UI in the terminal (run `lazygit` in a repo)
 brew "herdr"                # terminal agent multiplexer
 brew "git-delta"            # nicer diffs: side by side in git diff and lazygit
 brew "oh-my-posh"           # prompt (theme set in zsh/prompt.zsh)
-brew "eza"                  # nicer ls
 
 # Fonts
 cask "font-jetbrains-mono-nerd-font" # VS Code font with icons (vscode/settings.json). Ghostty uses Menlo + its own bundled icons

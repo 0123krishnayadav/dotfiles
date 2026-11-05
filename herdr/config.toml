@@ -1,3 +1,9 @@
+# herdr config. ~/.config/herdr/config.toml is linked to this file (not the folder:
+# herdr keeps sockets, logs and sessions there).
+#   Check:  herdr config check
+#   Reload: Option+Space, release, then Shift+R (client and server;
+#           `herdr server reload-config` reloads only the server)
+
 onboarding = false
 [keys]
 prefix = "alt+space"
@@ -12,7 +18,8 @@ switch_tab       = ["prefix+1..9", "alt+1..9", "cmd+1..9"]
 
 # Direct chords (no prefix): every press works on its own, so they repeat.
 # Vim-style: workspaces stack top-to-bottom (j/k), panes run left-to-right (h/l).
-# Needs Ghostty's macos-option-as-alt = true (set in ghostty/config.ghostty). Overrides zsh's alt+h (run-help) and alt+l (ls).
+# Needs Ghostty's macos-option-as-alt = true (set in ghostty/config.ghostty), and Raycast must not
+# use these Option keys (Raycast Settings → Extensions). Overrides zsh's alt+h (run-help) and alt+l (ls).
 next_workspace      = "alt+j"
 previous_workspace  = "alt+k"
 cycle_pane_next     = ["prefix+tab", "alt+l"]

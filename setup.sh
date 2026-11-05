@@ -209,5 +209,5 @@ if (( APPSTORE_FAILED )); then
 else
   ok "Everything installed."
 fi
-echo "    Remaining manual steps: see mac-setup-guide.md → 'After the script'"
+echo "    Remaining manual steps: see README.md → 'After setup.sh'"
 echo "    Open Ghostty to load the new shell."

@@ -1,31 +1,18 @@
 # ---------------------------------------------------------------------------
 # aliases.zsh - loaded from .zshrc (after Oh My Zsh, so these win)
+# Aliases only apply to what you type; scripts get the real commands.
+# Skip one once with `command ls` or `\ls`.
 # ---------------------------------------------------------------------------
 
-# Reload shell config (replaces the old zsh-reload plugin)
-alias src='omz reload'
+alias src='omz reload'   # reload the shell
 
-# Neovim instead of vim
 alias vim='nvim'
 alias vi='nvim'
-alias ils="/bin/ls"
-alias icat="/bin/cat"
-alias ls="ls -alh"
+alias ls='ls -alh'
+alias ils='/bin/ls'      # plain ls / cat
+alias icat='/bin/cat'
 
-
-# Better cat (bat on macOS/Arch, batcat on Ubuntu)
-if command -v bat >/dev/null 2>&1; then
-  alias cat='bat'
-elif command -v batcat >/dev/null 2>&1; then
-  alias bat='batcat'
-  alias cat='batcat'
-fi
-
-# fd (fdfind on Ubuntu)
-if command -v fdfind >/dev/null 2>&1; then
-  alias fd='fdfind'
-fi
-
-alias grep='rg --color=auto'
+command -v bat >/dev/null 2>&1 && alias cat='bat'   # syntax highlighting; plain output when piped
+alias grep='rg --color=auto'   # ripgrep: recursive, skips .gitignored files, not fully grep-compatible
 alias diff='diff --color=auto'
 alias df='df -h'

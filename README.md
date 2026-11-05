@@ -1,45 +1,71 @@
 # dotfiles
 
-My macOS setup: shell, editor, terminal, keyboard and app config, plus a one-click installer that sets up a new Mac from scratch.
+My macOS setup: shell, editor, terminal, keyboard and app config, plus `setup.sh`, which sets up a new Mac from scratch. Each config file's comments explain that config; this README only covers what isn't in a file.
 
-## Quick start
+## New Mac
 
-```bash
-xcode-select --install                     # git + compilers
-git clone git@github.com:0123krishnayadav/dotfiles.git ~/dotfiles
-~/dotfiles/setup.sh                        # or double-click setup.command in Finder
-```
+**On the old Mac first:** push this repo, and save these to Bitwarden or AirDrop (never git): `~/.ssh/id_rsa` + `id_rsa.pub`, `~/.zshrc.local` if you have one, and a Raycast export (Raycast → Settings → Advanced → Export).
 
-Clone to exactly `~/dotfiles`: configs are symlinked into it, so moving the folder breaks them. The repo is private, so you need an SSH key on GitHub first. See the [Mac setup guide](mac-setup-guide.md#quick-start-new-mac) for the full new-Mac steps.
+1. Sign in to the App Store (so Amphetamine can install).
+2. In Terminal: `xcode-select --install` (git and compilers).
+3. Copy the SSH key into `~/.ssh/`, then `chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa`. The repo is private and `tradebot` only accepts the old key. (A new `ssh-keygen -t ed25519` key works for GitHub only.) Check with `ssh -T git@github.com`.
+4. Clone to exactly `~/dotfiles` (configs are symlinked into it, so don't move it) and run the setup:
 
-`setup.sh` is safe to re-run. Each step skips what's already done and it stops at the first failure. `./setup.sh --no-apps` installs CLI tools only.
+   ```bash
+   git clone git@github.com:0123krishnayadav/dotfiles.git ~/dotfiles
+   ~/dotfiles/setup.sh        # or double-click setup.command
+   ```
+
+   It asks for your password and takes 15–30 minutes. It's safe to re-run: each step skips what's done, and it stops at the first failure. `./setup.sh --no-apps` installs CLI tools only.
+5. Open Ghostty (Apple's Terminal can't send the `Cmd` shortcuts) and work through the list below.
+
+## After setup.sh
+
+- [ ] Log out and back in (key repeat)
+- [ ] Trackpad drag inertia: System Settings → Accessibility → Pointer Control → Trackpad Options
+- [ ] Default browser: Brave (System Settings → Desktop & Dock)
+- [ ] Karabiner-Elements: open it and allow the driver extension and Input Monitoring. Test: tap Caps Lock alone and focus moves to the next window
+- [ ] Raycast: turn off Spotlight's `⌘ Space` (System Settings → Keyboard → Keyboard Shortcuts), set Raycast's hotkey, then import the export or set the [shortcuts](#shortcuts-kept-in-raycast) by hand
+- [ ] Raycast File Actions (own extension): `git clone git@github.com:0123krishnayadav/raycast-file-action.git ~/Desktop/raycast-extension/file-actions`, then `npm install && npm run dev` in it (or Raycast → Import Extension)
+- [ ] Accessibility permission for Amphetamine and Raycast
+- [ ] Letos: install by hand (not on Homebrew)
+- [ ] Sign in to Bitwarden, Brave (Sync restores bookmarks and extensions) and Claude Code (`claude`)
+- [ ] `colima start` before the first `docker` command
+- [ ] Check: `ls -l ~/.zshenv ~/.config/{zsh,git,nvim,lazygit,ghostty} ~/.config/herdr/config.toml ~/.ssh/config` all point into the repo, `ghostty +validate-config` prints nothing, and `:checkhealth` in Neovim is clean
+- [ ] If VS Code's terminal shows boxes instead of icons: `xattr -d com.apple.quarantine ~/Library/Fonts/*Nerd*; killall fontd`, then restart VS Code
+
+## Shortcuts kept in Raycast
+
+Raycast keeps these in its own database, not in this repo. Hyper = Caps Lock, or Right ⌘ with `B`/`T`/`V` (Karabiner). Tapping either alone sends ⌘` (next window).
+
+| Shortcut | Action | Raycast → Settings → Extensions → |
+|---|---|---|
+| `Hyper B` / `T` / `V` | Brave / Ghostty / VS Code | Applications → the app → Record Hotkey |
+| `Opt M` / `H` / `L` | Maximize / left half / right half | Window Management |
+| `Opt Cmd O` | File Actions on the Finder selection | File Actions (also set its Terminal App to Ghostty) |
+
+New Hyper letter: also add it to the Right Command rules in `karabiner/karabiner.json`. Karabiner reads a copy in `~/.config/karabiner/` (its service can't read this repo), so after editing that copy run `cp ~/.config/karabiner/karabiner.json ~/dotfiles/karabiner/`.
 
 ## What's inside
 
 | Folder | Tool | Installed to |
 |---|---|---|
-| `zsh/` | zsh + Oh My Zsh (aliases, key bindings, functions) | `~/.config/zsh` (via `ZDOTDIR` in `~/.zshenv`) |
-| `nvim/` | Neovim, based on [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim), plugins via `vim.pack` | `~/.config/nvim` |
+| `zsh/` | zsh + Oh My Zsh: aliases, key bindings, functions, Oh My Posh prompt | `~/.config/zsh` (via `ZDOTDIR` in `~/.zshenv`) |
+| `nvim/` | Neovim, started from [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim); plugins via `vim.pack` | `~/.config/nvim` |
+| `ghostty/` | Ghostty: opens maximized running herdr; `Cmd` keys, Option = Alt | `~/.config/ghostty` |
+| `herdr/` | herdr (agent multiplexer): prefix `Option+Space`, `Cmd` tab and split keys | `~/.config/herdr/config.toml` (file only) |
 | `git/` | git config + global ignore, delta as pager | `~/.config/git` |
 | `lazygit/` | lazygit with side-by-side delta diffs | `~/.config/lazygit` |
-| `ssh/` | SSH host config (no keys) | `~/.ssh/config` |
-| `ghostty/` | Ghostty terminal: opens maximized in herdr (font, `Cmd` keys, Option = Alt; default colors) | `~/.config/ghostty` |
-| `karabiner/` | Karabiner-Elements: Caps Lock = Hyper; Right ⌘ = Hyper for B/T/V, else plain ⌘; tap either alone = ⌘` (next window) | copied to `~/.config/karabiner` |
+| `ssh/` | SSH hosts (no keys) | `~/.ssh/config` |
+| `karabiner/` | Caps Lock / Right ⌘ = Hyper | copied to `~/.config/karabiner` |
 | `vscode/` | VS Code settings + keybindings | `~/Library/Application Support/Code/User` |
-| `claude/` | Claude Code status line: model + effort, context left, 5h/7d limits left with time until reset, folder, git branch, session | `~/.claude/statusline-command.sh` (plus the `statusLine` entry in `~/.claude/settings.json`) |
+| `claude/` | Claude Code status line | `~/.claude/statusline-command.sh` + `statusLine` in `~/.claude/settings.json` |
 | `Brewfile` | CLI tools, apps, fonts, App Store apps, VS Code extensions | `brew bundle` |
 
-Everything except Karabiner is a **symlink**, so editing the live config edits this repo. Commit and push to keep it backed up. Files that get replaced are moved to `~/.settings-backup/<timestamp>/` first.
-
-Machine-specific or secret settings go in `~/.zshrc.local`. It's loaded automatically and never committed.
-
-## Docs
-
-- [mac-setup-guide.md](mac-setup-guide.md): what `setup.sh` does, manual steps after it, keyboard shortcuts, shell and Neovim features, and how to verify
-- [vimguide.md](vimguide.md): Vim grammar and cheat sheet
+Everything except Karabiner is a symlink, so editing the live config edits this repo. Commit and push to back it up. Files that get replaced are moved to `~/.settings-backup/<timestamp>/` first. Machine-specific or secret settings go in `~/.zshrc.local`, which is loaded automatically and never committed.
 
 ## Conventions
 
-- One folder per tool. Each tool's config lives in its own folder, never inlined into `.zshrc`.
-- Prefer XDG paths (`~/.config/<tool>`) over dotfiles in `$HOME`.
-- New tools: add them to the `Brewfile`, add a `link` line in `setup.sh` → `dotfiles()`, and update the table above.
+- One folder per tool. Nothing goes straight into `.zshrc`.
+- XDG paths (`~/.config/<tool>`) over dotfiles in `$HOME`.
+- New tool: add it to the `Brewfile`, add a `link` line in `setup.sh` → `dotfiles()`, and add a row above.
