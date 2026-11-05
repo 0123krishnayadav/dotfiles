@@ -8,7 +8,19 @@
 font-family = JetBrainsMono Nerd Font
 font-size = 14
 
-# New windows are 110x30 and open in ~. New tabs and splits open in the current folder
+# Launching Ghostty opens one maximized window running herdr. New tabs (Cmd+T)
+# and windows (Cmd+N) get a plain shell. Closing the herdr window (or detaching with
+# Option+Space q) quits Ghostty, so the next launch opens herdr again; the herdr
+# session itself keeps running in the background. Run through a login zsh so
+# herdr gets the Homebrew PATH from .zprofile (apps opened from the Dock don't).
+initial-command = /bin/zsh -lc 'exec herdr'
+quit-after-last-window-closed = true
+# Don't let macOS window restore replace the herdr window; herdr restores its own sessions
+window-save-state = never
+# Maximized (fills the screen, keeps the menu bar and Dock), not macOS fullscreen
+maximize = true
+
+# Windows open in ~ (110x30 when not maximized). New tabs and splits open in the current folder
 window-width = 110
 window-height = 30
 window-inherit-working-directory = false
