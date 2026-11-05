@@ -8,7 +8,7 @@
 font-family = Menlo
 font-size = 14
 
-# Launching Ghostty opens one maximized window running herdr. Cmd+T/Q/D/Shift+D
+# Launching Ghostty opens one maximized window running herdr. Cmd+T/W/D/Shift+D
 # and Cmd+1..9 control Herdr tabs/splits; Cmd+N opens a plain shell window.
 # Closing the herdr window (or detaching with
 # Option+Space q) quits Ghostty, so the next launch opens herdr again; the herdr
@@ -51,12 +51,13 @@ keybind = super+backspace=csi:127;9u
 keybind = super+arrow_left=csi:1;9D
 keybind = super+arrow_right=csi:1;9C
 
-# Forward tab/split shortcuts to Herdr. Cmd+Q closes the current Herdr tab.
+# Forward tab/split shortcuts to Herdr. Cmd+W closes the current Herdr tab; Cmd+Q
+# keeps Ghostty's default (quit), and herdr keeps the session running in the background.
 # Cmd+1..9 selects the corresponding Herdr tab in the current workspace. These use the
 # physical-key names (digit_N): Ghostty's defaults bind super+digit_N to goto_tab, and
 # physical-key bindings win over super+1 / super+one, which would never fire.
 keybind = super+t=csi:116;9u
-keybind = super+q=csi:113;9u
+keybind = super+w=csi:119;9u
 keybind = super+d=csi:100;9u
 keybind = super+shift+d=csi:100;10u
 keybind = super+digit_1=csi:49;9u

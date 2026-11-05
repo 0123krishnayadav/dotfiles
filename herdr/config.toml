@@ -5,7 +5,7 @@ prefix = "alt+space"
 # Ghostty forwards Cmd chords as CSI u sequences (ghostty/config.ghostty).
 # Keep the prefix bindings available alongside the direct macOS shortcuts.
 new_tab          = ["prefix+c", "cmd+t"]
-close_tab        = ["prefix+shift+x", "cmd+q"]
+close_tab        = ["prefix+shift+x", "cmd+w"]
 split_vertical   = ["prefix+v", "cmd+d"]
 split_horizontal = ["prefix+minus", "cmd+shift+d"]
 switch_tab       = ["prefix+1..9", "alt+1..9", "cmd+1..9"]
