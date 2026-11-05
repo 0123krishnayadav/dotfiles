@@ -132,6 +132,7 @@ dotfiles() {
   link "$REPO/ssh/config"          "$HOME/.ssh/config"
   link "$REPO/nvim"                "$HOME/.config/nvim"
   link "$REPO/lazygit"             "$HOME/.config/lazygit"
+  link "$REPO/ghostty"             "$HOME/.config/ghostty"
   # herdr: link only the file; ~/.config/herdr also holds its sockets, logs and sessions
   link "$REPO/herdr/config.toml"   "$HOME/.config/herdr/config.toml"
   claude_statusline || return 1
@@ -146,22 +147,6 @@ dotfiles() {
   else
     ok "karabiner.json up to date"
   fi
-}
-
-iterm2() {
-  # Shell integration
-  if [[ ! -f "$HOME/.iterm2_shell_integration.zsh" ]]; then
-    curl -fsSL https://iterm2.com/shell_integration/zsh -o "$HOME/.iterm2_shell_integration.zsh" && ok "shell integration"
-  fi
-  # Profile -> Dynamic Profile (linked, so repo edits apply on iTerm2 restart)
-  local guid="6132E75C-6D6B-4C90-A9F4-CF60D74153F6"   # must match iterm/iterm_config.json
-  link "$REPO/iterm/iterm_config.json" "$HOME/Library/Application Support/iTerm2/DynamicProfiles/krishna-personal.json"
-  defaults write com.googlecode.iterm2 "Default Bookmark Guid" -string "$guid"
-  ok "profile 'Krishna Personal' installed and set as default (restart iTerm2)"
-  # Don't dim the inactive split pane / background windows
-  defaults write com.googlecode.iterm2 DimInactiveSplitPanes -bool false
-  defaults write com.googlecode.iterm2 DimBackgroundWindows -bool false
-  ok "pane dimming disabled"
 }
 
 vscode() {
@@ -211,7 +196,6 @@ step "Oh My Zsh"                oh_my_zsh
 step "Zsh plugins"              zsh_plugins
 step "Default shell"            default_shell
 step "Dotfiles"                 dotfiles
-step "iTerm2"                   iterm2
 step "VS Code settings"         vscode
 step "Node.js LTS (fnm)"        node_lts
 step "Rust (rustup)"            rust
@@ -226,4 +210,4 @@ else
   ok "Everything installed."
 fi
 echo "    Remaining manual steps: see mac-setup-guide.md → 'After the script'"
-echo "    Open a NEW iTerm2 window to load the new shell."
+echo "    Open Ghostty to load the new shell."

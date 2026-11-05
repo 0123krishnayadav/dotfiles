@@ -2,6 +2,4 @@
 command -v oh-my-posh >/dev/null && \
   eval "$(oh-my-posh init zsh --config "$HOMEBREW_PREFIX/opt/oh-my-posh/themes/amro.omp.json")"
 
-# iTerm2 shell integration
-test -e "${HOME}/.iterm2_shell_integration.zsh" && \
-  source "${HOME}/.iterm2_shell_integration.zsh"
+# Ghostty loads its own shell integration (prompt marks, current folder), so nothing to source here

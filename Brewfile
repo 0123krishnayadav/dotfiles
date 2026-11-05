@@ -21,10 +21,10 @@ brew "oh-my-posh"           # prompt (theme set in zsh/prompt.zsh)
 brew "eza"                  # nicer ls
 
 # Fonts
-cask "font-jetbrains-mono-nerd-font" # icons in Neovim (used by the iTerm2 profile)
+cask "font-jetbrains-mono-nerd-font" # icons in Neovim (set as the font in ghostty/config.ghostty)
 
 # Apps
-cask "iterm2"
+cask "ghostty"               # terminal (config: ghostty/)
 cask "brave-browser"
 cask "raycast"               # launcher, app hotkeys, window snapping
 cask "karabiner-elements"    # Caps Lock / Right Cmd = Hyper key

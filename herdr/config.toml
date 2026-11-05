@@ -4,7 +4,7 @@ prefix = "alt+space"
 
 # Direct chords (no prefix): every press works on its own, so they repeat.
 # Vim-style: workspaces stack top-to-bottom (j/k), panes run left-to-right (h/l).
-# Needs iTerm's Option keys = Esc+ (both are set). Overrides zsh's alt+h (run-help) and alt+l (ls).
+# Needs Ghostty's macos-option-as-alt = true (set in ghostty/config.ghostty). Overrides zsh's alt+h (run-help) and alt+l (ls).
 next_workspace      = "alt+j"
 previous_workspace  = "alt+k"
 cycle_pane_next     = ["prefix+tab", "alt+l"]

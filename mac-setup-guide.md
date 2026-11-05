@@ -49,7 +49,7 @@ Do the [Before you leave the old Mac](#before-you-leave-the-old-mac) checklist, 
 
    It asks for your Mac password at the start (and Homebrew may ask again). It takes 15–30 minutes. Leave it running.
 
-6. **Quit Terminal, open iTerm2** (Terminal can't send the `Cmd` shortcuts to Neovim; iTerm2 can). The "Krishna Personal" profile already has the Nerd Font and all the `Cmd` key mappings.
+6. **Quit Terminal, open Ghostty** (Terminal can't send the `Cmd` shortcuts to Neovim; Ghostty can). Its config (`ghostty/config.ghostty`, linked by the script) already has the Nerd Font, colors and all the `Cmd` key mappings.
 7. Do the [After the script](#after-the-script) checklist.
 8. Run the [Verify](#verify) commands.
 
@@ -68,18 +68,17 @@ The script is safe to run again. Each step skips anything already done, and it s
 | `zsh/.zprofile` | PATH for login shells (Homebrew, `~/.local/bin`) | read from `~/.config/zsh` |
 | `zsh/.zshrc` | Interactive shell config (history, options, plugins) | read from `~/.config/zsh` |
 | `zsh/aliases.zsh` | All aliases | loaded by `.zshrc` |
-| `zsh/keybindings.zsh` | Shell key bindings (Tab, `Cmd ←/→/Delete`) | loaded by `.zshrc` |
+| `zsh/keybindings.zsh` | Shell key bindings (Tab, `Cmd ←/→/Delete`, `Cmd F` / `Cmd Shift F` open / close Ghostty's find bar via AppleScript) | loaded by `.zshrc` |
 | `zsh/functions.zsh` | Shell functions (`killport`) | loaded by `.zshrc` |
-| `zsh/prompt.zsh` | Oh My Posh prompt (prebuilt `amro` theme) + iTerm2 shell integration | loaded by `.zshrc` |
+| `zsh/prompt.zsh` | Oh My Posh prompt (prebuilt `amro` theme). Ghostty adds its shell integration by itself | loaded by `.zshrc` |
 | `git/config` | Git name/email, default branch, delta as the diff pager (side by side in `git diff`, `git log -p`, `git show`) | folder symlinked to `~/.config/git` (git reads it there by default) |
 | `git/ignore` | Global gitignore (`.DS_Store`, editor swap files, ...) | same folder; applies to every repo |
 | `ssh/config` | SSH hosts (GitHub, servers) | symlinked to `~/.ssh/config`. Keys are **not** in the repo |
 | `nvim/` | Neovim config (kickstart.nvim) | symlinked to `~/.config/nvim` |
 | `lazygit/config.yml` | lazygit (run `lazygit` in any repo; `space` stage, `c` commit, `P`/`p` push/pull, `q` quit, `?` all keys): `e` opens files in nvim, Nerd Font icons, side-by-side diffs with delta (`\|` switches style, `+` enlarges the diff) | folder symlinked to `~/.config/lazygit` |
-| `herdr/config.toml` | herdr (terminal agent multiplexer): prefix key `Option + Space`, onboarding off. Direct keys, no prefix needed: `Option+j`/`k` next/previous workspace, `Option+l`/`h` next/previous pane, `Option+1..9` jump to tab N. Needs iTerm's Option = Esc+, and Raycast must not use those keys (clear them in Raycast Settings → Extensions). After editing run `herdr server reload-config` (the server only reads it at startup) | file symlinked to `~/.config/herdr/config.toml` (not the folder: herdr keeps sockets, logs and sessions there) |
+| `herdr/config.toml` | herdr (terminal agent multiplexer): prefix key `Option + Space`, onboarding off. Direct keys, no prefix needed: `Option+j`/`k` next/previous workspace, `Option+l`/`h` next/previous pane, `Option+1..9` jump to tab N. Needs Ghostty's `macos-option-as-alt = true` (set), and Raycast must not use those keys (clear them in Raycast Settings → Extensions). After editing run `herdr server reload-config` (the server only reads it at startup) | file symlinked to `~/.config/herdr/config.toml` (not the folder: herdr keeps sockets, logs and sessions there) |
 | `karabiner/karabiner.json` | Karabiner-Elements: Caps Lock = Hyper key; Right ⌘ = Hyper for `B`/`T`/`V`, plain ⌘ for everything else; tapping either alone = ⌘` (next window) | **copied** to `~/.config/karabiner/` (not linked: Karabiner can't read files in `~/Documents`) |
-| `iterm/iterm_config.json` | iTerm2 profile (colors, font, `Cmd` key mappings, both Option keys = Esc+ so Option works as Alt in terminal apps; neither types Mac special characters like é or £ in iTerm) | symlinked into `~/Library/Application Support/iTerm2/DynamicProfiles/` as the "Krishna Personal" profile, set as default. Already in Dynamic Profile format (`{ "Profiles": [ … ] }`, own Guid, own name) so it never clashes with iTerm2's built-in "Default" profile |
-| `vscode/settings.json`, `keybindings.json` | VS Code config | symlinked into `~/Library/Application Support/Code/User/` |
+| `ghostty/config.ghostty` | Ghostty terminal: JetBrainsMono Nerd Font 14, 110×30 windows, `Cmd` key mappings for Neovim and the shell (`Cmd F` / `Cmd Shift F` open / close Ghostty's find bar only at the shell prompt, since in Neovim they search files; `Cmd -`/`=` no longer change the font size, use the menu bar), both Option keys = Alt so terminal apps get Alt (neither types Mac special characters like é or £ in Ghostty), no dimming of the inactive split. New tabs and splits open in the current folder, new windows in `~`. Reload after editing with `Cmd Shift ,`; check with `ghostty +validate-config` | folder symlinked to `~/.config/ghostty` || `vscode/settings.json`, `keybindings.json` | VS Code config | symlinked into `~/Library/Application Support/Code/User/` |
 | `claude/statusline-command.sh` | Claude Code status line, one colour per part: `Opus 5.5 xhigh · 5h 97% (2h) · 7d 80% (3d) · ~/Desktop/trade-bot · <git branch> · <session name>` (5h/7d = % of the limit left, then time until it resets). Parts with no data are skipped. Uses `jq` (built into macOS 15+) | symlinked to `~/.claude/statusline-command.sh`. `setup.sh` also sets `statusLine` in `~/.claude/settings.json` (edited, not linked: Claude Code rewrites that file) |
 | `vimguide.md` | Vim cheat sheet | — |
 
@@ -99,19 +98,18 @@ Put machine-specific or secret settings (API keys, work aliases) in `~/.zshrc.lo
 | 4 | Oh My Zsh | Unattended install that leaves our zsh config alone |
 | 5 | Zsh plugins | Clones `zsh-autosuggestions` into `~/.oh-my-zsh/custom/plugins` (the only plugin not bundled with Oh My Zsh) |
 | 6 | Default shell | `chsh -s /bin/zsh` if needed |
-| 7 | Dotfiles | Symlinks `~/.zshenv`, `~/.config/zsh`, `~/.config/git`, `~/.ssh/config`, `~/.config/nvim`, `~/.config/lazygit`, `~/.config/herdr/config.toml`, `~/.claude/statusline-command.sh`, and sets `statusLine` in `~/.claude/settings.json`. Copies `karabiner.json` to `~/.config/karabiner/`. Copies `~/.zsh_history` to `~/.local/state/zsh/history` if needed |
-| 8 | iTerm2 | Shell integration + "Krishna Personal" profile set as default. New tabs and split panes open in the current folder, new windows open in `~` |
-| 9 | VS Code | Symlinks settings + keybindings |
-| 10 | Node.js | `fnm install --lts`, set as default |
-| 11 | Rust | `rustup` (stable toolchain) |
-| 12 | Neovim plugins | Installs plugins, Tree-sitter parsers and language servers headlessly |
-| 13 | Claude Code | Native installer → `~/.local/bin/claude` |
-| 14 | macOS defaults | Fast key repeat (`KeyRepeat 1`, `InitialKeyRepeat 10`) |
+| 7 | Dotfiles | Symlinks `~/.zshenv`, `~/.config/zsh`, `~/.config/git`, `~/.ssh/config`, `~/.config/nvim`, `~/.config/lazygit`, `~/.config/ghostty`, `~/.config/herdr/config.toml`, `~/.claude/statusline-command.sh`, and sets `statusLine` in `~/.claude/settings.json`. Copies `karabiner.json` to `~/.config/karabiner/`. Copies `~/.zsh_history` to `~/.local/state/zsh/history` if needed |
+| 8 | VS Code | Symlinks settings + keybindings |
+| 9 | Node.js | `fnm install --lts`, set as default |
+| 10 | Rust | `rustup` (stable toolchain) |
+| 11 | Neovim plugins | Installs plugins, Tree-sitter parsers and language servers headlessly |
+| 12 | Claude Code | Native installer → `~/.local/bin/claude` |
+| 13 | macOS defaults | Fast key repeat (`KeyRepeat 1`, `InitialKeyRepeat 10`) |
 
 ### Brewfile contents
 
 - **CLI:** `fnm`, `fzf`, `zoxide`, `bun`, `colima`, `docker`, `docker-buildx`, `mas`, `neovim`, `tree-sitter-cli`, `fd`, `ripgrep`, `bat`, `lazygit`, `herdr`, `git-delta`, `oh-my-posh`, `eza`
-- **Apps:** iTerm2, Brave, Raycast, Karabiner-Elements, VS Code, Bitwarden, AppCleaner
+- **Apps:** Ghostty, Brave, Raycast, Karabiner-Elements, VS Code, Bitwarden, AppCleaner
 - **App Store:** Amphetamine
 - **VS Code extensions:** Claude Code, Material Icon Theme, rust-analyzer
 
@@ -131,7 +129,7 @@ These can't be scripted (or shouldn't be):
 - [ ] **Raycast:** open it, set the hotkey, then set the [keyboard shortcuts](#keyboard-shortcuts) (or import them). If using `⌘ Space`, first turn off the Spotlight shortcut (System Settings → Keyboard → Keyboard Shortcuts → Spotlight). Restore settings from the old Mac with Raycast → Settings → Advanced → Export / Import (`.rayconfig`)
 - [ ] **Raycast File Actions extension** (own extension, not in the Store): `git clone git@github.com:0123krishnayadav/raycast-file-action.git ~/Desktop/raycast-extension/file-actions`, then `cd` there and run `npm install && npm run dev`. If it doesn't show up in Raycast, run Raycast's **Import Extension** command and pick that folder. Then set its hotkey (see [keyboard shortcuts](#keyboard-shortcuts))
 - [ ] **Amphetamine, Raycast:** grant Accessibility permissions when prompted
-- [ ] **iTerm2:** quit (`Cmd Q`) and reopen it so the "Krishna Personal" profile (font + `Cmd` key mappings) is picked up. If icons show as boxes, check Settings → Profiles → Text → Font is **JetBrainsMono Nerd Font Mono**. If the font isn't in the list at all (or VS Code's terminal shows boxes too), macOS hasn't registered it: run `xattr -d com.apple.quarantine ~/Library/Fonts/*Nerd*; killall fontd` (macOS restarts `fontd`, the font service, by itself and rescans the fonts), then quit and reopen the apps. Test with `echo -e "\ue7a8 \uf113 \uf07c"` - you should see icons, not boxes
+- [ ] **Ghostty:** if icons show as boxes, run `ghostty +show-face --string=A`: it should say found in face **JetBrainsMono Nerd Font**. If it names another font (or VS Code's terminal shows boxes too), macOS hasn't registered it: run `xattr -d com.apple.quarantine ~/Library/Fonts/*Nerd*; killall fontd` (macOS restarts `fontd`, the font service, by itself and rescans the fonts), then quit and reopen the apps. Test with `echo -e "\ue7a8 \uf113 \uf07c"` - you should see icons, not boxes
 - [ ] **Letos:** not on Homebrew, install manually
 - [ ] **Bitwarden / Brave:** sign in (Brave Sync brings back bookmarks and extensions)
 - [ ] **Claude Code:** run `claude` and log in. If you saved `~/.claude/settings.json` / `~/.claude/CLAUDE.md`, copy them back into `~/.claude/`
@@ -146,7 +144,7 @@ These can't be scripted (or shouldn't be):
 | Shortcut | Action | Where it's set |
 |---|---|---|
 | `Hyper B` | Open / focus Brave | Raycast |
-| `Hyper T` | Open / focus iTerm2 | Raycast |
+| `Hyper T` | Open / focus Ghostty | Raycast |
 | `Hyper V` | Open / focus VS Code | Raycast |
 | Tap Caps Lock or Right ⌘ alone | Move focus to next window (of the same app) | Karabiner sends ⌘`, the macOS default shortcut |
 | `Opt M` | Maximize window | Raycast |
@@ -156,9 +154,9 @@ These can't be scripted (or shouldn't be):
 
 **Raycast shortcuts are not in this repo.** Raycast keeps them in its own database. Either import your `.rayconfig` export (Raycast → Settings → Advanced → Import), or set them by hand:
 
-- **App hotkeys:** Raycast → Settings → Extensions → Applications → find the app (Brave Browser, iTerm, Visual Studio Code) → click **Record Hotkey** → hold Caps Lock and press the letter
+- **App hotkeys:** Raycast → Settings → Extensions → Applications → find the app (Brave Browser, Ghostty, Visual Studio Code) → click **Record Hotkey** → hold Caps Lock and press the letter
 - **Window snapping:** Raycast → Settings → Extensions → Window Management → **Maximize**, **Left Half**, **Right Half** → Record Hotkey → `Opt M` / `Opt H` / `Opt L`
-- **File Actions:** Raycast → Settings → Extensions → File Actions → Record Hotkey → `Opt Cmd O`. Don't use plain `Cmd O`: Raycast hotkeys are global, so it would replace "Open" in Finder and every other app. Its **Terminal App** setting picks the app for "Open in Terminal" (default iTerm2, falls back to Terminal)
+- **File Actions:** Raycast → Settings → Extensions → File Actions → Record Hotkey → `Opt Cmd O`. Don't use plain `Cmd O`: Raycast hotkeys are global, so it would replace "Open" in Finder and every other app. Set its **Terminal App** setting to **Ghostty**: it picks the app for "Open in Terminal", and its default is still iTerm2 (when iTerm2 isn't installed it falls back to Apple's Terminal)
 
 **Next window** is the macOS shortcut ⌘` (System Settings → Keyboard → Keyboard Shortcuts → Keyboard → Move focus to next window), left at its default. Karabiner sends ⌘` when Caps Lock or Right ⌘ is tapped on its own, so the macOS side never needs a Hyper shortcut.
 
@@ -176,7 +174,7 @@ zsh reads these in order. Each one is only for a certain kind of shell:
 |---|---|---|---|
 | 1 | `~/.zshenv` | **every** zsh, including scripts and `zsh -c` | XDG variables, `ZDOTDIR=~/.config/zsh` (so the files below are read from there), creates `~/.cache/zsh` + `~/.local/state/zsh`, Rust's `cargo env` |
 | 2 | `/etc/zprofile` | login shells (macOS) | Apple's `path_helper` rebuilds `PATH` with the system dirs first |
-| 3 | `~/.config/zsh/.zprofile` | login shells (every new iTerm2/VS Code tab) | `PATH`: Homebrew, `~/.local/bin`. It goes here, after `path_helper`, so Homebrew comes before `/usr/bin` |
+| 3 | `~/.config/zsh/.zprofile` | login shells (every new Ghostty/VS Code tab) | `PATH`: Homebrew, `~/.local/bin`. It goes here, after `path_helper`, so Homebrew comes before `/usr/bin` |
 | 4 | `~/.config/zsh/.zshrc` | interactive shells | history, shell options, Oh My Zsh + plugins, aliases, key bindings |
 
 Where zsh's own files live now (out of `$HOME`):
@@ -246,7 +244,7 @@ Aliases only apply when you type them. Scripts still get the real `cat`/`grep`. 
 |---|---|
 | **Tab** | Accepts the autosuggestion if one is shown, otherwise does normal completion |
 | **`killport 3000`** | Kills whatever is listening on port 3000 |
-| **iTerm2 shell integration** | Command marks, `⌘⇧↑/↓` to jump between prompts. Also lets iTerm2 track the current folder, so `⌘T` / `⌘D` open in the same place |
+| **Ghostty shell integration** | Loaded by Ghostty itself, nothing to install. `⌘↑/↓` (or `⌘⇧↑/↓`) jumps between prompts. It also tracks the current folder, so `⌘T` (tab) and `⌘D` / `⌘⇧D` (split right / down) open in the same place. Over `ssh` it sends `TERM=xterm-256color`, since servers don't know `xterm-ghostty` |
 | **`~/.zshrc.local`** | Loaded last if it exists, for private/per-machine settings (API keys, work aliases) |
 
 ---
@@ -264,17 +262,17 @@ The config is [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim): one 
 | Format on save | Lua (stylua), Rust (rustfmt), TOML (taplo), shell (shfmt), JS/TS/JSON/YAML/CSS/HTML (prettierd, **only in projects that have a prettier config**). Toggle with `Space t f` (buffer) / `Space t F` (everywhere) |
 | Completion | blink.cmp with docs popup and the Rust fuzzy matcher (`Ctrl-y` accept, `Ctrl-n`/`Ctrl-p` move, `Ctrl-Space` open) |
 | Extras | File tree (neo-tree), auto-pairs, indent guides, sticky function header (treesitter-context), crate versions in `Cargo.toml` (crates.nvim) |
-| Icons | On. Needs the JetBrainsMono Nerd Font (in the Brewfile, already set in the iTerm2 profile) |
+| Icons | On. Needs the JetBrainsMono Nerd Font (in the Brewfile, already set in `ghostty/config.ghostty`) |
 
-The `Cmd` shortcuts below need iTerm2 to send them to Neovim. The "Krishna Personal" profile installed by `setup.sh` already does. They don't work in Apple's Terminal (it keeps `Cmd` for its menus); the `Space` keys work everywhere.
+The `Cmd` shortcuts below need Ghostty to send them to Neovim. The `keybind` lines in `ghostty/config.ghostty` already do. They don't work in Apple's Terminal (it keeps `Cmd` for its menus); the `Space` keys work everywhere.
 
 Useful keys (leader = `Space`):
 
 | Key | Does |
 |---|---|
 | `Cmd P` / `Space s f` | find file |
-| `Cmd F` | search in current file |
-| `Cmd Shift F` | search text in project |
+| `Cmd F` | search in current file (at the shell prompt: open Ghostty's find bar) |
+| `Cmd Shift F` | search text in project (at the shell prompt: close Ghostty's find bar) |
 | `Cmd S` / `Ctrl s` | save |
 | `Cmd Delete` | delete to start of line (also in the shell) |
 | `Cmd ←` / `Cmd →` | start / end of line (also in the shell) |
@@ -303,7 +301,6 @@ Plugins, parsers and servers live in `~/.local/share/nvim/` (not in the repo); `
 ## Before you leave the old Mac
 
 - [ ] Commit and push this repo (`git add -A && git commit -m "SETTINGS: $(date +%F)" && git push`)
-- [ ] If you changed iTerm2 settings: iTerm2 doesn't save UI changes back into a Dynamic Profile, so make lasting changes in `iterm/iterm_config.json` itself (it's linked; quit iTerm2 with Cmd+Q and reopen to apply, a new window isn't enough). If you changed things in the UI instead: Settings → Profiles → Other Actions → **Save Profile as JSON**, then copy the changed keys into `iterm/iterm_config.json`. Don't overwrite it: the exported file lacks the `{ "Profiles": [ … ] }` wrapper, and its `Guid` and `Name` would clash with the built-in profile
 - [ ] If you changed VS Code settings in a non-default profile, copy them into `vscode/settings.json`
 - [ ] Export Raycast settings: Raycast → Settings → Advanced → Export (`.rayconfig`, keeps hotkeys, window shortcuts, snippets, extensions). Save it to Bitwarden or AirDrop it, not git (`*.rayconfig` is gitignored)
 - [ ] Save your SSH keys (`~/.ssh/id_rsa`, `~/.ssh/id_rsa.pub`) to Bitwarden or AirDrop them. `~/.ssh/config` is already in this repo. **Never** put it in git. You need it to clone this repo and reach your servers
@@ -315,7 +312,7 @@ Plugins, parsers and servers live in `~/.local/share/nvim/` (not in the repo); `
 
 ## Verify
 
-Open a new iTerm2 window:
+Open a new Ghostty window:
 
 ```bash
 echo $SHELL          # /bin/zsh
@@ -334,12 +331,13 @@ echo $ZDOTDIR        # ~/.config/zsh  (zsh config comes from the repo)
 ssh -T git@github.com
 
 # Every config link points into this repo (no "No such file")
-ls -l ~/.zshenv ~/.config/{zsh,git,nvim,lazygit} ~/.ssh/config
+ls -l ~/.zshenv ~/.config/{zsh,git,nvim,lazygit,ghostty} ~/.ssh/config
+ghostty +validate-config   # no output = config is fine
 ```
 
 Then:
 
-- Caps Lock or Right ⌘ + `T` / `B` / `V` jumps to iTerm2 / Brave / VS Code
+- Caps Lock or Right ⌘ + `T` / `B` / `V` jumps to Ghostty / Brave / VS Code
 - Type some text at the prompt and try `Cmd ←`, `Cmd →`, `Cmd Delete`
 - Open `nvim`: file icons should show in the tree (`\`), and `Cmd P` / `Cmd F` / `Cmd Shift F` should open search
 - Run `:checkhealth` in Neovim to confirm there are no errors

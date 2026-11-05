@@ -702,8 +702,8 @@ do
   -- Shortcut for searching your Neovim configuration files
   vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config', follow = true } end, { desc = '[S]earch [N]eovim files' })
 
-  -- VS Code / macOS-style shortcuts. iTerm2 sends these Cmd keys as escape sequences
-  -- (see the Keys section of the iTerm2 profile), which Neovim reads as <D-...>
+  -- VS Code / macOS-style shortcuts. Ghostty sends these Cmd keys as escape sequences
+  -- (see the keybind lines in ghostty/config.ghostty), which Neovim reads as <D-...>
   vim.keymap.set({ 'n', 'i', 'x' }, '<D-p>', builtin.find_files, { desc = 'Search files' })
   vim.keymap.set(
     { 'n', 'i', 'x' },

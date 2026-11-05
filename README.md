@@ -23,7 +23,7 @@ Clone to exactly `~/dotfiles`: configs are symlinked into it, so moving the fold
 | `git/` | git config + global ignore, delta as pager | `~/.config/git` |
 | `lazygit/` | lazygit with side-by-side delta diffs | `~/.config/lazygit` |
 | `ssh/` | SSH host config (no keys) | `~/.ssh/config` |
-| `iterm/` | iTerm2 "Krishna Personal" profile (font, colors, `Cmd` keys) | iTerm2 Dynamic Profiles |
+| `ghostty/` | Ghostty terminal (font, `Cmd` keys, Option = Alt; default colors) | `~/.config/ghostty` |
 | `karabiner/` | Karabiner-Elements: Caps Lock = Hyper; Right ⌘ = Hyper for B/T/V, else plain ⌘; tap either alone = ⌘` (next window) | copied to `~/.config/karabiner` |
 | `vscode/` | VS Code settings + keybindings | `~/Library/Application Support/Code/User` |
 | `claude/` | Claude Code status line: model + effort, 5h/7d limits left with time until reset, folder, git branch, session | `~/.claude/statusline-command.sh` (plus the `statusLine` entry in `~/.claude/settings.json`) |

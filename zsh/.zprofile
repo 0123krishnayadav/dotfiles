@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# .zprofile - read by login shells (every new iTerm2 / VS Code tab on macOS).
+# .zprofile - read by login shells (every new Ghostty / VS Code tab on macOS).
 # PATH goes here, not in .zshenv: macOS runs /usr/libexec/path_helper in
 # /etc/zprofile, which would push anything set earlier behind /usr/bin.
 # ---------------------------------------------------------------------------

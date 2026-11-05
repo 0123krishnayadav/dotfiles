@@ -1,0 +1,43 @@
+# Ghostty config. ~/.config/ghostty is linked to this folder, so edits here are live.
+#   Reload:     Cmd+Shift+,   (window size only applies to new windows)
+#   Check:      ghostty +validate-config
+#   All options: ghostty +show-config --default --docs
+
+# Font: the Nerd Font from the Brewfile, for icons in Neovim, lazygit and the prompt.
+# The plain "Nerd Font" variant has full-size icons; "Nerd Font Mono" shrinks them to one cell.
+font-family = JetBrainsMono Nerd Font
+font-size = 14
+
+# New windows are 110x30 and open in ~. New tabs and splits open in the current folder
+window-width = 110
+window-height = 30
+window-inherit-working-directory = false
+
+cursor-style-blink = false
+# Don't dim the inactive split
+unfocused-split-opacity = 1
+
+# Both Option keys act as Alt, so herdr's alt chords and zsh's Alt keys work.
+# Typing Mac special characters with Option (é, £) is given up on purpose.
+macos-option-as-alt = true
+
+# Over ssh, send TERM=xterm-256color (servers don't know xterm-ghostty)
+shell-integration-features = ssh-env
+
+# macOS-style Cmd keys, sent as CSI u escape sequences so Neovim reads them as <D-...>
+# (nvim/init.lua) and zsh can bind them (zsh/keybindings.zsh). At the zsh prompt,
+# Cmd+F / Cmd+Shift+F still open / close Ghostty's find bar (zsh asks Ghostty to).
+# Cmd+-/= no longer change the font size; use the menu bar for that.
+keybind = super+p=csi:112;9u
+keybind = super+f=csi:102;9u
+keybind = super+shift+f=csi:102;10u
+keybind = super+s=csi:115;9u
+keybind = super+minus=csi:45;9u
+keybind = super+equal=csi:61;9u
+keybind = super+backspace=csi:127;9u
+keybind = super+arrow_left=csi:1;9D
+keybind = super+arrow_right=csi:1;9C
+
+# Option+fn+Delete deletes the next word. Option+←/→ (word jumps) and
+# Option+Delete (previous word) already work by default.
+keybind = alt+delete=esc:d
