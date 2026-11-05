@@ -9,7 +9,7 @@ brew "colima"               # Docker runtime (no Docker Desktop)
 brew "docker"
 brew "docker-buildx"
 brew "mas"                  # Mac App Store CLI
-brew "neovim"               # editor (config: nvim, kickstart.nvim)
+brew "neovim"               # editor (config: nvim, LazyVim)
 brew "tree-sitter-cli"      # builds Neovim syntax parsers
 brew "fd"                   # better find
 brew "ripgrep"              # better grep (grep alias)

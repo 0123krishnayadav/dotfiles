@@ -51,7 +51,7 @@ New Hyper letter: also add it to the Right Command rules in `karabiner/karabiner
 | Folder | Tool | Installed to |
 |---|---|---|
 | `zsh/` | zsh + Oh My Zsh: aliases, key bindings, functions, Oh My Posh prompt | `~/.config/zsh` (via `ZDOTDIR` in `~/.zshenv`) |
-| `nvim/` | Neovim, started from [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim); plugins via `vim.pack` | `~/.config/nvim` |
+| `nvim/` | Neovim with [LazyVim](https://github.com/LazyVim/LazyVim): extras in `lazyvim.json`, plugins pinned in `lazy-lock.json` | `~/.config/nvim` |
 | `ghostty/` | Ghostty: opens maximized running herdr; `Cmd` keys, Option = Alt | `~/.config/ghostty` |
 | `herdr/` | herdr (agent multiplexer): prefix `Option+Space`, `Cmd` tab and split keys | `~/.config/herdr/config.toml` (file only) |
 | `git/` | git config + global ignore, delta as pager | `~/.config/git` |

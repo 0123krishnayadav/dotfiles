@@ -166,11 +166,9 @@ rust() {
 }
 
 neovim() {
-  # Install plugins, Tree-sitter parsers and language servers without opening the editor
-  nvim --headless +qa >/dev/null 2>&1
-  nvim --headless \
-    -c "lua require('nvim-treesitter').install(vim.g.ts_parsers):wait(600000)" \
-    -c 'MasonToolsInstallSync' -c qa >/dev/null 2>&1 && ok "plugins, parsers and LSPs installed"
+  # Install the plugin versions pinned in lazy-lock.json without opening the editor.
+  # LazyVim installs language servers and parsers itself on the first real launch.
+  nvim --headless "+Lazy! restore" +qa >/dev/null 2>&1 && ok "plugins installed"
 }
 
 claude_code() {
