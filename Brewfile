@@ -21,7 +21,7 @@ brew "oh-my-posh"           # prompt (theme set in zsh/prompt.zsh)
 brew "eza"                  # nicer ls
 
 # Fonts
-cask "font-jetbrains-mono-nerd-font" # icons in Neovim (set as the font in ghostty/config.ghostty)
+cask "font-jetbrains-mono-nerd-font" # VS Code font with icons (vscode/settings.json). Ghostty uses Menlo + its own bundled icons
 
 # Apps
 cask "ghostty"               # terminal (config: ghostty/)

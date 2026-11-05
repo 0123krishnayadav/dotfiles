@@ -6,7 +6,7 @@ os:
   editPreset: nvim-remote
 
 gui:
-  nerdFontsVersion: "3"   # file icons (JetBrainsMono Nerd Font)
+  nerdFontsVersion: "3"   # file icons (Ghostty bundles the Nerd Font symbols)
   sidePanelWidth: 0.2     # narrower left panels, more room for the diff
 
 git:

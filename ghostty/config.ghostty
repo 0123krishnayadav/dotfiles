@@ -3,13 +3,14 @@
 #   Check:      ghostty +validate-config
 #   All options: ghostty +show-config --default --docs
 
-# Font: the Nerd Font from the Brewfile, for icons in Neovim, lazygit and the prompt.
-# The plain "Nerd Font" variant has full-size icons; "Nerd Font Mono" shrinks them to one cell.
-font-family = JetBrainsMono Nerd Font
+# Font: Menlo (built into macOS). Ghostty draws Nerd Font icons from its own bundled
+# copy, so Neovim, lazygit and the prompt keep their icons without a patched font.
+font-family = Menlo
 font-size = 14
 
-# Launching Ghostty opens one maximized window running herdr. New tabs (Cmd+T)
-# and windows (Cmd+N) get a plain shell. Closing the herdr window (or detaching with
+# Launching Ghostty opens one maximized window running herdr. Cmd+T/Q/D/Shift+D
+# and Cmd+1..9 control Herdr tabs/splits; Cmd+N opens a plain shell window.
+# Closing the herdr window (or detaching with
 # Option+Space q) quits Ghostty, so the next launch opens herdr again; the herdr
 # session itself keeps running in the background. Run through a login zsh so
 # herdr gets the Homebrew PATH from .zprofile (apps opened from the Dock don't).
@@ -49,6 +50,24 @@ keybind = super+equal=csi:61;9u
 keybind = super+backspace=csi:127;9u
 keybind = super+arrow_left=csi:1;9D
 keybind = super+arrow_right=csi:1;9C
+
+# Forward tab/split shortcuts to Herdr. Cmd+Q closes the current Herdr tab.
+# Cmd+1..9 selects the corresponding Herdr tab in the current workspace. These use the
+# physical-key names (digit_N): Ghostty's defaults bind super+digit_N to goto_tab, and
+# physical-key bindings win over super+1 / super+one, which would never fire.
+keybind = super+t=csi:116;9u
+keybind = super+q=csi:113;9u
+keybind = super+d=csi:100;9u
+keybind = super+shift+d=csi:100;10u
+keybind = super+digit_1=csi:49;9u
+keybind = super+digit_2=csi:50;9u
+keybind = super+digit_3=csi:51;9u
+keybind = super+digit_4=csi:52;9u
+keybind = super+digit_5=csi:53;9u
+keybind = super+digit_6=csi:54;9u
+keybind = super+digit_7=csi:55;9u
+keybind = super+digit_8=csi:56;9u
+keybind = super+digit_9=csi:57;9u
 
 # Option+fn+Delete deletes the next word. Option+←/→ (word jumps) and
 # Option+Delete (previous word) already work by default.
