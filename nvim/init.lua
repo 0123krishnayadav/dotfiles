@@ -713,21 +713,19 @@ do
   )
   vim.keymap.set({ 'n', 'i', 'x' }, '<D-F>', builtin.live_grep, { desc = 'Search in all files' })
   vim.keymap.set({ 'n', 'i', 'x' }, '<D-s>', '<Cmd>write<CR><Esc>', { desc = 'Save file' })
-  -- Cmd-Delete: delete from the cursor to the start of the line
-  vim.keymap.set('i', '<D-BS>', function()
+  -- Line editing. Ghostty sends Cmd-Left / Cmd-Right as Home / End and Cmd-Delete as Ctrl-U:
+  -- plain keys, so they also get through herdr to the shell. End and the command line's
+  -- Home / End / Ctrl-U already do the right thing.
+  -- Cmd-Left / Home: first non-blank character, like VS Code
+  vim.keymap.set({ 'n', 'x', 'o' }, '<Home>', '^', { desc = 'Start of line' })
+  vim.keymap.set('i', '<Home>', '<C-o>^', { desc = 'Start of line' })
+  -- Cmd-Delete / Ctrl-U in insert mode: delete everything before the cursor on the line
+  -- (the built-in Ctrl-U first stops at the start of what you just typed)
+  vim.keymap.set('i', '<C-u>', function()
     local row, col = unpack(vim.api.nvim_win_get_cursor(0))
     vim.api.nvim_buf_set_text(0, row - 1, 0, row - 1, col, {})
     vim.api.nvim_win_set_cursor(0, { row, 0 })
   end, { desc = 'Delete to start of line' })
-  vim.keymap.set('n', '<D-BS>', 'd0', { desc = 'Delete to start of line' })
-  vim.keymap.set('c', '<D-BS>', '<C-u>', { desc = 'Delete to start of line' })
-  -- Cmd-Left / Cmd-Right: start / end of line (first non-blank character, like VS Code)
-  vim.keymap.set({ 'n', 'x', 'o' }, '<D-Left>', '^', { desc = 'Start of line' })
-  vim.keymap.set({ 'n', 'x', 'o' }, '<D-Right>', '$', { desc = 'End of line' })
-  vim.keymap.set('i', '<D-Left>', '<C-o>^', { desc = 'Start of line' })
-  vim.keymap.set('i', '<D-Right>', '<End>', { desc = 'End of line' })
-  vim.keymap.set('c', '<D-Left>', '<Home>', { desc = 'Start of line' })
-  vim.keymap.set('c', '<D-Right>', '<End>', { desc = 'End of line' })
   -- Cmd-- / Cmd-=: jump back / forward (like VS Code's Ctrl-- / Ctrl-Shift--)
   vim.keymap.set('n', '<D-->', '<C-o>', { desc = 'Go back' })
   vim.keymap.set('n', '<D-=>', '<C-i>', { desc = 'Go forward' })

@@ -23,11 +23,14 @@ _tab_suggest_or_complete() {
 zle -N _tab_suggest_or_complete
 bindkey '\t' _tab_suggest_or_complete
 
-# macOS-style Cmd keys. Ghostty sends these as escape sequences
-# (keybind lines in ghostty/config.ghostty) so Neovim can tell them apart too.
-bindkey '^[[127;9u' backward-kill-line   # Cmd-Delete: delete to start of line
-bindkey '^[[1;9D' beginning-of-line      # Cmd-Left: start of line
-bindkey '^[[1;9C' end-of-line            # Cmd-Right: end of line
+# macOS-style line editing. Ghostty sends Cmd-Left / Cmd-Right as Home / End and
+# Cmd-Delete as Ctrl-U (ghostty/config.ghostty): plain keys, so they get through herdr.
+# Both Home/End forms are bound: herdr sends ^[OH / ^[OF while zle has keypad mode on.
+bindkey '^U' backward-kill-line   # Cmd-Delete: delete to start of line (zsh default kills the whole line)
+bindkey '^[[H' beginning-of-line  # Cmd-Left / Home
+bindkey '^[OH' beginning-of-line
+bindkey '^[[F' end-of-line        # Cmd-Right / End
+bindkey '^[OF' end-of-line
 
 # Cmd-F / Cmd-Shift-F at the prompt: open / close Ghostty's find bar.
 # Ghostty sends these keys on to the running program so Neovim can use them for its

@@ -47,9 +47,14 @@ keybind = super+shift+f=csi:102;10u
 keybind = super+s=csi:115;9u
 keybind = super+minus=csi:45;9u
 keybind = super+equal=csi:61;9u
-keybind = super+backspace=csi:127;9u
-keybind = super+arrow_left=csi:1;9D
-keybind = super+arrow_right=csi:1;9C
+
+# Line editing: Cmd+←/→ send Home/End and Cmd+Delete sends Ctrl+U (Ghostty's own default).
+# These are plain keys every shell and prompt understands. Don't send them as CSI u Cmd
+# chords: herdr drops Cmd chords on the way to apps that haven't turned on the kitty
+# keyboard protocol (zsh is one), so they never reached the prompt inside herdr.
+keybind = super+arrow_left=csi:H
+keybind = super+arrow_right=csi:F
+keybind = super+backspace=text:\x15
 
 # Forward tab/split shortcuts to Herdr. Cmd+W closes the current Herdr tab; Cmd+Q
 # keeps Ghostty's default (quit), and herdr keeps the session running in the background.

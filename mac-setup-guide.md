@@ -275,7 +275,7 @@ Useful keys (leader = `Space`):
 | `Cmd F` | search in current file (at the shell prompt: open Ghostty's find bar) |
 | `Cmd Shift F` | search text in project (at the shell prompt: close Ghostty's find bar) |
 | `Cmd S` / `Ctrl s` | save |
-| `Cmd Delete` | delete to start of line (also in the shell) |
+| `Cmd Delete` | delete to start of line, in insert mode (also in the shell) |
 | `Cmd ←` / `Cmd →` | start / end of line (also in the shell) |
 | `Space s g` | search text in project (ripgrep) |
 | `Space Space` | open buffers |
