@@ -40,13 +40,18 @@ shell-integration-features = ssh-env
 # macOS-style Cmd keys, sent as CSI u escape sequences so Neovim reads them as <D-...>
 # (nvim/lua/config/keymaps.lua). At the zsh prompt in a plain Ghostty window, Cmd+F / Cmd+Shift+F open /
 # close Ghostty's find bar (zsh asks Ghostty to); inside herdr the shell never gets them.
-# Cmd+-/= no longer change the font size; use the menu bar for that.
 keybind = super+p=csi:112;9u
 keybind = super+f=csi:102;9u
 keybind = super+shift+f=csi:102;10u
 keybind = super+s=csi:115;9u
-keybind = super+minus=csi:45;9u
-keybind = super+equal=csi:61;9u
+# Cmd+- / Cmd+= (back / forward in Neovim) replace Ghostty's zoom out / in. They must use the
+# same character triggers as those defaults (super+- / super+=): with the physical names
+# (super+minus / super+equal) the defaults stay bound, and their View-menu shortcuts zoom
+# before the key reaches the terminal. Cmd++ is unbound too, so no zoom shortcut can catch
+# Cmd+=; zoom from the View menu.
+keybind = super+-=csi:45;9u
+keybind = super+==csi:61;9u
+keybind = super++=unbind
 
 # Line editing: Cmd+←/→ send Home/End and Cmd+Delete sends Ctrl+U (Ghostty's own default).
 # These are plain keys every shell and prompt understands. Don't send them as CSI u Cmd
