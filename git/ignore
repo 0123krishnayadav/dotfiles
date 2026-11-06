@@ -13,3 +13,5 @@
 # Local secrets / per-machine files
 .env.local
 *.local
+
+**/.claude/settings.local.json
