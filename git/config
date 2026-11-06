@@ -14,3 +14,5 @@
 	# (lazygit ignores this section: its config passes --no-gitconfig and sets its own flags)
 	line-numbers = true
 	side-by-side = true
+[include]
+  path=~/.gitconfig.local
