@@ -33,6 +33,17 @@ map("n", "\\", function()
   Snacks.explorer({ cwd = LazyVim.root() })
 end, { desc = "Explorer (Root Dir)" })
 
+-- Space u B: inline git blame on the current line, off / on (on by default, lua/plugins/user.lua)
+Snacks.toggle({
+  name = "Inline Git Blame",
+  get = function()
+    return require("gitsigns.config").config.current_line_blame
+  end,
+  set = function(state)
+    require("gitsigns").toggle_current_line_blame(state)
+  end,
+}):map("<leader>uB")
+
 -- Move the selection with J / K
 map("x", "J", ":m '>+1<CR>gv=gv", { desc = "Move Selection Down", silent = true })
 map("x", "K", ":m '<-2<CR>gv=gv", { desc = "Move Selection Up", silent = true })
