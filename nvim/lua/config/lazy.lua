@@ -25,7 +25,9 @@ require("lazy").setup({
     version = false, -- latest git commit; lazy-lock.json pins the exact one
   },
   install = { colorscheme = { "tokyonight", "habamax" } },
-  checker = { enabled = true, notify = false }, -- look for plugin updates in the background
+  -- No background update checks: they ran ~40 git processes at every start. Update by hand
+  -- with :Lazy update, then commit lazy-lock.json.
+  checker = { enabled = false },
   performance = {
     rtp = {
       disabled_plugins = { "gzip", "tarPlugin", "tohtml", "tutor", "zipPlugin" },

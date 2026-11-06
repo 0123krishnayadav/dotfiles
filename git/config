@@ -5,6 +5,8 @@
 	defaultBranch = main
 [core]
 	pager = delta
+[alias]
+  cb = branch --show-current
 [interactive]
 	diffFilter = delta --color-only
 [delta]
