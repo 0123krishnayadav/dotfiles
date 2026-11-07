@@ -31,7 +31,7 @@ My macOS setup: shell, editor, terminal, keyboard and app config, plus `setup.sh
 - [ ] Letos: install by hand (not on Homebrew)
 - [ ] Sign in to Bitwarden, Brave (Sync restores bookmarks and extensions) and Claude Code (`claude`)
 - [ ] `colima start` before the first `docker` command
-- [ ] Check: `ls -l ~/.zshenv ~/.config/{zsh,git,nvim,lazygit,ghostty} ~/.config/herdr/config.toml ~/.ssh/config` all point into the repo, `ghostty +validate-config` prints nothing, and `:checkhealth` in Neovim is clean
+- [ ] Check: `ls -l ~/.zshenv ~/.config/{zsh,git,nvim,lazygit,ghostty} ~/.config/herdr/config.toml ~/.config/herdr-app/{keys,settings}.json ~/.ssh/config` all point into the repo, `ghostty +validate-config` prints nothing, and `:checkhealth` in Neovim is clean
 - [ ] If VS Code's terminal shows boxes instead of icons: `xattr -d com.apple.quarantine ~/Library/Fonts/*Nerd*; killall fontd`, then restart VS Code
 
 ## Shortcuts kept in Raycast
@@ -46,6 +46,17 @@ Raycast keeps these in its own database, not in this repo. Hyper = Caps Lock, or
 
 New Hyper letter: also add it to the Right Command rules in `karabiner/karabiner.json`. Karabiner reads a copy in `~/.config/karabiner/` (its service can't read this repo), so after editing that copy run `cp ~/.config/karabiner/karabiner.json ~/dotfiles/karabiner/`.
 
+## Herdr.app keys
+
+`herdr-app/keys.json` can't hold comments, so its notes are here. It copies herdr in Ghostty (`herdr/config.toml` + `ghostty/config.ghostty`); herdr's workspaces are the app's spaces.
+
+- Prefix `Option+Space`, then herdr's key: `c` `Shift+X` `Shift+T` `n` `p` `1`–`9` (tabs), `v` `-` `x` `z` `h` `j` `k` `l` (panes), `Shift+N` `Shift+W` `Shift+D` (spaces), `w`/`g` picker, `e` find in scrollback, `b` sidebar, `s` settings, `?` help, `q` quit (terminals keep running).
+- Direct: `Cmd+T/W/D/Shift+D/1–9`, `Option+1–9` tabs, `Option+J/K` next/previous space, `Option+H/L` pane left/right.
+- `Cmd+P/F/Shift+F/S/-/=` go to the program, so Neovim gets `<D-…>` as in Ghostty. The app's own uses for them moved: picker `Option+Space w`, find `Option+Space e`, zoom from the palette (`Cmd+Shift+P`).
+- Line editing sends Ghostty's bytes: `Cmd+←/→` Home/End, `Cmd+Delete` Ctrl+U, `Option+←/→` word jumps, `Option+Delete`/`Option+fn+Delete` delete a word. `settings.json` makes both Option keys Alt.
+- Not in the app: resize mode, rename pane, worktree keys. `Option+Space Tab`/`Shift+Tab` move right/left instead of cycling.
+- Edits apply after Cmd+Q and reopen (the app doesn't see changes through the links). Mistakes show in `~/.config/herdr-app/keys.error` and `herdr-app status`.
+
 ## What's inside
 
 | Folder | Tool | Installed to |
@@ -54,6 +65,7 @@ New Hyper letter: also add it to the Right Command rules in `karabiner/karabiner
 | `nvim/` | Neovim with [LazyVim](https://github.com/LazyVim/LazyVim): extras in `lazyvim.json`, plugins pinned in `lazy-lock.json` | `~/.config/nvim` |
 | `ghostty/` | Ghostty: opens maximized running herdr; `Cmd` keys, Option = Alt | `~/.config/ghostty` |
 | `herdr/` | herdr (agent multiplexer): prefix `Option+Space`, `Cmd` tab and split keys | `~/.config/herdr/config.toml` (file only) |
+| `herdr-app/` | Herdr.app (herdr as a desktop app) with the same keys as herdr + Ghostty. Notes below | `~/.config/herdr-app/{keys,settings}.json` (files only) |
 | `git/` | git config + global ignore, delta as pager | `~/.config/git` |
 | `lazygit/` | lazygit with side-by-side delta diffs | `~/.config/lazygit` |
 | `ssh/` | SSH hosts (no keys) | `~/.ssh/config` |

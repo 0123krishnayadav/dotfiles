@@ -135,6 +135,11 @@ dotfiles() {
   link "$REPO/ghostty"             "$HOME/.config/ghostty"
   # herdr: link only the file; ~/.config/herdr also holds its sockets, logs and sessions
   link "$REPO/herdr/config.toml"   "$HOME/.config/herdr/config.toml"
+  # Herdr.app: same, its folder also holds a socket, mods and window state. It reads these
+  # at launch but doesn't notice edits through a link: quit it (Cmd+Q) and reopen to apply
+  # (terminals keep running). Settings changed in the app are written back into the repo.
+  link "$REPO/herdr-app/keys.json"     "$HOME/.config/herdr-app/keys.json"
+  link "$REPO/herdr-app/settings.json" "$HOME/.config/herdr-app/settings.json"
   claude_statusline || return 1
   # Karabiner: copied, not linked. Its background service runs as root and macOS
   # blocks it from reading ~/Documents, so a link into this repo loads no rules.

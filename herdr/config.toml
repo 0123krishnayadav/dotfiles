@@ -3,6 +3,7 @@
 #   Check:  herdr config check
 #   Reload: Option+Space, release, then Shift+R (client and server;
 #           `herdr server reload-config` reloads only the server)
+# Herdr.app copies these keys (and Ghostty's Cmd keys) in herdr-app/keys.json: change both.
 
 onboarding = false
 [keys]

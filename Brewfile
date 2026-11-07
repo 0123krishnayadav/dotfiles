@@ -24,6 +24,7 @@ cask "font-jetbrains-mono-nerd-font" # VS Code font with icons (vscode/settings.
 
 # Apps
 cask "ghostty"               # terminal (config: ghostty/)
+cask "herdr-app"             # herdr as a desktop app, same keys as herdr in Ghostty (config: herdr-app/)
 cask "brave-browser"
 cask "raycast"               # launcher, app hotkeys, window snapping
 cask "karabiner-elements"    # Caps Lock / Right Cmd = Hyper key
