@@ -3,7 +3,7 @@
 Include ~/.ssh/config.local
 
 Host *
-  # Offer only the key set for the host, not every key in the agent
+  IdentityFile ~/.ssh/id_rsa
   IdentitiesOnly yes
   AddKeysToAgent yes
   UseKeychain yes
