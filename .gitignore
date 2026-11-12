@@ -1,0 +1,20 @@
+# Never commit secrets or machine-specific files
+*.local
+.env
+.env.*
+*.pem
+*.key
+*.p12
+id_rsa*
+id_ed25519*
+*.rayconfig
+.DS_Store
+
+# Files zsh / Apple Terminal write into $ZDOTDIR (= zsh/)
+zsh/.zsh_sessions/
+zsh/.zsh_history
+zsh/.zcompdump*
+
+# Karabiner writes these into its folder (linked to karabiner/)
+karabiner/automatic_backups/
+karabiner/assets/

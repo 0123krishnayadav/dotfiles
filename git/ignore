@@ -1,0 +1,16 @@
+# Global gitignore: Git reads ~/.config/git/ignore in every repo automatically
+
+# macOS
+.DS_Store
+._*
+
+# Editors
+*.swp
+*.swo
+*~
+.idea/
+
+# Local secrets / per-machine files
+*.local
+
+**/.claude/settings.local.json

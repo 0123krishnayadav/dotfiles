@@ -1,0 +1,10 @@
+# Hosts (names, IPs, users) live in ~/.ssh/config.local, which is never committed.
+# It is read first and SSH uses the first value it finds, so it wins over the defaults below.
+Include ~/.ssh/config.local
+
+Host *
+  # Offer only the key set for the host, not every key in the agent
+  IdentitiesOnly yes
+  AddKeysToAgent yes
+  UseKeychain yes
+  ServerAliveInterval 30

@@ -1,0 +1,29 @@
+# Ghostty: a second terminal (Herdr.app is the main one). ~/.config/ghostty is linked to this folder.
+#   Reload: Cmd+Shift+,   Check: ./setup.sh --check   All options: ghostty +show-config --default --docs
+
+# Same font as VS Code (the Brewfile installs it); its icons cover Neovim and lazygit
+font-family = JetBrainsMono Nerd Font Mono
+font-size = 14
+
+# Closing the last window quits Ghostty, and it never reopens old windows
+quit-after-last-window-closed = true
+window-save-state = never
+
+# New windows: 110x30, opening in your home folder
+window-width = 110
+window-height = 30
+window-inherit-working-directory = false
+
+cursor-style-blink = false
+# Don't dim inactive splits
+unfocused-split-opacity = 1
+
+# Option works as Alt, so zsh's Option keys work (Option+C, Option+Delete, Option+←/→).
+# Typing é or £ with Option is given up.
+macos-option-as-alt = true
+
+# Over ssh, send TERM=xterm-256color (servers don't know xterm-ghostty). Other features keep their defaults.
+shell-integration-features = ssh-env
+
+# Optional settings for this Mac.
+config-file = ?~/.ghostty
