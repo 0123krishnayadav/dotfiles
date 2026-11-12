@@ -7,7 +7,7 @@ My macOS setup: shell, editor, terminal, keyboard and app config, plus `setup.sh
 **On the old Mac first:** push this repo, and save these to a password manager or AirDrop them (never git): `~/.ssh/id_rsa` + `id_rsa.pub`, `~/.ssh/config.local` (your SSH hosts), `~/.zshrc.local` and `~/.gitconfig.local` if you have them, and a Raycast export (Raycast → Settings → Advanced → Export).
 
 1. In Terminal: `xcode-select --install` (git and compilers).
-2. Copy the SSH key and `config.local` into `~/.ssh/`, then `chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa ~/.ssh/config.local`. Your servers only accept the old key. (A new `ssh-keygen -t ed25519` key works for GitHub only, until you add it to each server.) Check with `ssh -T git@github.com`.
+2. Copy the SSH key and `config.local` into `~/.ssh/`, then `chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa ~/.ssh/config.local`. Check with `ssh -T git@github.com`.
 3. Clone to exactly `~/dotfiles` (configs are symlinked into it, so don't move it) and run the setup:
 
    ```bash
