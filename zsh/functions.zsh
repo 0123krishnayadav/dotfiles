@@ -8,3 +8,7 @@ killport() {
   [[ -n $1 ]] || { echo "usage: killport PORT" >&2; return 1; }
   lsof -ti tcp:"$1" -sTCP:LISTEN | xargs -r kill
 }
+
+# Grey suggestions (zsh-autosuggestions): never suggest `cd ...` from history.
+# Use `z` instead - it works from any folder.
+ZSH_AUTOSUGGEST_HISTORY_IGNORE='cd|cd *'
