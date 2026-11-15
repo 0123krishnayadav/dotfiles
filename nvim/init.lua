@@ -1,5 +1,5 @@
 -- Neovim config: LazyVim (https://lazyvim.org).
---   lua/config/   options, keymaps (LazyVim's defaults are listed at the top of each file)
+--   lua/config/   options, keymaps, autocmds (LazyVim's defaults are linked at the top of each file)
 --   lua/plugins/  overrides on top of LazyVim
 --   colors/       the colorscheme: VS Code's default dark theme
 --   lazyvim.json  enabled extras (change with :LazyExtras)
