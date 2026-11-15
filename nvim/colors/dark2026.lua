@@ -45,6 +45,9 @@ local c = {
   attribute = "#9cdcfe",
 }
 
+-- Git changes in the sign column (editorGutter.*)
+local signs = { Add = "#72C892", Change = "#0078D4", Delete = "#F28772" }
+
 -- A string links to that group; {} clears a group so the highlight under it shows through
 local groups = {
   -- Editor
@@ -69,8 +72,10 @@ local groups = {
   IncSearch = "CurSearch",
   Substitute = "CurSearch",
   MatchParen = { bg = over("#3994BC55") },
-  NonText = { fg = over("#8C8C8C4D") },
-  Whitespace = "NonText",
+  -- Dim but readable: plugins use NonText for folder paths, counts, hidden files and hints.
+  -- It's the gray VS Code uses for folder paths in Quick Open.
+  NonText = { fg = dim },
+  Whitespace = { fg = over("#8C8C8C4D") }, -- tab and trailing-space markers stay faint
   EndOfBuffer = { fg = bg },
   SpecialKey = { fg = dim },
   Conceal = { fg = dim },
@@ -225,10 +230,10 @@ local groups = {
   Added = { fg = green },
   Changed = { fg = yellow },
   Removed = { fg = red },
-  GitSignsAdd = { fg = "#72C892" },
-  GitSignsChange = { fg = "#0078D4" },
-  GitSignsDelete = { fg = "#F28772" },
-  GitSignsCurrentLineBlame = { fg = over("#8C8C8C99") },
+  GitSignsAdd = { fg = signs.Add },
+  GitSignsChange = { fg = signs.Change },
+  GitSignsDelete = { fg = signs.Delete },
+  GitSignsCurrentLineBlame = "NonText",
 
   -- Plugins (everything else follows the groups above)
   SnacksIndent = { fg = over("#8384854D") },
@@ -237,6 +242,7 @@ local groups = {
   SnacksPickerMatch = { fg = blue },
   SnacksPickerListCursorLine = { bg = over("#FFFFFF22", widget) },
   BlinkCmpLabelMatch = { fg = blue },
+  BlinkCmpGhostText = { fg = over("#FFFFFF56") }, -- the completion preview after the cursor
   TreesitterContext = { bg = bg },
   TreesitterContextBottom = { underline = true, sp = border },
   TreesitterContextLineNumber = { fg = "#858889", bg = bg },
@@ -250,6 +256,15 @@ local groups = {
   MiniIconsRed = { fg = "#EF8773" },
   MiniIconsYellow = { fg = "#E0B97F" },
 }
+
+-- Staged changes: a little dimmer than unstaged ones. Left to gitsigns, they get half the
+-- brightness, which turns the blue almost black.
+signs.Untracked, signs.Changedelete, signs.Topdelete = signs.Add, signs.Change, signs.Delete
+for kind, color in pairs(signs) do
+  for _, suffix in ipairs({ "", "Nr", "Cul" }) do
+    groups["GitSignsStaged" .. kind .. suffix] = { fg = over(color .. "CC") }
+  end
+end
 
 for name, hl in pairs(groups) do
   vim.api.nvim_set_hl(0, name, type(hl) == "string" and { link = hl } or hl)
