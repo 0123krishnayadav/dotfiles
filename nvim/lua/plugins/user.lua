@@ -1,6 +1,7 @@
 -- Overrides on top of LazyVim. Language support comes from extras (lazyvim.json, :LazyExtras).
 return {
-  { "folke/tokyonight.nvim", opts = { style = "night", styles = { comments = { italic = false } } } },
+  -- Same look as VS Code's default dark theme (colors/dark2026.lua)
+  { "LazyVim/LazyVim", opts = { colorscheme = "dark2026" } },
 
   -- Show dotfiles in file search, grep and the explorer (never .git)
   {

@@ -44,7 +44,7 @@ Herdr.app is the terminal. `herdr-app/keys.json` can't hold comments, so its not
 |---|---|---|
 | `zsh/` | zsh + Oh My Zsh: aliases, key bindings, functions, Oh My Posh prompt | `~/.config/zsh` (via `ZDOTDIR` in `~/.zshenv`) |
 | `ghostty/` | Ghostty, a second terminal: font, window size, Option as Alt | `~/.config/ghostty` |
-| `nvim/` | Neovim with [LazyVim](https://github.com/LazyVim/LazyVim): extras in `lazyvim.json`, plugins pinned in `lazy-lock.json` | `~/.config/nvim` |
+| `nvim/` | Neovim with [LazyVim](https://github.com/LazyVim/LazyVim): extras in `lazyvim.json`, plugins pinned in `lazy-lock.json`, VS Code's default dark theme in `colors/` | `~/.config/nvim` |
 | `herdr-app/` | Herdr.app, the terminal: prefix `Option+Space` and macOS `Cmd` keys. Notes above | `~/.config/herdr-app/{keys,settings}.json` (files only) |
 | `git/` | git config + global ignore, delta as pager | `~/.config/git` |
 | `lazygit/` | lazygit with side-by-side delta diffs | `~/.config/lazygit` |
