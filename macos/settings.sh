@@ -14,8 +14,8 @@ macos_settings() {
 
   # Keyboard → Key repeat rate / Delay until repeat. Units of 15 ms, whole numbers only
   # (-int cuts 1.5 down to 1)
-  defaults write NSGlobalDomain KeyRepeat -int 2         # 30 ms between repeats, the fastest System Settings offers
-  defaults write NSGlobalDomain InitialKeyRepeat -int 15 # 225 ms before repeating starts, the shortest System Settings offers
+  defaults write NSGlobalDomain KeyRepeat -int 1         # 15 ms between repeats, faster than System Settings' fastest (2)
+  defaults write NSGlobalDomain InitialKeyRepeat -int 20 # 300 ms before repeating starts (System Settings' shortest is 15)
   # Keyboard → Keyboard Shortcuts: ⌘Space (Spotlight, so Raycast can have it), ⌃Space and ⌃⌥Space (input sources)
   hotkey_off 64 1048576
   hotkey_off 60 262144
