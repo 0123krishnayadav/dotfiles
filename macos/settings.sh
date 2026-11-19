@@ -44,15 +44,17 @@ macos_settings() {
   defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
   ok "look: dark, 60% glass tint, no gaps between tiled windows"
 
-  # Dock: hides until the pointer reaches it, on the left, only these apps (ones not installed are skipped)
+  # Dock: hides until the pointer reaches it, on the left, only these apps (ones not installed are skipped),
+  # and no "recent apps" section (macOS otherwise adds the last few apps you opened)
   defaults write com.apple.dock autohide -bool true
   defaults write com.apple.dock orientation -string left
+  defaults write com.apple.dock show-recents -bool false
   for app in /System/Applications/Apps.app "/Applications/Brave Browser.app" "/Applications/Visual Studio Code.app" \
     "/System/Applications/App Store.app" "/System/Applications/System Settings.app"; do
     [[ -d "$app" ]] && tiles+=("<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>file://${app// /%20}/</string><key>_CFURLStringType</key><integer>15</integer></dict></dict><key>tile-type</key><string>file-tile</string></dict>")
   done
   defaults write com.apple.dock persistent-apps -array "${tiles[@]}"
-  ok "Dock: auto-hide, on the left, ${#tiles[@]} apps"
+  ok "Dock: auto-hide, on the left, ${#tiles[@]} apps, no recent apps"
 
   # Finder: list view, and searching searches the current folder (not the whole Mac)
   defaults write com.apple.finder FXPreferredViewStyle -string Nlsv
