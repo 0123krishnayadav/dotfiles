@@ -8,13 +8,17 @@ os:
 gui:
   nerdFontsVersion: "3"   # file icons (needs a terminal font with Nerd Font symbols)
   sidePanelWidth: 0.2     # narrower left panels, more room for the diff
+  # Colors: VS Code's dark theme, like Neovim's, in ~/.config/theme/lazygit.yml (made from
+  # theme/palette.lua), which lazygit reads after this file (LG_CONFIG_FILE in zsh/.zshenv).
+  # Neovim's lazygit uses it too: nvim/lua/plugins/user.lua stops Snacks from making its own.
 
 git:
-  # Diffs rendered by delta (brew git-delta). `|` cycles through these, `+` enlarges the diff panel.
-  # --no-gitconfig: ignore git/config's [delta] section (it turns side by side on for the shell)
+  # Diffs rendered by delta (brew git-delta) in the theme's colors (--config: only that file, so
+  # git/config's [delta] section, side by side in the shell, doesn't apply).
+  # `|` cycles through these, `+` enlarges the diff panel.
   diffRenderers:
     # Side by side when the diff panel is wide enough, normal diff otherwise
     - name: delta side-by-side
-      command: delta --no-gitconfig --{{colorScheme}} --paging=never --line-numbers {{if gt .width 140}}--side-by-side{{end}}
+      command: delta --config ~/.config/theme/delta.gitconfig --paging=never --line-numbers {{if gt .width 140}}--side-by-side{{end}}
     - name: delta
-      command: delta --no-gitconfig --{{colorScheme}} --paging=never --line-numbers
+      command: delta --config ~/.config/theme/delta.gitconfig --paging=never --line-numbers

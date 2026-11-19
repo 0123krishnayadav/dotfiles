@@ -1,52 +1,18 @@
--- "Dark 2026", VS Code's default dark theme, for Neovim.
--- Every color is taken from VS Code's own theme files (2026-dark.json on top of Dark Modern and
--- Dark+, in the app under extensions/theme-defaults/themes), resolved the way VS Code resolves
--- them, so code looks the same in both editors. The status line is lua/lualine/themes/dark2026.lua.
+-- "Dark 2026", VS Code's default dark theme, for Neovim, so code looks the same in both editors.
+-- The colors are in theme/palette.lua (shared with lazygit, delta and bat); this file says which
+-- one each part of Neovim gets. The status line is lua/lualine/themes/dark2026.lua.
 vim.o.background = "dark"
 vim.cmd("highlight clear")
 vim.g.colors_name = "dark2026"
 
-local bg, fg = "#121314", "#BBBEBF" -- editor.background, editor.foreground
-local widget, panel, border = "#202122", "#191A1B", "#2A2B2C" -- popups, bars, lines between them
-local ui, dim = "#bfbfbf", "#8C8C8C" -- text outside the editor, and its muted form
+-- ~/.config/nvim is a link to the repo's nvim/, and palette.lua is next to it in the repo
+local p = dofile(vim.fs.dirname(vim.fn.resolve(vim.fn.stdpath("config"))) .. "/theme/palette.lua")
+local over, c = p.over, p.syntax
+local bg, fg, widget, border, ui, dim = p.bg, p.fg, p.widget, p.border, p.ui, p.dim
+local selection = over(p.selection)
 
--- VS Code writes see-through colors as #RRGGBBAA. Neovim has no alpha, so paint them onto `base`.
-local function over(color, base)
-  base = base or bg
-  local alpha = tonumber(color:sub(8, 9), 16) / 255
-  local out = "#"
-  for i = 2, 6, 2 do
-    local c, b = tonumber(color:sub(i, i + 1), 16), tonumber(base:sub(i, i + 1), 16)
-    out = out .. string.format("%02x", math.floor(c * alpha + b * (1 - alpha) + 0.5))
-  end
-  return out
-end
-
-local selection = over("#276782dd")
-local blue, red, yellow, green = "#48A0C7", "#f48771", "#e5ba7d", "#73c991" -- links, errors, warnings, added
-
--- Syntax colors, named after what they color in VS Code
-local c = {
-  comment = "#8b949e",
-  string = "#a5d6ff",
-  escape = "#d7ba7d",
-  number = "#b5cea8",
-  literal = "#569cd6", -- true, null, `new`, `typeof`, `static`, `async`, macros
-  constant = "#79c0ff",
-  variable = "#c9d1d9",
-  parameter = "#ffa657",
-  func = "#d2a8ff",
-  builtin = "#DCDCAA", -- library functions: print, parseInt
-  type = "#4EC9B0",
-  keyword = "#ff7b72", -- const, function, class
-  control = "#C586C0", -- if, return, import, await
-  operator = "#d4d4d4",
-  tag = "#7ee787", -- HTML tags, JSON and YAML keys
-  attribute = "#9cdcfe",
-}
-
--- Git changes in the sign column (editorGutter.*)
-local signs = { Add = "#72C892", Change = "#0078D4", Delete = "#F28772" }
+-- Git changes in the sign column
+local signs = { Add = p.gutter.add, Change = p.gutter.change, Delete = p.gutter.delete }
 
 -- A string links to that group; {} clears a group so the highlight under it shows through
 local groups = {
@@ -58,53 +24,53 @@ local groups = {
   FloatTitle = { fg = ui, bg = widget, bold = true },
   FloatFooter = { fg = dim, bg = widget },
   Cursor = { fg = bg, bg = fg },
-  CursorLine = { bg = "#242526" },
+  CursorLine = { bg = p.line },
   CursorColumn = "CursorLine",
-  ColorColumn = { bg = panel },
-  LineNr = { fg = "#858889" },
+  ColorColumn = { bg = p.panel },
+  LineNr = { fg = p.line_nr },
   CursorLineNr = { fg = fg },
   SignColumn = { fg = dim },
   FoldColumn = { fg = dim },
-  Folded = { fg = dim, bg = over("#2767824D") },
+  Folded = { fg = dim, bg = over(p.fold) },
   Visual = { bg = selection },
-  Search = { bg = over("#27678280") },
-  CurSearch = { fg = "#FFFFFF", bg = "#297AA0" },
+  Search = { bg = over(p.search) },
+  CurSearch = { fg = p.on_button, bg = p.button },
   IncSearch = "CurSearch",
   Substitute = "CurSearch",
-  MatchParen = { bg = over("#3994BC55") },
+  MatchParen = { bg = over(p.bracket) },
   -- Dim but readable: plugins use NonText for folder paths, counts, hidden files and hints.
   -- It's the gray VS Code uses for folder paths in Quick Open.
   NonText = { fg = dim },
-  Whitespace = { fg = over("#8C8C8C4D") }, -- tab and trailing-space markers stay faint
+  Whitespace = { fg = over(p.whitespace) }, -- tab and trailing-space markers stay faint
   EndOfBuffer = { fg = bg },
   SpecialKey = { fg = dim },
   Conceal = { fg = dim },
   WinSeparator = { fg = border },
-  StatusLine = { fg = dim, bg = panel },
+  StatusLine = { fg = dim, bg = p.panel },
   StatusLineNC = { fg = dim, bg = bg },
-  TabLine = { fg = dim, bg = panel },
-  TabLineFill = { bg = panel },
+  TabLine = { fg = dim, bg = p.panel },
+  TabLineFill = { bg = p.panel },
   TabLineSel = { fg = ui, bg = bg },
   WinBar = { fg = dim, bg = bg },
   WinBarNC = "WinBar",
   Pmenu = { fg = ui, bg = widget },
-  PmenuSel = { bg = over("#FFFFFF26", widget) },
+  PmenuSel = { bg = over(p.menu_selection, widget) },
   PmenuSbar = { bg = widget },
-  PmenuThumb = { bg = over("#A8A9AA85", widget) },
-  PmenuMatch = { fg = blue },
+  PmenuThumb = { bg = over(p.scrollbar, widget) },
+  PmenuMatch = { fg = p.blue },
   WildMenu = "PmenuSel",
-  QuickFixLine = { bg = over("#27678260") },
-  Directory = { fg = blue },
+  QuickFixLine = { bg = over(p.quickfix) },
+  Directory = { fg = p.blue },
   Title = { fg = c.constant, bold = true },
-  Question = { fg = blue },
-  MoreMsg = { fg = blue },
+  Question = { fg = p.blue },
+  MoreMsg = { fg = p.blue },
   ModeMsg = { fg = ui },
-  ErrorMsg = { fg = red },
-  WarningMsg = { fg = yellow },
-  SpellBad = { undercurl = true, sp = "#F14C4C" },
-  SpellCap = { undercurl = true, sp = "#CCA700" },
-  SpellRare = { undercurl = true, sp = "#3794FF" },
-  SpellLocal = { undercurl = true, sp = "#3794FF" },
+  ErrorMsg = { fg = p.red },
+  WarningMsg = { fg = p.yellow },
+  SpellBad = { undercurl = true, sp = p.error },
+  SpellCap = { undercurl = true, sp = p.warning },
+  SpellRare = { undercurl = true, sp = p.info },
+  SpellLocal = { undercurl = true, sp = p.info },
 
   -- Syntax
   Comment = { fg = c.comment },
@@ -134,8 +100,8 @@ local groups = {
   SpecialChar = { fg = c.escape },
   Tag = { fg = c.tag },
   Delimiter = { fg = c.variable },
-  Underlined = { fg = blue, underline = true },
-  Error = { fg = "#f44747" },
+  Underlined = { fg = p.blue, underline = true },
+  Error = { fg = c.invalid },
   Todo = { fg = c.constant, bold = true },
 
   -- Treesitter
@@ -151,7 +117,7 @@ local groups = {
   ["@constant.builtin"] = { fg = c.literal },
   ["@constant.macro"] = "Macro",
   ["@module"] = "Type",
-  ["@label"] = { fg = "#C8C8C8" },
+  ["@label"] = { fg = c.label },
   ["@string.escape"] = "SpecialChar",
   ["@string.regexp"] = "String",
   ["@string.special.url"] = { fg = c.string, underline = true },
@@ -176,7 +142,7 @@ local groups = {
   ["@tag"] = "Tag",
   ["@tag.builtin"] = "Tag",
   ["@tag.attribute"] = { fg = c.attribute },
-  ["@tag.delimiter"] = { fg = "#808080" },
+  ["@tag.delimiter"] = { fg = c.tag_delimiter },
   ["@markup.heading"] = "Title",
   ["@markup.strong"] = { fg = c.variable, bold = true },
   ["@markup.italic"] = { fg = c.variable, italic = true },
@@ -187,7 +153,7 @@ local groups = {
   ["@markup.link.url"] = "@string.special.url",
   ["@markup.list"] = { fg = c.parameter },
   ["@diff.plus"] = { fg = c.tag },
-  ["@diff.minus"] = { fg = "#ffa198" },
+  ["@diff.minus"] = { fg = c.deleted },
   ["@diff.delta"] = { fg = c.parameter },
 
   -- Language servers. VS Code lets these win over the grammar too, except where the grammar
@@ -202,59 +168,59 @@ local groups = {
   ["@lsp.typemod.property.readonly"] = "Constant",
   ["@lsp.typemod.variable.defaultLibrary"] = "Constant", -- console, Math
   ["@lsp.typemod.function.defaultLibrary"] = "@function.builtin",
-  LspReferenceText = { bg = over("#27678250") },
+  LspReferenceText = { bg = over(p.word) },
   LspReferenceRead = "LspReferenceText",
-  LspReferenceWrite = { bg = over("#27678280") },
-  LspInlayHint = { fg = "#969696", bg = over("#6161611A") },
+  LspReferenceWrite = { bg = over(p.word_write) },
+  LspInlayHint = { fg = p.inlay_hint, bg = over(p.inlay_hint_bg) },
   LspCodeLens = { fg = dim },
-  LspSignatureActiveParameter = { fg = blue, bold = true },
+  LspSignatureActiveParameter = { fg = p.blue, bold = true },
 
   -- Diagnostics
-  DiagnosticError = { fg = "#F14C4C" },
-  DiagnosticWarn = { fg = "#CCA700" },
-  DiagnosticInfo = { fg = "#3794FF" },
+  DiagnosticError = { fg = p.error },
+  DiagnosticWarn = { fg = p.warning },
+  DiagnosticInfo = { fg = p.info },
   DiagnosticHint = { fg = dim },
-  DiagnosticOk = { fg = green },
-  DiagnosticUnderlineError = { undercurl = true, sp = "#F14C4C" },
-  DiagnosticUnderlineWarn = { undercurl = true, sp = "#CCA700" },
-  DiagnosticUnderlineInfo = { undercurl = true, sp = "#3794FF" },
+  DiagnosticOk = { fg = p.green },
+  DiagnosticUnderlineError = { undercurl = true, sp = p.error },
+  DiagnosticUnderlineWarn = { undercurl = true, sp = p.warning },
+  DiagnosticUnderlineInfo = { undercurl = true, sp = p.info },
   DiagnosticUnderlineHint = { undercurl = true, sp = dim },
-  DiagnosticUnnecessary = { fg = over("#BBBEBFAA") },
+  DiagnosticUnnecessary = { fg = over(p.unnecessary) },
   DiagnosticDeprecated = { strikethrough = true },
 
   -- Diffs and git
-  DiffAdd = { bg = over("#347d3926") },
-  DiffChange = { bg = over("#347d3926") },
-  DiffText = { bg = over("#57ab5a4d") },
-  DiffDelete = { bg = over("#c93c3726") },
-  Added = { fg = green },
-  Changed = { fg = yellow },
-  Removed = { fg = red },
+  DiffAdd = { bg = over(p.diff.add) },
+  DiffChange = { bg = over(p.diff.add) },
+  DiffText = { bg = over(p.diff.add_text) },
+  DiffDelete = { bg = over(p.diff.delete) },
+  Added = { fg = p.green },
+  Changed = { fg = p.yellow },
+  Removed = { fg = p.red },
   GitSignsAdd = { fg = signs.Add },
   GitSignsChange = { fg = signs.Change },
   GitSignsDelete = { fg = signs.Delete },
   GitSignsCurrentLineBlame = "NonText",
 
   -- Plugins (everything else follows the groups above)
-  SnacksIndent = { fg = over("#8384854D") },
-  SnacksIndentScope = { fg = "#838485" },
+  SnacksIndent = { fg = over(p.indent) },
+  SnacksIndentScope = { fg = p.indent_active },
   SnacksPickerDirectory = { fg = ui }, -- folders in the file tree are plain text, as in VS Code
-  SnacksPickerMatch = { fg = blue },
-  SnacksPickerListCursorLine = { bg = over("#FFFFFF22", widget) },
-  BlinkCmpLabelMatch = { fg = blue },
-  BlinkCmpGhostText = { fg = over("#FFFFFF56") }, -- the completion preview after the cursor
+  SnacksPickerMatch = { fg = p.blue },
+  SnacksPickerListCursorLine = { bg = over(p.list_selection, widget) },
+  BlinkCmpLabelMatch = { fg = p.blue },
+  BlinkCmpGhostText = { fg = over(p.ghost_text) },
   TreesitterContext = { bg = bg },
   TreesitterContextBottom = { underline = true, sp = border },
-  TreesitterContextLineNumber = { fg = "#858889", bg = bg },
-  MiniIconsAzure = { fg = "#57A3F8" },
-  MiniIconsBlue = { fg = "#3794FF" },
+  TreesitterContextLineNumber = { fg = p.line_nr, bg = bg },
+  MiniIconsAzure = { fg = p.icons.azure },
+  MiniIconsBlue = { fg = p.info },
   MiniIconsCyan = { fg = c.type },
-  MiniIconsGreen = { fg = "#86CF86" },
+  MiniIconsGreen = { fg = p.icons.green },
   MiniIconsGrey = { fg = dim },
-  MiniIconsOrange = { fg = "#CD861A" },
-  MiniIconsPurple = { fg = "#AD80D7" },
-  MiniIconsRed = { fg = "#EF8773" },
-  MiniIconsYellow = { fg = "#E0B97F" },
+  MiniIconsOrange = { fg = p.icons.orange },
+  MiniIconsPurple = { fg = p.icons.purple },
+  MiniIconsRed = { fg = p.icons.red },
+  MiniIconsYellow = { fg = p.icons.yellow },
 }
 
 -- Staged changes: a little dimmer than unstaged ones. Left to gitsigns, they get half the
@@ -270,25 +236,7 @@ for name, hl in pairs(groups) do
   vim.api.nvim_set_hl(0, name, type(hl) == "string" and { link = hl } or hl)
 end
 
--- :terminal colors: VS Code's terminal palette (black, red, green, yellow, blue, magenta, cyan, white)
-local ansi = {
-  "#000000",
-  "#cd3131",
-  "#0dbc79",
-  "#e5e510",
-  "#2472c8",
-  "#bc3fbc",
-  "#11a8cd",
-  "#e5e5e5",
-  "#666666",
-  "#f14c4c",
-  "#23d18b",
-  "#f5f543",
-  "#3b8eea",
-  "#d670d6",
-  "#29b8db",
-  "#e5e5e5",
-}
-for i, color in ipairs(ansi) do
+-- :terminal colors: VS Code's terminal palette
+for i, color in ipairs(p.ansi) do
   vim.g["terminal_color_" .. i - 1] = color
 end

@@ -21,7 +21,13 @@ export VISUAL="nvim"
 [[ -d "$XDG_CACHE_HOME/zsh" ]] || mkdir -p "$XDG_CACHE_HOME/zsh"
 [[ -d "$XDG_STATE_HOME/zsh" ]] || mkdir -p "$XDG_STATE_HOME/zsh"
 
-# Optional local lazygit settings, also inherited by Neovim's terminal.
-if [[ -z ${LG_CONFIG_FILE:-} && -f "$HOME/.lazygit.yml" ]]; then
-  export LG_CONFIG_FILE="$XDG_CONFIG_HOME/lazygit/config.yml,$HOME/.lazygit.yml"
-fi
+# lazygit: the repo's config, then the theme's colors, then optional local settings. Only the
+# files that exist (lazygit won't start if a listed one is missing), and set in every shell, so
+# none keeps an older list from the app that started it. Also inherited by Neovim's terminal.
+() {
+  local f files=()
+  for f in "$XDG_CONFIG_HOME/lazygit/config.yml" "$XDG_CONFIG_HOME/theme/lazygit.yml" "$HOME/.lazygit.yml"; do
+    if [[ -f $f ]]; then files+=("$f"); fi
+  done
+  if (($#files)); then export LG_CONFIG_FILE=${(j:,:)files}; else unset LG_CONFIG_FILE; fi
+}

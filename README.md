@@ -44,10 +44,11 @@ Herdr.app is the terminal. `herdr-app/keys.json` can't hold comments, so its not
 |---|---|---|
 | `zsh/` | zsh + Oh My Zsh: aliases, key bindings, functions, Oh My Posh prompt | `~/.config/zsh` (via `ZDOTDIR` in `~/.zshenv`) |
 | `ghostty/` | Ghostty, a second terminal: font, window size, Option as Alt | `~/.config/ghostty` |
-| `nvim/` | Neovim with [LazyVim](https://github.com/LazyVim/LazyVim): extras in `lazyvim.json`, plugins pinned in `lazy-lock.json`, VS Code's default dark theme in `colors/` | `~/.config/nvim` |
+| `nvim/` | Neovim with [LazyVim](https://github.com/LazyVim/LazyVim): extras in `lazyvim.json`, plugins pinned in `lazy-lock.json`, VS Code's default dark theme in `colors/` (colors from `theme/`) | `~/.config/nvim` |
 | `herdr-app/` | Herdr.app, the terminal: macOS `Cmd` keys, no prefix key. Notes above | `~/.config/herdr-app/{keys,settings}.json` (files only) |
 | `git/` | git config + global ignore, delta as pager | `~/.config/git` |
 | `lazygit/` | lazygit with side-by-side delta diffs | `~/.config/lazygit` |
+| `theme/` | VS Code's dark theme for Neovim, lazygit and its delta diffs (through bat's theme cache): every color once in `palette.lua`. After changing one, `nvim -l ~/.config/theme/build.lua` rewrites the other tools' files | `~/.config/theme`, `~/.config/bat/themes/dark2026.tmTheme` |
 | `ssh/` | SSH defaults only (no hosts, no keys) | `~/.ssh/config` |
 | `karabiner/` | Caps Lock / Right ⌘ = Hyper | `~/.config/karabiner` |
 | `hammerspoon/` | Hammerspoon: `Option+Space` shows the Dock in a ring at the pointer; point and click (how to use: top of `ring_dock.lua`). Optional | `~/.hammerspoon`, by `./setup.sh hammerspoon` |

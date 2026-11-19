@@ -33,6 +33,8 @@ LINKS=(
   ssh/config .ssh/config
   nvim .config/nvim
   lazygit .config/lazygit
+  theme .config/theme # colors shared by Neovim, lazygit, delta and bat
+  theme/dark2026.tmTheme .config/bat/themes/dark2026.tmTheme
   ghostty .config/ghostty
   karabiner .config/karabiner                     # the folder: Karabiner replaces karabiner.json on save
   herdr-app/keys.json .config/herdr-app/keys.json # files only: Herdr.app keeps sockets and state there
@@ -153,7 +155,19 @@ links() {
   for ((i = 0; i < ${#LINKS[@]}; i += 2)); do link "$REPO/${LINKS[i]}" "$HOME/${LINKS[i + 1]}" || return 1; done
   # ssh rejects configs that are group/world-writable
   chmod 700 "$HOME/.ssh" && chmod 600 "$REPO/ssh/config"
-  app_settings
+  app_settings || return 1
+  bat_cache
+}
+
+# bat and delta read syntax themes from a cache, not from the files themselves
+bat_cache() {
+  if ! command -v bat >/dev/null; then
+    warn "bat isn't installed yet: run ./setup.sh --link again after the Brewfile"
+    return
+  fi
+  # The folders under $HOME, not the shell's XDG_* ones (they differ in a test with a fake HOME)
+  XDG_CONFIG_HOME="$HOME/.config" XDG_CACHE_HOME="$HOME/.cache" bat cache --build >/dev/null &&
+    ok "bat theme cache built"
 }
 
 # Settings inside JSON files that apps own. These files aren't linked: the apps rewrite them
@@ -335,6 +349,22 @@ links_ok() {
   return 1
 }
 
+# delta (lazygit's diffs) finds the dark2026 syntax theme, and bat's cache has its latest version
+delta_theme() {
+  command -v delta >/dev/null || {
+    echo "delta isn't installed (fix: ./setup.sh brew_bundle)"
+    return 1
+  }
+  if ! XDG_CACHE_HOME="$HOME/.cache" delta --list-syntax-themes | grep -q $'\tdark2026$'; then
+    echo "not in bat's cache (fix: ./setup.sh --link)"
+    return 1
+  fi
+  if [[ "$REPO/theme/dark2026.tmTheme" -nt "$HOME/.cache/bat/themes.bin" ]]; then
+    echo "bat's cache is older than theme/dark2026.tmTheme, e.g. after a pull (fix: ./setup.sh --link)"
+    return 1
+  fi
+}
+
 # Lists only what's missing (brew also prints download progress). Apps installed by hand
 # count as missing until brew adopts them (./setup.sh brew_bundle does, or the command below).
 brewfile_installed() {
@@ -357,6 +387,7 @@ check() {
   t "macos/settings.sh" bash -n "$REPO/macos/settings.sh"
   t "zsh files" zsh_syntax
   t "JSON files" json_syntax
+  t "theme/ files made from palette.lua" nvim -l "$REPO/theme/build.lua" --check
 
   bold "Each tool loads the repo's config"
   # XDG_CONFIG_HOME=$REPO makes them read <tool>/ in the repo, whatever ~/.config holds
@@ -369,6 +400,7 @@ check() {
 
   bold "This Mac matches the repo"
   t "$((${#LINKS[@]} / 2)) links into the repo" links_ok
+  t "delta has the dark2026 theme" delta_theme
   app_settings
   t "Brewfile installed" brewfile_installed
 

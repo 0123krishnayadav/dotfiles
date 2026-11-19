@@ -3,12 +3,12 @@ return {
   -- Same look as VS Code's default dark theme (colors/dark2026.lua)
   { "LazyVim/LazyVim", opts = { colorscheme = "dark2026" } },
 
-  -- Show dotfiles in file search, grep and the explorer (never .git). The explorer also shows
-  -- gitignored files, grayed out as in VS Code; file search and grep skip them, as VS Code's
-  -- do (Alt+i shows them there).
   {
     "folke/snacks.nvim",
     opts = {
+      -- Show dotfiles in file search, grep and the explorer (never .git). The explorer also shows
+      -- gitignored files, grayed out as in VS Code; file search and grep skip them, as VS Code's
+      -- do (Alt+i shows them there).
       picker = {
         sources = {
           files = { hidden = true },
@@ -16,6 +16,9 @@ return {
           explorer = { hidden = true, ignored = true, exclude = { ".git", ".DS_Store" } },
         },
       },
+      -- lazygit keeps the theme's colors (theme/lazygit.yml) instead of a theme Snacks makes from
+      -- the colorscheme, so it looks the same in and out of Neovim
+      lazygit = { configure = false },
     },
   },
 
