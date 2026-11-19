@@ -51,7 +51,7 @@ Herdr.app is the terminal. `herdr-app/keys.json` can't hold comments, so its not
 | `theme/` | VS Code's dark theme for Neovim, lazygit and its delta diffs (through bat's theme cache): every color once in `palette.lua`. After changing one, `nvim -l ~/.config/theme/build.lua` rewrites the other tools' files | `~/.config/theme`, `~/.config/bat/themes/dark2026.tmTheme` |
 | `ssh/` | SSH defaults only (no hosts, no keys) | `~/.ssh/config` |
 | `karabiner/` | Caps Lock / Right ⌘ = Hyper | `~/.config/karabiner` |
-| `hammerspoon/` | Hammerspoon: `Option+Space` shows the Dock in a ring at the pointer; point and click (how to use: top of `ring_dock.lua`). Optional | `~/.hammerspoon`, by `./setup.sh hammerspoon` |
+| `hammerspoon/` | Hammerspoon: `Option+Space` or a three-finger trackpad tap or click shows the Dock in a ring at the pointer; point and click (how to use: top of `ring_dock.lua`). Optional | `~/.hammerspoon`, by `./setup.sh hammerspoon` |
 | `vscode/` | VS Code settings + keybindings | `~/Library/Application Support/Code/User` |
 | `macos/` | macOS System Settings (keyboard, trackpad, look, Dock, Finder) and the permissions walk-through | `defaults write`, run by `./setup.sh macos_settings` / `permissions` |
 | `claude/` | Claude Code status line | `~/.claude/statusline-command.sh` + `statusLine` in `~/.claude/settings.json` |

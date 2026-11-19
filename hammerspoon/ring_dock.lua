@@ -1,8 +1,8 @@
--- Ring Dock: Option+Space shows everything in the Dock in a ring around the pointer, in the
--- Dock's order, with its badges and running dots. Point toward an item (anywhere on the ring or
--- inside it, the direction counts) and click, or hold Option+Space, point and let go. Return
--- opens the item pointed at; Esc, a click outside the ring or in its middle, or Option+Space
--- again closes it.
+-- Ring Dock: Option+Space, or a tap or click on the trackpad with three fingers, shows everything
+-- in the Dock in a ring around the pointer, in the Dock's order, with its badges and running dots.
+-- Point toward an item (anywhere on the ring or inside it, the direction counts) and click, or
+-- keep holding the keys or the click, point and let go. Return opens the item pointed at; Esc,
+-- a click outside the ring or in its middle, or the same keys or fingers again close it.
 -- Resting on an app with 2 or more windows lists their names outside the ring, next to it:
 -- move out onto one and click (or let go) to bring that window to the front. Only windows on
 -- the current desktop (and minimized ones) can be listed.
@@ -11,6 +11,8 @@
 local M = {}
 
 local MODS, KEY = { "alt" }, "space"
+local FINGERS = 3 -- or a trackpad tap or click with this many fingers
+local TAP, MOVE = 0.3, 0.05 -- a tap: fingers down and up within this many seconds, moving less (trackpad = 1)
 local ICON = 44 -- icon size, points: the whole ring scales with it
 local GAP = 14 -- space between icons around the ring
 local BAND = 12 -- ring around the icons, inside and out
@@ -251,10 +253,17 @@ local function choose()
   end
 end
 
+-- Letting go of what opened the ring, after holding it and pointing: opens what's pointed at
+local function letGo()
+  local r = M.ring
+  if r and (r.row or (r.inside and r.sel)) and hs.timer.secondsSinceEpoch() - r.opened > HOLD then choose() end
+end
+
 local E = hs.eventtap.event.types
 local function onEvent(e)
+  if not M.ring then return false end -- closed, with events still queued for its tap
   local t = e:getType()
-  if t == E.mouseMoved or t == E.leftMouseDragged then
+  if t == E.mouseMoved or t == E.leftMouseDragged or t == E.rightMouseDragged then
     update()
     return false
   elseif t == E.keyDown then
@@ -269,12 +278,59 @@ local function onEvent(e)
     return true
   end
   -- Mouse buttons act on release; both halves of the click stay away from the app below
-  if t == E.leftMouseUp then
+  if t == M.ring.held then -- letting go of the three-finger click that opened it
+    M.ring.held = nil
+    letGo()
+  elseif t == E.leftMouseUp then
     choose()
   elseif t == E.rightMouseUp or t == E.otherMouseUp then
     M.close()
   end
   return true
+end
+
+-- The trackpad: its touch events tell how many fingers are on it. A tap with FINGERS of them
+-- (macOS sends no click for it) opens or closes the ring. A click with them opens it instead
+-- of clicking: macOS mostly sends that as a right click (secondary click is on), sometimes as
+-- a left one. Once the ring is open, its own tap gets the clicks first.
+local fingers = 0
+local touch -- since fingers went down: when, the most at once, where each started, moved, pressed
+local UP = { [E.leftMouseDown] = E.leftMouseUp, [E.rightMouseDown] = E.rightMouseUp }
+local function onTrackpad(e)
+  local t = e:getType()
+  if t ~= E.gesture then
+    if touch then touch.pressed = true end
+    if fingers ~= FINGERS or M.ring then return false end
+    M.open()
+    if not M.ring then return false end -- no Accessibility: let the click through
+    M.ring.held = UP[t] -- its release
+    return true
+  end
+  local touches = e:getTouches() or {}
+  if #touches == 0 then -- pressure changes: only a press sends them
+    if touch then touch.pressed = true end
+    return false
+  end
+  local s = touch or { start = hs.timer.secondsSinceEpoch(), most = 0, from = {} }
+  fingers = 0
+  for _, f in ipairs(touches) do
+    if f.touching and not f.resting then fingers = fingers + 1 end
+    local p, o = f.normalizedPosition, s.from[f.identity]
+    if p and not o then
+      s.from[f.identity] = p
+    elseif p and math.abs(p.x - o.x) + math.abs(p.y - o.y) > MOVE then
+      s.moved = true
+    end
+  end
+  s.most = math.max(s.most, fingers)
+  touch = fingers > 0 and s or nil
+  if fingers == 0 and s.most == FINGERS and not (s.moved or s.pressed)
+      and hs.timer.secondsSinceEpoch() - s.start < TAP then
+    hs.timer.doAfter(0, function()
+      if M.ring then M.close() else M.open() end
+    end)
+  end
+  return false
 end
 
 function M.open()
@@ -345,7 +401,7 @@ function M.open()
 
   M.ring = { cv = cv, items = items, theme = t, icon = icon, inner = inner, outer = outer, c = c, cx = cx, cy = cy,
     screen = scr, hover = hover, pill = pill, label = label, opened = hs.timer.secondsSinceEpoch() }
-  M.ring.tap = hs.eventtap.new({ E.mouseMoved, E.leftMouseDragged, E.leftMouseDown, E.leftMouseUp,
+  M.ring.tap = hs.eventtap.new({ E.mouseMoved, E.leftMouseDragged, E.rightMouseDragged, E.leftMouseDown, E.leftMouseUp,
     E.rightMouseDown, E.rightMouseUp, E.otherMouseDown, E.otherMouseUp, E.keyDown }, onEvent):start()
   update()
   cv:show(0.1)
@@ -359,10 +415,9 @@ function M.start()
   hs.timer.doAfter(1, M.items) -- and the first Dock read, which takes ~100 ms
   M.hotkey = hs.hotkey.bind(MODS, KEY, function()
     if M.ring then M.close() else M.open() end
-  end, function()
-    local r = M.ring
-    if r and (r.row or (r.inside and r.sel)) and hs.timer.secondsSinceEpoch() - r.opened > HOLD then choose() end
-  end)
+  end, letGo)
+
+  M.trackpad = hs.eventtap.new({ E.gesture, E.leftMouseDown, E.rightMouseDown }, onTrackpad):start()
 end
 
 return M

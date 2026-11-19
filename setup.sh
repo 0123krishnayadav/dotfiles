@@ -230,7 +230,7 @@ hammerspoon() {
     warn "Accessibility is still off for Hammerspoon: switch it on, then run ./setup.sh hammerspoon again"
     return 1
   fi
-  ok "Option+Space shows the Dock ring"
+  ok "Option+Space or a three-finger tap or click shows the Dock ring"
 }
 
 # (Re)start Hammerspoon so it loads ~/.hammerspoon, and print whether it has Accessibility
