@@ -28,6 +28,6 @@
    ```
 
    (or Raycast → Import Extension). Then in Settings → Extensions → File Actions, set its hotkey to `Opt Cmd O` (acts on the Finder selection) and its Terminal App to Ghostty.
-8. **Leave Herdr.app's `Option` keys alone:** `Option+1–9`, `Option+J/K` and `Option+H/L` belong to Herdr.app ([keys](../../README.md#herdrapp-keys)). A Raycast hotkey on one of them wins, and the key does nothing in Herdr; clear it in Settings → Extensions.
+8. **Leave the `Option` keys alone:** `Option+1–9`, `Option+J/K` and `Option+H/L` belong to Herdr.app ([keys](../../README.md#herdrapp-keys)), `Option+Space` to Hammerspoon's Dock ring. A Raycast hotkey on one of them wins and the key does nothing there; clear it in Settings → Extensions.
 
 **Check:** `⌘ Space` opens Raycast, `Hyper T` opens Herdr.app, typing `term` lists Ghostty first, and `Opt Cmd O` on a file in Finder opens File Actions.

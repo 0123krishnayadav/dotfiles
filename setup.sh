@@ -34,6 +34,7 @@ LINKS=(
   lazygit .config/lazygit
   ghostty .config/ghostty
   karabiner .config/karabiner                     # the folder: Karabiner replaces karabiner.json on save
+  hammerspoon .hammerspoon
   herdr-app/keys.json .config/herdr-app/keys.json # files only: Herdr.app keeps sockets and state there
   herdr-app/settings.json .config/herdr-app/settings.json
   claude/statusline-command.sh .claude/statusline-command.sh
@@ -262,6 +263,18 @@ herdr_app_keys() {
   jq -e '.errors == []' <<<"$status"
 }
 
+# Hammerspoon loaded the repo's config (its hotkeys only work once it has Accessibility)
+hammerspoon_config() {
+  pgrep -xq Hammerspoon || {
+    echo "Hammerspoon isn't running, skipped"
+    return
+  }
+  [[ "$(hs -q -t 5 -c 'return ringDock ~= nil' </dev/null 2>&1)" == true ]] || { # </dev/null: or hs waits on stdin
+    echo "config didn't load: menu bar icon → Console shows why"
+    return 1
+  }
+}
+
 links_ok() {
   local i missing=""
   for ((i = 0; i < ${#LINKS[@]}; i += 2)); do
@@ -299,6 +312,7 @@ check() {
   # XDG_CONFIG_HOME=$REPO makes them read <tool>/ in the repo, whatever ~/.config holds
   t "Ghostty" env XDG_CONFIG_HOME="$REPO" /Applications/Ghostty.app/Contents/MacOS/ghostty +validate-config
   t "Herdr.app keys" herdr_app_keys
+  t "Hammerspoon" hammerspoon_config
   t "zsh starts without errors" zsh_starts
   t "Neovim starts without errors" nvim_starts
   t "Claude Code status line" statusline_renders

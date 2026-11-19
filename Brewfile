@@ -21,4 +21,5 @@ cask "herdr-app"             # terminal: herdr as a desktop app (config: herdr-a
 cask "ghostty"               # second terminal (config: ghostty/)
 cask "raycast"               # launcher, app hotkeys
 cask "karabiner-elements"    # Caps Lock / Right Cmd = Hyper key
+cask "hammerspoon"           # Option+Space: the Dock in a ring at the pointer (config: hammerspoon/)
 cask "visual-studio-code"

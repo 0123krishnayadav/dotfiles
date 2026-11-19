@@ -80,6 +80,7 @@ permissions() {
   ask_permission Karabiner-Elements "$sec?Privacy_ListenEvent" "Input Monitoring: turn on the Karabiner items"
   ask_permission Raycast "$sec?Privacy_Accessibility" "Accessibility: turn on Raycast"
   ask_permission Amphetamine "$sec?Privacy_Accessibility" "Accessibility: turn on Amphetamine"
+  ask_permission Hammerspoon "$sec?Privacy_Accessibility" "Accessibility: turn on Hammerspoon"
 }
 
 # ask_permission APP PANE WHAT: skipped when the app isn't installed
