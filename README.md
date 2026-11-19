@@ -20,10 +20,11 @@ My macOS setup: shell, editor, terminal, keyboard and app config, plus `setup.sh
 
 ## After setup.sh
 
-- [ ] Optional steps: all three at once with `./setup.sh --optional`, or one at a time:
+- [ ] Optional steps: all four at once with `./setup.sh --optional`, or one at a time:
   - [ ] `./setup.sh claude_code` installs Claude Code; then sign in (`claude`)
   - [ ] `./setup.sh macos_settings` sets System Settings (key repeat, trackpad, dark mode, Dock, Finder; list in `macos/settings.sh`), then log out and back in
-  - [ ] `./setup.sh permissions` opens each pane for Karabiner, Raycast, Amphetamine and Hammerspoon; switch them on there. Karabiner test: tap Caps Lock alone and focus moves to the next window
+  - [ ] `./setup.sh permissions` opens each pane for Karabiner, Raycast and Amphetamine; switch them on there. Karabiner test: tap Caps Lock alone and focus moves to the next window
+  - [ ] `./setup.sh hammerspoon` installs Hammerspoon for the `Option+Space` Dock ring, links it and asks for Accessibility; then press `Option+Space`
 - [ ] Work through [optional/](optional/README.md), step by step: Raycast (`⌘ Space`, hotkeys, `term` alias, File Actions), Rust, Bun, Node, apps, VS Code extensions
 - [ ] `./setup.sh --check` passes, and `:checkhealth` in Neovim is clean (with Node installed)
 - [ ] If VS Code's terminal shows boxes instead of icons: `xattr -d com.apple.quarantine ~/Library/Fonts/*Nerd*; killall fontd`, then restart VS Code
@@ -49,7 +50,7 @@ Herdr.app is the terminal. `herdr-app/keys.json` can't hold comments, so its not
 | `lazygit/` | lazygit with side-by-side delta diffs | `~/.config/lazygit` |
 | `ssh/` | SSH defaults only (no hosts, no keys) | `~/.ssh/config` |
 | `karabiner/` | Caps Lock / Right ⌘ = Hyper | `~/.config/karabiner` |
-| `hammerspoon/` | Hammerspoon: `Option+Space` shows the Dock in a ring at the pointer; point and click (how to use: top of `ring_dock.lua`) | `~/.hammerspoon` |
+| `hammerspoon/` | Hammerspoon: `Option+Space` shows the Dock in a ring at the pointer; point and click (how to use: top of `ring_dock.lua`). Optional | `~/.hammerspoon`, by `./setup.sh hammerspoon` |
 | `vscode/` | VS Code settings + keybindings | `~/Library/Application Support/Code/User` |
 | `macos/` | macOS System Settings (keyboard, trackpad, look, Dock, Finder) and the permissions walk-through | `defaults write`, run by `./setup.sh macos_settings` / `permissions` |
 | `claude/` | Claude Code status line | `~/.claude/statusline-command.sh` + `statusLine` in `~/.claude/settings.json` |
