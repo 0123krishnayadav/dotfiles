@@ -32,9 +32,8 @@ My macOS setup: shell, editor, terminal, keyboard and app config, plus `setup.sh
 
 Herdr.app is the terminal. `herdr-app/keys.json` can't hold comments, so its notes are here.
 
-- Prefix `Option+Space`, then: `c` new tab, `Shift+X` close tab, `Shift+T` rename tab, `n`/`p` next/previous tab, `1`–`9` go to tab, `v`/`-` split right/down, `x` close pane, `z` zoom pane, `h`/`j`/`k`/`l` move between panes, `Shift+N`/`Shift+W`/`Shift+D` new/rename/close space, `w` picker, `e` find, `b` sidebar, `s` settings, `?` help, `q` quit (terminals keep running).
 - Direct: `Cmd+T/W/D/Shift+D/1–9` new tab, close tab, split right/down, go to tab; `Option+1–9` go to tab; `Option+J/K` next/previous space; `Option+H/L` pane left/right. Raycast must not use these `Option` keys ([Raycast step 8](optional/raycast/README.md)), or it takes them first.
-- `Cmd+P/F/Shift+F/S/-/=` go to the program, so Neovim gets them. The app's own uses moved: picker `Option+Space w`, find `Option+Space e`, zoom from the palette (`Cmd+Shift+P`).
+- `Cmd+P/F/Shift+F/S/-/=` go to the program, so Neovim gets them. The app's own picker, find and zoom are in the palette (`Cmd+Shift+P`).
 - Line editing: `Cmd+←/→` Home/End, `Cmd+Delete` deletes to the start of the line, `Option+←/→` jump words, `Option+Delete` deletes a word.
 - Edits apply after Cmd+Q and reopen (the app doesn't see changes through the links). Mistakes show in `./setup.sh --check`, `herdr-app status` and `~/.config/herdr-app/keys.error`.
 
@@ -45,7 +44,7 @@ Herdr.app is the terminal. `herdr-app/keys.json` can't hold comments, so its not
 | `zsh/` | zsh + Oh My Zsh: aliases, key bindings, functions, Oh My Posh prompt | `~/.config/zsh` (via `ZDOTDIR` in `~/.zshenv`) |
 | `ghostty/` | Ghostty, a second terminal: font, window size, Option as Alt | `~/.config/ghostty` |
 | `nvim/` | Neovim with [LazyVim](https://github.com/LazyVim/LazyVim): extras in `lazyvim.json`, plugins pinned in `lazy-lock.json`, VS Code's default dark theme in `colors/` | `~/.config/nvim` |
-| `herdr-app/` | Herdr.app, the terminal: prefix `Option+Space` and macOS `Cmd` keys. Notes above | `~/.config/herdr-app/{keys,settings}.json` (files only) |
+| `herdr-app/` | Herdr.app, the terminal: macOS `Cmd` keys, no prefix key. Notes above | `~/.config/herdr-app/{keys,settings}.json` (files only) |
 | `git/` | git config + global ignore, delta as pager | `~/.config/git` |
 | `lazygit/` | lazygit with side-by-side delta diffs | `~/.config/lazygit` |
 | `ssh/` | SSH defaults only (no hosts, no keys) | `~/.ssh/config` |
