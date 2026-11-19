@@ -3,7 +3,9 @@ return {
   -- Same look as VS Code's default dark theme (colors/dark2026.lua)
   { "LazyVim/LazyVim", opts = { colorscheme = "dark2026" } },
 
-  -- Show dotfiles in file search, grep and the explorer (never .git)
+  -- Show dotfiles in file search, grep and the explorer (never .git). The explorer also shows
+  -- gitignored files, grayed out as in VS Code; file search and grep skip them, as VS Code's
+  -- do (Alt+i shows them there).
   {
     "folke/snacks.nvim",
     opts = {
@@ -11,7 +13,7 @@ return {
         sources = {
           files = { hidden = true },
           grep = { hidden = true },
-          explorer = { hidden = true, exclude = { ".git", ".DS_Store" } },
+          explorer = { hidden = true, ignored = true, exclude = { ".git", ".DS_Store" } },
         },
       },
     },
