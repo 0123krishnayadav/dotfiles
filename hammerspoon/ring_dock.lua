@@ -5,7 +5,8 @@
 -- a click outside the ring or in its middle, or the same keys or fingers again close it.
 -- Resting on an app with 2 or more windows lists their names outside the ring, next to it:
 -- move out onto one and click (or let go) to bring that window to the front. Only windows on
--- the current desktop (and minimized ones) can be listed.
+-- the current desktop (and minimized ones) can be listed. A right click on an item opens its
+-- menu in the Dock.
 -- It reads the real Dock (needs Accessibility), so pin and unpin apps in the Dock as usual.
 
 local M = {}
@@ -261,7 +262,16 @@ local function letGo()
   if r and (r.row or (r.inside and r.sel)) and hs.timer.secondsSinceEpoch() - r.opened > HOLD then choose() end
 end
 
+-- A right click on an item: its menu in the Dock, as if right-clicked there. Anywhere else: close.
+local function dockMenu()
+  local r = M.ring
+  local it = r.inside and r.items[r.sel]
+  M.close()
+  if it then it.el:performAction("AXShowMenu") end
+end
+
 local E = hs.eventtap.event.types
+local fingers = 0 -- on the trackpad now (not resting on it)
 local function onEvent(e)
   if not M.ring then return false end -- closed, with events still queued for its tap
   local t = e:getType()
@@ -280,11 +290,16 @@ local function onEvent(e)
     return true
   end
   -- Mouse buttons act on release; both halves of the click stay away from the app below
-  if t == M.ring.held then -- letting go of the three-finger click that opened it
-    M.ring.held = nil
+  local r = M.ring
+  if t == r.held then -- letting go of the three-finger click that opened it
+    r.held = nil
     letGo()
+  elseif t == E.rightMouseDown then
+    r.fingers = fingers -- FINGERS of them: the trackpad click that closes the ring, not a right click
   elseif t == E.leftMouseUp then
     choose()
+  elseif t == E.rightMouseUp and r.fingers ~= FINGERS then
+    dockMenu()
   elseif t == E.rightMouseUp or t == E.otherMouseUp then
     M.close()
   end
@@ -295,7 +310,6 @@ end
 -- (macOS sends no click for it) opens or closes the ring. A click with them opens it instead
 -- of clicking: macOS mostly sends that as a right click (secondary click is on), sometimes as
 -- a left one. Once the ring is open, its own tap gets the clicks first.
-local fingers = 0
 local touch -- since fingers went down: when, the most at once, where each started, moved, pressed
 local UP = { [E.leftMouseDown] = E.leftMouseUp, [E.rightMouseDown] = E.rightMouseUp }
 local function onTrackpad(e)
