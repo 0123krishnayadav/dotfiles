@@ -104,10 +104,12 @@ function M.items()
   return items
 end
 
--- A running app's windows on the current desktop, minimized ones too (not Finder's desktop)
+-- A running app's windows on the current desktop, minimized ones too (not Finder's desktop).
+-- Not hs.application.get: for an ID that isn't running (an app whose windows belong to another
+-- app, like Herdr's, or one quitting) it searches every window of every app, ~1.5 s stuck.
 local function windows(it)
   local info = it.kind == "AXApplicationDockItem" and it.path and hs.application.infoForBundlePath(it.path)
-  local app = info and info.CFBundleIdentifier and hs.application.get(info.CFBundleIdentifier)
+  local app = info and info.CFBundleIdentifier and hs.application.applicationsForBundleID(info.CFBundleIdentifier)[1]
   local wins = {}
   for _, w in ipairs(app and app:allWindows() or {}) do
     if w:isStandard() then wins[#wins + 1] = w end
@@ -413,6 +415,9 @@ function M.start()
     local _ = hs[ext]
   end
   hs.timer.doAfter(1, M.items) -- and the first Dock read, which takes ~100 ms
+  -- A busy or hung app answers Accessibility late or never: wait 0.25 s for it, not macOS's 6
+  -- (all of Hammerspoon; the Dock answers in ms)
+  hs.window.timeout(0.25)
   M.hotkey = hs.hotkey.bind(MODS, KEY, function()
     if M.ring then M.close() else M.open() end
   end, letGo)
