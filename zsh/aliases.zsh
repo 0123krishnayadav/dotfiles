@@ -6,8 +6,10 @@
 
 alias src='omz reload'   # reload the shell
 
-alias vim='nvim'
-alias vi='nvim'
+if command -v nvim >/dev/null 2>&1; then   # a server without Neovim keeps plain vim
+  alias vim='nvim'
+  alias vi='nvim'
+fi
 alias ls='ls -alh'
 alias ils='/bin/ls'      # plain ls / cat
 alias icat='/bin/cat'

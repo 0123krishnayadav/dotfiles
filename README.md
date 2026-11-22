@@ -18,6 +18,17 @@ My macOS setup: shell, editor, terminal, keyboard and app config, plus `setup.sh
    It asks for your password and takes 15–30 minutes. It's safe to re-run: each step skips what's done, and it stops at the first failure. `./setup.sh --no-apps` skips the Brewfile's apps (everything else still runs), `./setup.sh --link` only links the configs, and `./setup.sh neovim` runs just that step (`./setup.sh --help` lists them all).
 4. Open Herdr.app (Apple's Terminal can't send the `Cmd` shortcuts) and work through the list below.
 
+## Linux server
+
+`server/setup.sh` gives a server a light version of the shell: this repo's zsh config with Oh My Zsh, plus `vim`, `tmux`, `fzf`, `zoxide`, `ripgrep` and `btop` from the system's package manager. No Homebrew, Neovim, lazygit or prompt theme (the prompt is `user@host:folder (branch)`). Debian/Ubuntu, Fedora or Arch, as root or a user with sudo.
+
+```bash
+git clone https://github.com/0123krishnayadav/dotfiles.git ~/dotfiles
+~/dotfiles/server/setup.sh
+```
+
+Log in again afterwards. Safe to re-run.
+
 ## After setup.sh
 
 - [ ] Optional steps: all four at once with `./setup.sh --optional`, or one at a time:

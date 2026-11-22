@@ -23,14 +23,18 @@ zstyle ':omz:plugins:fnm' use-on-cd yes   # auto-switch Node on cd (.nvmrc / .no
 plugins=(
   git                   # git aliases: gst, gco, gp, ...
   fnm                   # Node version manager (does nothing until fnm is installed, see optional/node)
-  fzf                   # Ctrl+R history, Ctrl+T files, Alt+C cd
   zoxide                # smarter cd
   zsh-autosuggestions   # grey history suggestions (ships with Oh My Zsh since 2026-09)
   web-search            # google foo, ddg foo, github foo ...
   copypath              # copypath [file] -> copy path to clipboard
   copyfile              # copyfile <file> -> copy file contents to clipboard
-  macos                 # ofd, cdf, pfd, quick-look, ...
 )
+# fzf: Ctrl+R history, Ctrl+T files, Alt+C cd. Not where its key bindings are missing (an old fzf
+# without --zsh, from a minimal Ubuntu that strips /usr/share/doc), or every shell prints an error.
+if [[ $OSTYPE == darwin* || -e /usr/share/doc/fzf/examples/key-bindings.zsh ]] || fzf --zsh &>/dev/null; then
+  plugins+=(fzf)
+fi
+[[ $OSTYPE == darwin* ]] && plugins+=(macos)   # ofd, cdf, pfd, quick-look, ...
 
 source "$ZSH/oh-my-zsh.sh"
 

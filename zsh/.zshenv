@@ -13,9 +13,9 @@ export XDG_STATE_HOME="$HOME/.local/state"
 # (a symlink to this repo's zsh/ folder). Only this file has to live in $HOME.
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
-# Default editor (git commit, crontab -e, ...)
-export EDITOR="nvim"
-export VISUAL="nvim"
+# Default editor (git commit, crontab -e, ...): Neovim, or vim where it isn't installed (a server)
+if (( $+commands[nvim] )); then export EDITOR="nvim"; else export EDITOR="vim"; fi
+export VISUAL="$EDITOR"
 
 # Cache (completion dump) and state (history) directories
 [[ -d "$XDG_CACHE_HOME/zsh" ]] || mkdir -p "$XDG_CACHE_HOME/zsh"
