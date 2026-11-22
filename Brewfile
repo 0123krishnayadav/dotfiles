@@ -9,6 +9,8 @@ brew "fd"                   # better find
 brew "ripgrep"              # better grep: rg (Neovim search uses it too)
 brew "bat"                  # better cat (cat alias)
 brew "lazygit"              # git UI in the terminal (run `lazygit` in a repo)
+brew "tmux"                 # terminal sessions that keep running after you close the window (config: tmux)
+brew "glow"                 # md viewer
 brew "git-delta"            # nicer diffs: side by side in git diff and lazygit
 brew "oh-my-posh"           # prompt (theme set in zsh/prompt.zsh). Homebrew's own, not Oh My Posh's tap
 brew "jq"                   # JSON for setup.sh and the Claude Code status line (macOS 15+ also has /usr/bin/jq)
