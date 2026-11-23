@@ -176,6 +176,9 @@ app_settings() {
   # Claude Code status line (the script itself is in LINKS)
   json_set "$HOME/.claude/settings.json" '.statusLine = {type: "command", command: $cmd, padding: 0}' \
     --arg cmd "bash $HOME/.claude/statusline-command.sh"
+  # Claude Code hooks from claude/hooks.json (sounds), merged per event so other hooks stay
+  json_set "$HOME/.claude/settings.json" '.hooks = ((.hooks // {}) + $h[0])' \
+    --slurpfile h "$REPO/claude/hooks.json"
 }
 
 # json_set FILE JQ_FILTER [--arg NAME VALUE ...]: apply the filter unless it changes nothing.
