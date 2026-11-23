@@ -40,6 +40,7 @@ LINKS=(
   herdr-app/keys.json .config/herdr-app/keys.json # files only: Herdr.app keeps sockets and state there
   herdr-app/settings.json .config/herdr-app/settings.json
   claude/statusline-command.sh .claude/statusline-command.sh
+  claude/sound.sh .claude/sound.sh
   vscode/settings.json "Library/Application Support/Code/User/settings.json"
   vscode/keybindings.json "Library/Application Support/Code/User/keybindings.json"
 )

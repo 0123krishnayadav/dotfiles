@@ -1,11 +1,11 @@
 {
   "Stop": [
-    { "hooks": [{ "type": "command", "command": "(afplay /System/Library/Sounds/Glass.aiff >/dev/null 2>&1 &)" }] }
+    { "hooks": [{ "type": "command", "command": "bash ~/.claude/sound.sh Glass" }] }
   ],
   "PermissionRequest": [
-    { "matcher": "*", "hooks": [{ "type": "command", "command": "(afplay /System/Library/Sounds/Ping.aiff >/dev/null 2>&1 &)" }] }
+    { "matcher": "*", "hooks": [{ "type": "command", "command": "bash ~/.claude/sound.sh Ping" }] }
   ],
   "Notification": [
-    { "matcher": "idle_prompt|elicitation_dialog", "hooks": [{ "type": "command", "command": "(afplay /System/Library/Sounds/Ping.aiff >/dev/null 2>&1 &)" }] }
+    { "matcher": "idle_prompt|elicitation_dialog", "hooks": [{ "type": "command", "command": "bash ~/.claude/sound.sh Ping" }] }
   ]
 }
