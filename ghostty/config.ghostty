@@ -7,7 +7,7 @@ font-size = 14
 
 # Closing the last window quits Ghostty, and it never reopens old windows
 quit-after-last-window-closed = true
-window-save-state = never
+window-save-state = always
 
 # New windows: 110x30, opening in your home folder
 window-width = 110
