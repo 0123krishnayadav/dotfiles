@@ -312,6 +312,23 @@ end
 -- a left one. Once the ring is open, its own tap gets the clicks first.
 local touch -- since fingers went down: when, the most at once, where each started, moved, pressed
 local UP = { [E.leftMouseDown] = E.leftMouseUp, [E.rightMouseDown] = E.rightMouseUp }
+
+-- Hammerspoon sometimes stops getting finger data (seen after sleep): every gesture event comes
+-- with no touches, so no tap is ever seen. Reload doesn't help, only a new process does: relaunch.
+-- A press sends empty ones too (pressure), so only count them with no button down.
+local STALE, empties = 150, 0 -- empty gesture events in a row
+local function noTouches()
+  if next(hs.eventtap.checkMouseButtons()) then empties = 0 return end
+  empties = empties + 1
+  if empties < STALE then return end
+  empties = 0
+  local last = hs.settings.get("ringDock.relaunched") or 0
+  if os.time() - last < 600 then return end -- at most every 10 min, in case a relaunch doesn't help
+  hs.settings.set("ringDock.relaunched", os.time())
+  print("ring_dock: no finger data from the trackpad, relaunching Hammerspoon")
+  hs.timer.doAfter(0, hs.relaunch)
+end
+
 local function onTrackpad(e)
   local t = e:getType()
   if t ~= E.gesture then
@@ -325,8 +342,10 @@ local function onTrackpad(e)
   local touches = e:getTouches() or {}
   if #touches == 0 then -- pressure changes: only a press sends them
     if touch then touch.pressed = true end
+    noTouches()
     return false
   end
+  empties = 0
   local s = touch or { start = hs.timer.secondsSinceEpoch(), most = 0, from = {} }
   fingers = 0
   for _, f in ipairs(touches) do
