@@ -1,0 +1,18 @@
+# Atuin: shell history in a database (Ctrl+R, Up arrow). Linked to ~/.atuin/config.toml.
+# Data (history.db, key) stays in ~/.atuin/data, never in this repo.
+# Every setting and its default: `atuin default-config`. Takes effect in new shells.
+
+# Search through the daemon's in-memory index (fastest). After `atuin import`, run
+# `atuin daemon restart`, or the search won't see the imported commands.
+search_mode = "daemon-fuzzy"
+
+# Enter runs the selected command, Tab puts it on the prompt to edit first
+enter_accept = true
+
+[daemon]
+enabled = true
+autostart = true # started by a launchd agent (./setup.sh atuin) or by the first search
+
+# Record AI agent sessions (Claude Code) so they can be searched and resumed. Needs the daemon.
+[threads]
+enabled = true

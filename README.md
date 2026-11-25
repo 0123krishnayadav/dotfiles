@@ -31,8 +31,9 @@ Log in again afterwards. Safe to re-run.
 
 ## After setup.sh
 
-- [ ] Optional steps: all four at once with `./setup.sh --optional`, or one at a time:
+- [ ] Optional steps: all five at once with `./setup.sh --optional`, or one at a time:
   - [ ] `./setup.sh claude_code` installs Claude Code; then sign in (`claude`)
+  - [ ] `./setup.sh atuin_setup` installs Atuin (`Ctrl+R` history search, also for Claude Code) and imports your zsh history; then open a new tab
   - [ ] `./setup.sh macos_settings` sets System Settings (key repeat, trackpad, dark mode, Dock, Finder; list in `macos/settings.sh`), then log out and back in
   - [ ] `./setup.sh permissions` opens each pane for Karabiner, Raycast and Amphetamine; switch them on there. Karabiner test: tap Caps Lock alone and focus moves to the next window
   - [ ] `./setup.sh hammerspoon` installs Hammerspoon for the `Option+Space` Dock ring, links it and asks for Accessibility; then press `Option+Space`
@@ -58,6 +59,7 @@ Herdr.app is the terminal. `herdr-app/keys.json` can't hold comments, so its not
 | `nvim/` | Neovim with [LazyVim](https://github.com/LazyVim/LazyVim): extras in `lazyvim.json`, plugins pinned in `lazy-lock.json`, VS Code's default dark theme in `colors/` (colors from `theme/`) | `~/.config/nvim` |
 | `herdr-app/` | Herdr.app, the terminal: macOS `Cmd` keys, no prefix key. Notes above | `~/.config/herdr-app/{keys,settings}.json` (files only) |
 | `git/` | git config + global ignore, delta as pager | `~/.config/git` |
+| `atuin/` | Atuin: shell history in a database. `Ctrl+R` searches everything, `Up` this folder's history (shell hook: `zsh/atuin.zsh`). Optional: `./setup.sh atuin_setup` installs it, starts its daemon and connects Claude Code. History and key stay in `~/.atuin/data`, never in git; after `atuin import`, run `atuin daemon restart` | `~/.atuin/config.toml` (file only), by `./setup.sh atuin_setup` |
 | `lazygit/` | lazygit with side-by-side delta diffs | `~/.config/lazygit` |
 | `theme/` | VS Code's dark theme for Neovim, lazygit and its delta diffs (through bat's theme cache): every color once in `palette.lua`. After changing one, `nvim -l ~/.config/theme/build.lua` rewrites the other tools' files | `~/.config/theme`, `~/.config/bat/themes/dark2026.tmTheme` |
 | `ssh/` | SSH defaults only (no hosts, no keys) | `~/.ssh/config` |

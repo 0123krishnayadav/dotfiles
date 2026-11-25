@@ -29,7 +29,7 @@ plugins=(
   copypath              # copypath [file] -> copy path to clipboard
   copyfile              # copyfile <file> -> copy file contents to clipboard
 )
-# fzf: Ctrl+R history, Ctrl+T files, Alt+C cd. Not where its key bindings are missing (an old fzf
+# fzf: Ctrl+T files, Alt+C cd (Ctrl+R too where Atuin isn't installed). Not where its key bindings are missing (an old fzf
 # without --zsh, from a minimal Ubuntu that strips /usr/share/doc), or every shell prints an error.
 if [[ $OSTYPE == darwin* || -e /usr/share/doc/fzf/examples/key-bindings.zsh ]] || fzf --zsh &>/dev/null; then
   plugins+=(fzf)
@@ -54,8 +54,8 @@ setopt AUTOCD                  # type a folder name to cd into it
 setopt NO_BEEP                 # no terminal bell
 setopt NUMERIC_GLOB_SORT       # sort file10 after file9, not after file1
 
-# Aliases, key bindings, functions and prompt live next to this file
-for f in aliases keybindings functions prompt; do source "$ZDOTDIR/$f.zsh"; done
+# Aliases, key bindings, functions, prompt and Atuin live next to this file
+for f in aliases keybindings functions prompt atuin; do source "$ZDOTDIR/$f.zsh"; done
 unset f
 
 # Not in the repo (zsh itself reads ~/.config/zsh, not ~):
@@ -65,3 +65,4 @@ for f in "$HOME/.zshrc" "$HOME/.zshrc.local"; do
   [[ -f $f && ! $f -ef $ZDOTDIR/.zshrc ]] && source "$f"
 done
 unset f
+

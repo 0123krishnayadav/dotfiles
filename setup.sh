@@ -10,6 +10,7 @@
 #   ./setup.sh macos_settings   optional: macOS System Settings (macos/settings.sh)
 #   ./setup.sh permissions      optional: open each privacy permission pane
 #   ./setup.sh hammerspoon      optional: Hammerspoon's Option+Space Dock ring (install, link, Accessibility)
+#   ./setup.sh atuin_setup      optional: Atuin history search (install, link, daemon, Claude Code hooks)
 #   ./setup.sh --optional       all the optional steps above, in that order
 #   ./setup.sh --help     this text and the list of steps
 #
@@ -209,6 +210,15 @@ neovim() {
   nvim --headless "+Lazy! restore" +qa >/dev/null 2>&1 && ok "plugins installed"
 }
 
+# Atuin (Ctrl+R / Up history search): install it, link its config (the file only: it keeps its
+# history and key in ~/.atuin), start its daemon (a launchd agent) and add Claude Code's hooks and
+# MCP server. zsh/atuin.zsh loads it once installed. Imports the zsh history on the first run.
+atuin_setup() {
+  if command -v atuin >/dev/null; then ok "already installed"; else brew install atuin || return 1; fi
+  link "$REPO/atuin/config.toml" "$HOME/.atuin/config.toml" || return 1
+  atuin setup --yes --only --daemon --threads --agent-history --agents claude-code --mcp </dev/null
+}
+
 claude_code() {
   if [[ -x "$HOME/.local/bin/claude" ]]; then
     ok "already installed"
@@ -321,6 +331,23 @@ statusline_renders() {
   echo '{"model":{"display_name":"Opus"}}' | bash "$REPO/claude/statusline-command.sh" | grep -q Opus
 }
 
+# Optional Atuin: its config is linked and Claude Code's hooks call the Atuin on PATH
+atuin_wired() {
+  local a
+  a=$(command -v atuin) || {
+    echo "Atuin isn't installed, skipped"
+    return
+  }
+  [[ "$(readlink "$HOME/.atuin/config.toml")" == "$REPO/atuin/config.toml" ]] || {
+    echo "~/.atuin/config.toml isn't linked to the repo (fix: ./setup.sh atuin_setup)"
+    return 1
+  }
+  grep -q "\"$a hook claude-code\"" "$HOME/.claude/settings.json" 2>/dev/null || {
+    echo "Claude Code's hooks don't call $a (fix: ./setup.sh atuin_setup)"
+    return 1
+  }
+}
+
 # Herdr.app reports bad keys.json entries, as of its last launch, while it runs
 herdr_app_keys() {
   local status
@@ -405,6 +432,7 @@ check() {
   bold "This Mac matches the repo"
   t "$((${#LINKS[@]} / 2)) links into the repo" links_ok
   t "delta has the dark2026 theme" delta_theme
+  t "Atuin (optional)" atuin_wired
   app_settings
   t "Brewfile installed" brewfile_installed
 
@@ -433,6 +461,7 @@ STEPS=(
 # Never part of a full run: only when named, e.g. ./setup.sh claude_code
 OPTIONAL_STEPS=(
   claude_code "Claude Code"
+  atuin_setup "Atuin (Ctrl+R history search)"
   macos_settings "macOS settings"
   permissions "Permissions (only you can switch these on)"
   hammerspoon "Hammerspoon (Option+Space Dock ring)"
@@ -504,5 +533,5 @@ for ((i = 0; i < ${#STEPS[@]}; i += 2)); do step "${STEPS[i + 1]}" "${STEPS[i]}"
 bold "Done"
 ok "Everything installed."
 echo "    Remaining manual steps: see README.md → 'After setup.sh'"
-echo "    Optional: ./setup.sh --optional (Claude Code, System Settings, permissions, Hammerspoon), or one: ./setup.sh claude_code"
+echo "    Optional: ./setup.sh --optional (Claude Code, Atuin, System Settings, permissions, Hammerspoon), or one: ./setup.sh claude_code"
 echo "    Open Herdr.app to load the new shell."
