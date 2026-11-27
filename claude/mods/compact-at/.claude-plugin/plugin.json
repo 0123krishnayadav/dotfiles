@@ -1,0 +1,5 @@
+{
+  "name": "compact-at",
+  "version": "0.1.0",
+  "description": "Compacts the conversation by itself once its context reaches a token limit (256k by default)"
+}

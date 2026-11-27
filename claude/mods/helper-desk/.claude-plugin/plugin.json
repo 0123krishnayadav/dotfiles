@@ -1,0 +1,6 @@
+{
+  "name": "helper-desk",
+  "version": "0.1.0",
+  "description": "Purple band with overall subagent status, and a side panel with each subagent's progress, tokens and cost",
+  "types": "./types/index.d.ts"
+}

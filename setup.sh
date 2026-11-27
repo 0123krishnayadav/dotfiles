@@ -3,7 +3,7 @@
 #
 #   ./setup.sh            run every step in STEPS (not the optional ones)
 #   ./setup.sh --no-apps  skip the Brewfile's apps (everything else still runs)
-#   ./setup.sh --link     only link the configs (LINKS) and set the Claude Code status line; installs nothing
+#   ./setup.sh --link     only link the configs (LINKS, and Claude Code's in claude/setup.sh); installs nothing
 #   ./setup.sh --check    change nothing: test the configs and that this Mac matches the repo
 #   ./setup.sh neovim links     run only these steps
 #   ./setup.sh claude_code      optional: install Claude Code
@@ -40,8 +40,6 @@ LINKS=(
   karabiner .config/karabiner                     # the folder: Karabiner replaces karabiner.json on save
   herdr-app/keys.json .config/herdr-app/keys.json # files only: Herdr.app keeps sockets and state there
   herdr-app/settings.json .config/herdr-app/settings.json
-  claude/statusline-command.sh .claude/statusline-command.sh
-  claude/sound.sh .claude/sound.sh
   vscode/settings.json "Library/Application Support/Code/User/settings.json"
   vscode/keybindings.json "Library/Application Support/Code/User/keybindings.json"
 )
@@ -151,13 +149,13 @@ default_shell() {
   chsh -s /bin/zsh
 }
 
-# Everything in LINKS, then the settings that live inside app-owned files
+# Everything in LINKS, then Claude Code's links and settings (claude/setup.sh)
 links() {
   local i
   for ((i = 0; i < ${#LINKS[@]}; i += 2)); do link "$REPO/${LINKS[i]}" "$HOME/${LINKS[i + 1]}" || return 1; done
   # ssh rejects configs that are group/world-writable
   chmod 700 "$HOME/.ssh" && chmod 600 "$REPO/ssh/config"
-  app_settings || return 1
+  claude_links || return 1
   bat_cache
 }
 
@@ -170,17 +168,6 @@ bat_cache() {
   # The folders under $HOME, not the shell's XDG_* ones (they differ in a test with a fake HOME)
   XDG_CONFIG_HOME="$HOME/.config" XDG_CACHE_HOME="$HOME/.cache" bat cache --build >/dev/null &&
     ok "bat theme cache built"
-}
-
-# Settings inside JSON files that apps own. These files aren't linked: the apps rewrite them
-# and keep per-machine data in them, so only our keys are merged in.
-app_settings() {
-  # Claude Code status line (the script itself is in LINKS)
-  json_set "$HOME/.claude/settings.json" '.statusLine = {type: "command", command: $cmd, padding: 0}' \
-    --arg cmd "bash $HOME/.claude/statusline-command.sh"
-  # Claude Code hooks from claude/hooks.json (sounds), merged per event so other hooks stay
-  json_set "$HOME/.claude/settings.json" '.hooks = ((.hooks // {}) + $h[0])' \
-    --slurpfile h "$REPO/claude/hooks.json"
 }
 
 # json_set FILE JQ_FILTER [--arg NAME VALUE ...]: apply the filter unless it changes nothing.
@@ -217,14 +204,6 @@ atuin_setup() {
   if command -v atuin >/dev/null; then ok "already installed"; else brew install atuin || return 1; fi
   link "$REPO/atuin/config.toml" "$HOME/.atuin/config.toml" || return 1
   atuin setup --yes --only --daemon --threads --agent-history --agents claude-code --mcp </dev/null
-}
-
-claude_code() {
-  if [[ -x "$HOME/.local/bin/claude" ]]; then
-    ok "already installed"
-    return
-  fi
-  curl -fsSL https://claude.ai/install.sh | bash
 }
 
 HS=/Applications/Hammerspoon.app/Contents/Frameworks/hs/hs # its command line; on PATH only with the brew cask
@@ -280,6 +259,9 @@ hammerspoon_restart() {
 # macOS System Settings and permissions: the macos_settings and permissions steps
 source "$REPO/macos/settings.sh"
 
+# Claude Code: the claude_code step, its links and settings, its checks
+source "$REPO/claude/setup.sh"
+
 # ---------------------------------------------------------------------------
 # ./setup.sh --check
 
@@ -325,10 +307,6 @@ nvim_starts() {
   nvim --headless "+lua vim.defer_fn(function()
     if vim.v.errmsg ~= '' then io.stderr:write(vim.v.errmsg) vim.cmd('cq') end
     vim.cmd('qa!') end, 2000)"
-}
-
-statusline_renders() {
-  echo '{"model":{"display_name":"Opus"}}' | bash "$REPO/claude/statusline-command.sh" | grep -q Opus
 }
 
 # Optional Atuin: its config is linked and Claude Code's hooks call the Atuin on PATH
@@ -427,13 +405,12 @@ check() {
   t "Hammerspoon" hammerspoon_config
   t "zsh starts without errors" zsh_starts
   t "Neovim starts without errors" nvim_starts
-  t "Claude Code status line" statusline_renders
 
   bold "This Mac matches the repo"
   t "$((${#LINKS[@]} / 2)) links into the repo" links_ok
   t "delta has the dark2026 theme" delta_theme
   t "Atuin (optional)" atuin_wired
-  app_settings
+  claude_check
   t "Brewfile installed" brewfile_installed
 
   bold "Done"

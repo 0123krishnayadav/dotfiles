@@ -1,0 +1,6 @@
+{
+  "name": "cache-clock",
+  "version": "0.1.0",
+  "description": "Counts down to the prompt cache going cold, shows what the next message costs warm or cold, warns before it expires and can keep it warm cheaply",
+  "types": "./types/index.d.ts"
+}

@@ -18,3 +18,6 @@ zsh/.zcompdump*
 # Karabiner writes these into its folder (linked to karabiner/)
 karabiner/automatic_backups/
 karabiner/assets/
+
+# Claude Code writes its API types into each mod it loads
+claude/mods/*/.claude-plugin/types/
