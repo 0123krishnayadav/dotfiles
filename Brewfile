@@ -1,7 +1,7 @@
 # What the configs in this repo need. setup.sh installs it (brew bundle). Extras: optional/
 
 # CLI tools
-brew "fzf"                  # fuzzy finder (Ctrl+R history, Ctrl+T files; Atuin takes Ctrl+R if installed)
+brew "fzf"                  # fuzzy finder (Ctrl+R history, Ctrl+T files)
 brew "zoxide"               # smarter cd
 brew "neovim"               # editor (config: nvim, LazyVim)
 brew "tree-sitter-cli"      # builds Neovim syntax parsers

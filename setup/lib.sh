@@ -139,6 +139,6 @@ run() {
   bold "Done"
   ok "Everything installed."
   echo "    Remaining manual steps: see README.md → 'After setup.sh'"
-  echo "    Optional: ./setup.sh --optional (Claude Code, Atuin, System Settings, permissions, Hammerspoon), or one: ./setup.sh claude_code"
+  echo "    Optional: ./setup.sh --optional (Claude Code, System Settings, permissions, Hammerspoon), or one: ./setup.sh claude_code"
   echo "    Open Herdr.app to load the new shell."
 }
