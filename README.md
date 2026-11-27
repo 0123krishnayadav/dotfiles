@@ -34,7 +34,7 @@ Log in again afterwards. Safe to re-run.
 - [ ] Optional steps: all five at once with `./setup.sh --optional`, or one at a time:
   - [ ] `./setup.sh claude_code` installs Claude Code; then sign in (`claude`)
   - [ ] `./setup.sh atuin_setup` installs Atuin (`Ctrl+R` history search, also for Claude Code) and imports your zsh history; then open a new tab
-  - [ ] `./setup.sh macos_settings` sets System Settings (key repeat, trackpad, dark mode, Dock, Finder; list in `macos/settings.sh`), then log out and back in
+  - [ ] `./setup.sh macos_settings` sets System Settings (key repeat, trackpad, dark mode, Dock, Finder; list in `macos/setup.sh`), then log out and back in
   - [ ] `./setup.sh permissions` opens each pane for Karabiner, Raycast and Amphetamine; switch them on there. Karabiner test: tap Caps Lock alone and focus moves to the next window
   - [ ] `./setup.sh hammerspoon` installs Hammerspoon for the `Option+Space` Dock ring, links it and asks for Accessibility; then press `Option+Space`
 - [ ] Work through [optional/](optional/README.md), step by step: Raycast (`⌘ Space`, hotkeys, `term` alias, File Actions), Rust, Bun, Node, apps, VS Code extensions
@@ -68,6 +68,7 @@ Herdr.app is the terminal. `herdr-app/keys.json` can't hold comments, so its not
 | `vscode/` | VS Code settings + keybindings | `~/Library/Application Support/Code/User` |
 | `macos/` | macOS System Settings (keyboard, trackpad, look, Dock, Finder) and the permissions walk-through | `defaults write`, run by `./setup.sh macos_settings` / `permissions` |
 | `claude/` | Claude Code status line, sounds, and mods in `claude/mods/`: `helper-desk` (subagent band + `/helper-desk` panel), `cache-clock` (countdown before the prompt cache goes cold, `/cache-clock`), `compact-at` (auto-compact at 256k, `/compact-at 150k` to change). Edit a mod and it reloads when the turn ends | `~/.claude/statusline-command.sh`, `~/.claude/sound.sh` + `statusLine`, `hooks` and `env.CLAUDE_CODE_PLUGIN_DIRS` in `~/.claude/settings.json`, all by `claude/setup.sh` |
+| `setup/` | The shared parts of `setup.sh`: helpers and commands (`lib.sh`), Homebrew and the Brewfile (`homebrew.sh`), `--check` (`check.sh`). Each tool's own part is its folder's `setup.sh` | — |
 | `Brewfile` | CLI tools, apps and fonts the configs need (extras: [optional/](optional/README.md)) | `brew bundle` |
 
 Everything is a symlink, so editing the live config edits this repo. Commit and push to back it up. Files that get replaced are moved to `~/.settings-backup/<timestamp>/` first. Machine-specific or secret settings go in `~/.zshrc.local` and `~/.gitconfig.local`, which are loaded automatically and never committed. When an app says "add this to `~/.zshrc`" (or `~/.zprofile`), that works too: zsh reads its config from the repo, but the repo's files also load those two when they exist. Move a line into the repo only if you want it on every Mac.
@@ -91,5 +92,5 @@ Put only this Mac's changes in these files. Restart the tool to apply them; Ghos
 
 - One folder per tool. Nothing goes straight into `.zshrc`.
 - XDG paths (`~/.config/<tool>`) over dotfiles in `$HOME`.
-- New tool: add it to the `Brewfile` and to `LINKS` in `setup.sh`, and add a row above. If no config needs it, give it a guide folder in [optional/](optional/README.md) instead.
+- New tool: add it to the `Brewfile`, give its folder a `setup.sh` (its `LINKS+=(...)`, and `<tool>_link` / `<tool>_check` if it needs more), add the folder to `TOOLS` in `setup.sh`, and add a row above. If no config needs it, give it a guide folder in [optional/](optional/README.md) instead.
 - After editing a config, run `./setup.sh --check`. Its header also says how to test `setup.sh` itself.

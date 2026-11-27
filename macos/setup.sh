@@ -2,8 +2,8 @@
 # macOS System Settings and privacy permissions. Optional: a full ./setup.sh never runs these,
 # only these commands do:
 #
-#   ./setup.sh macos_settings   set everything below    (same: ./macos/settings.sh)
-#   ./setup.sh permissions      open each permission pane (same: ./macos/settings.sh permissions)
+#   ./setup.sh macos_settings   set everything below    (same: ./macos/setup.sh)
+#   ./setup.sh permissions      open each permission pane (same: ./macos/setup.sh permissions)
 #
 # Values are copied from the Mac this repo comes from. To add a setting: run `defaults read > a`,
 # change it in System Settings, run `defaults read > b`, and `diff a b` shows the key to write here.

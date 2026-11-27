@@ -1,9 +1,4 @@
-#!/usr/bin/env bash
-# Claude Code: everything ./setup.sh does for it, sourced by setup.sh (uses its link, json_set, t).
-#
-#   ./setup.sh claude_code   optional: install Claude Code
-#   ./setup.sh --link        links the files below and merges the settings (claude_links)
-#   ./setup.sh --check       tests them (claude_check)
+# Claude Code: sourced by ../setup.sh. Optional install: ./setup.sh claude_code
 #
 # Mods: every folder in claude/mods/ loads in every session and reloads when one of its files is
 # saved. A new mod folder needs ./setup.sh --link once.
@@ -16,18 +11,12 @@ claude_code() {
   curl -fsSL https://claude.ai/install.sh | bash
 }
 
-# Repo path -> path under ~
-CLAUDE_LINKS=(
+LINKS+=(
   claude/statusline-command.sh .claude/statusline-command.sh
   claude/sound.sh .claude/sound.sh
 )
 
-# Part of the Links step
-claude_links() {
-  local i
-  for ((i = 0; i < ${#CLAUDE_LINKS[@]}; i += 2)); do
-    link "$REPO/${CLAUDE_LINKS[i]}" "$HOME/${CLAUDE_LINKS[i + 1]}" || return 1
-  done
+claude_link() {
   claude_settings
 }
 
@@ -50,7 +39,6 @@ claude_settings() {
 claude_check() {
   t "Claude Code status line" claude_statusline_renders
   t "Claude Code mods" claude_mods_validate
-  t "$((${#CLAUDE_LINKS[@]} / 2)) Claude Code links into the repo" claude_links_ok
   claude_settings
 }
 
@@ -71,15 +59,4 @@ claude_mods_validate() {
       return 1
     }
   done
-}
-
-claude_links_ok() {
-  local i missing=""
-  for ((i = 0; i < ${#CLAUDE_LINKS[@]}; i += 2)); do
-    [[ "$(readlink "$HOME/${CLAUDE_LINKS[i + 1]}")" == "$REPO/${CLAUDE_LINKS[i]}" ]] ||
-      missing+="~/${CLAUDE_LINKS[i + 1]}"$'\n'
-  done
-  [[ -z "$missing" ]] && return
-  printf 'Not linked to the repo (fix: ./setup.sh --link):\n%s' "$missing"
-  return 1
 }
