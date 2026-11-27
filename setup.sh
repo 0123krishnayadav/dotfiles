@@ -27,7 +27,7 @@ FAILED=0
 
 # The folders with a setup.sh, in the order their links and checks run (not server/: it's a
 # script of its own, for Linux servers)
-TOOLS=(zsh git ssh nvim lazygit theme ghostty karabiner herdr-app claude vscode hammerspoon macos)
+TOOLS=(zsh git ssh nvim lazygit theme ghostty karabiner claude vscode hammerspoon macos)
 
 # Repo path -> path under ~, filled in by each tool's setup.sh. Folders are linked whole unless
 # the app keeps its own files there.

@@ -16,7 +16,7 @@ My macOS setup: shell, editor, terminal, keyboard and app config, plus `setup.sh
    ```
 
    It asks for your password and takes 15–30 minutes. It's safe to re-run: each step skips what's done, and it stops at the first failure. `./setup.sh --no-apps` skips the Brewfile's apps (everything else still runs), `./setup.sh --link` only links the configs, and `./setup.sh neovim` runs just that step (`./setup.sh --help` lists them all).
-4. Open Herdr.app (Apple's Terminal can't send the `Cmd` shortcuts) and work through the list below.
+4. Open Ghostty and work through the list below.
 
 ## Linux server
 
@@ -40,23 +40,13 @@ Log in again afterwards. Safe to re-run.
 - [ ] `./setup.sh --check` passes, and `:checkhealth` in Neovim is clean (with Node installed)
 - [ ] If VS Code's terminal shows boxes instead of icons: `xattr -d com.apple.quarantine ~/Library/Fonts/*Nerd*; killall fontd`, then restart VS Code
 
-## Herdr.app keys
-
-Herdr.app is the terminal. `herdr-app/keys.json` can't hold comments, so its notes are here.
-
-- Direct: `Cmd+T/W/D/Shift+D/1–9` new tab, close tab, split right/down, go to tab; `Option+1–9` go to tab; `Option+J/K` next/previous space; `Option+H/L` pane left/right. Raycast must not use these `Option` keys ([Raycast step 8](optional/raycast/README.md)), or it takes them first.
-- `Cmd+P/F/Shift+F/S/-/=` go to the program, so Neovim gets them. The app's own picker, find and zoom are in the palette (`Cmd+Shift+P`).
-- Line editing: `Cmd+←/→` Home/End, `Cmd+Delete` deletes to the start of the line, `Option+←/→` jump words, `Option+Delete` deletes a word.
-- Edits apply after Cmd+Q and reopen (the app doesn't see changes through the links). Mistakes show in `./setup.sh --check`, `herdr-app status` and `~/.config/herdr-app/keys.error`.
-
 ## What's inside
 
 | Folder | Tool | Installed to |
 |---|---|---|
 | `zsh/` | zsh + Oh My Zsh: aliases, key bindings, functions, Oh My Posh prompt | `~/.config/zsh` (via `ZDOTDIR` in `~/.zshenv`) |
-| `ghostty/` | Ghostty, a second terminal: font, window size, Option as Alt | `~/.config/ghostty` |
+| `ghostty/` | Ghostty, the terminal: font, window size, Option as Alt | `~/.config/ghostty` |
 | `nvim/` | Neovim with [LazyVim](https://github.com/LazyVim/LazyVim): extras in `lazyvim.json`, plugins pinned in `lazy-lock.json`, VS Code's default dark theme in `colors/` (colors from `theme/`) | `~/.config/nvim` |
-| `herdr-app/` | Herdr.app, the terminal: macOS `Cmd` keys, no prefix key. Notes above | `~/.config/herdr-app/{keys,settings}.json` (files only) |
 | `git/` | git config + global ignore, delta as pager | `~/.config/git` |
 | `lazygit/` | lazygit with side-by-side delta diffs | `~/.config/lazygit` |
 | `theme/` | VS Code's dark theme for Neovim, lazygit and its delta diffs (through bat's theme cache): every color once in `palette.lua`. After changing one, `nvim -l ~/.config/theme/build.lua` rewrites the other tools' files | `~/.config/theme`, `~/.config/bat/themes/dark2026.tmTheme` |
@@ -84,7 +74,7 @@ These optional files stay in your home directory, outside this repo:
 | lazygit | `~/.lazygit.yml` (merged after the shared config in new shells) |
 | SSH | `~/.ssh/config.local`: all hosts, IPs and users (loaded first because SSH's first value wins) |
 
-Put only this Mac's changes in these files. Restart the tool to apply them; Ghostty also supports `Cmd+Shift+,`. Apps using plain JSON (VS Code, Herdr.app, Karabiner) have no equivalent include hook.
+Put only this Mac's changes in these files. Restart the tool to apply them; Ghostty also supports `Cmd+Shift+,`. Apps using plain JSON (VS Code, Karabiner) have no equivalent include hook.
 
 ## Conventions
 

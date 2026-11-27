@@ -23,11 +23,11 @@ _tab_suggest_or_complete() {
 zle -N _tab_suggest_or_complete
 bindkey '\t' _tab_suggest_or_complete
 
-# macOS-style line editing. Herdr.app sends Cmd-Left / Cmd-Right as Home / End and
-# Cmd-Delete as Ctrl-U (herdr-app/keys.json). Both Home/End forms are bound: some
+# macOS-style line editing. Ghostty sends Cmd-Left / Cmd-Right as Ctrl-A / Ctrl-E (zsh's
+# defaults) and Cmd-Delete as Ctrl-U. Home / End keys: both forms are bound, some
 # terminals send ^[OH / ^[OF instead while zle has keypad mode on.
 bindkey '^U' backward-kill-line   # Cmd-Delete: delete to start of line (zsh default kills the whole line)
-bindkey '^[[H' beginning-of-line  # Cmd-Left / Home
+bindkey '^[[H' beginning-of-line  # Home
 bindkey '^[OH' beginning-of-line
-bindkey '^[[F' end-of-line        # Cmd-Right / End
+bindkey '^[[F' end-of-line        # End
 bindkey '^[OF' end-of-line

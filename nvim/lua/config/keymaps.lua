@@ -2,8 +2,8 @@
 -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 local map = vim.keymap.set
 
--- macOS-style Cmd keys. Herdr.app passes them to the program (herdr-app/keys.json, "terminal"),
--- and Neovim reads them as <D-...> because it turns on the kitty keyboard protocol.
+-- macOS-style Cmd keys, read as <D-...> through the kitty keyboard protocol. Only reach Neovim
+-- when the terminal doesn't use them itself (Ghostty keeps Cmd+F and Cmd+-/= for its own search and zoom).
 map({ "n", "i", "x" }, "<D-p>", LazyVim.pick("files"), { desc = "Find Files (Root Dir)" })
 map({ "n", "i", "x" }, "<D-f>", function()
   Snacks.picker.lines()
@@ -15,8 +15,8 @@ map("n", "<D-=>", "<C-i>", { desc = "Go Forward" })
 map("i", "<D-->", "<C-o><C-o>", { desc = "Go Back" })
 map("i", "<D-=>", "<C-o><C-i>", { desc = "Go Forward" })
 
--- Line editing. Herdr.app sends Cmd-Left / Cmd-Right as Home / End and Cmd-Delete as Ctrl-U
--- (herdr-app/keys.json): plain keys, so the shell gets them too. End already goes to the end.
+-- Line editing: Home goes to the first character, not column 1 (End already goes to the end).
+-- Ghostty sends Cmd-Delete as Ctrl-U.
 map({ "n", "x", "o" }, "<Home>", "^", { desc = "Start of Line" })
 map("i", "<Home>", "<C-o>^", { desc = "Start of Line" })
 -- Delete everything before the cursor (the built-in Ctrl-U stops at what you just typed)

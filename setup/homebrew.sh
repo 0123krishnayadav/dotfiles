@@ -52,7 +52,7 @@ brewfile_installed() {
   grep '→' <<<"$out"
   casks=$(sed -n 's/^→ Cask \(.*\) needs to be installed\.$/\1/p' <<<"$out" | xargs)
   if [[ -n "$casks" ]]; then
-    echo "Apps installed by hand? Adopt them (not from inside an app in the list, e.g. Herdr.app):"
+    echo "Apps installed by hand? Adopt them (not from inside an app in the list, e.g. Ghostty):"
     echo "  brew install --cask --adopt $casks"
     echo "\"Operation not permitted\": allow your terminal in System Settings → Privacy & Security"
     echo "  → App Management, quit and reopen it, then run the command again"

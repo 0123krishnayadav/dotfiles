@@ -107,7 +107,7 @@ end
 
 -- A running app's windows on the current desktop, minimized ones too (not Finder's desktop).
 -- Not hs.application.get: for an ID that isn't running (an app whose windows belong to another
--- app, like Herdr's, or one quitting) it searches every window of every app, ~1.5 s stuck.
+-- app, or one quitting) it searches every window of every app, ~1.5 s stuck.
 local function windows(it)
   local info = it.kind == "AXApplicationDockItem" and it.path and hs.application.infoForBundlePath(it.path)
   local app = info and info.CFBundleIdentifier and hs.application.applicationsForBundleID(info.CFBundleIdentifier)[1]

@@ -15,7 +15,7 @@
    | Hotkey | Opens |
    |---|---|
    | `Hyper B` | Brave ([Apps](../apps/README.md)) |
-   | `Hyper T` | Herdr.app |
+   | `Hyper T` | Ghostty |
    | `Hyper V` | VS Code |
 
    Hyper = Caps Lock, or Right ⌘ with the letters listed in `karabiner/karabiner.json`. Tapping either alone sends ⌘` (next window). New Right ⌘ Hyper letter: add it to the Right Command rules in `karabiner/karabiner.json`.
@@ -28,6 +28,6 @@
    ```
 
    (or Raycast → Import Extension). Then in Settings → Extensions → File Actions, set its hotkey to `Opt Cmd O` (acts on the Finder selection) and its Terminal App to Ghostty.
-8. **Leave the `Option` keys alone:** `Option+1–9`, `Option+J/K` and `Option+H/L` belong to Herdr.app ([keys](../../README.md#herdrapp-keys)), `Option+Space` to Hammerspoon's Dock ring. A Raycast hotkey on one of them wins and the key does nothing there; clear it in Settings → Extensions.
+8. **Leave `Option+Space` alone:** it belongs to Hammerspoon's Dock ring. A Raycast hotkey on it wins and the ring doesn't open; clear it in Settings → Extensions.
 
-**Check:** `⌘ Space` opens Raycast, `Hyper T` opens Herdr.app, typing `term` lists Ghostty first, and `Opt Cmd O` on a file in Finder opens File Actions.
+**Check:** `⌘ Space` opens Raycast, `Hyper T` opens Ghostty, typing `term` lists Ghostty first, and `Opt Cmd O` on a file in Finder opens File Actions.

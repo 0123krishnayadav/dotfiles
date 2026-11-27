@@ -20,8 +20,7 @@ brew "jq"                   # JSON for setup.sh and the Claude Code status line 
 cask "font-jetbrains-mono-nerd-font" # font with icons for VS Code and Ghostty (vscode/settings.json, ghostty/)
 
 # Apps
-cask "herdr-app"             # terminal: herdr as a desktop app (config: herdr-app/)
-cask "ghostty"               # second terminal (config: ghostty/)
+cask "ghostty"               # terminal (config: ghostty/)
 cask "raycast"               # launcher, app hotkeys
 cask "karabiner-elements"    # Caps Lock / Right Cmd = Hyper key
 cask "visual-studio-code"
